@@ -61,7 +61,7 @@ export default function Header() {
                             ) : (
                                 <Link href="/">
                                     <Image
-                                        src="/assets/logo 1.png"
+                                        src="/assets/logo1.png"
                                         alt="Diha's tech"
                                         width={100}
                                         height={40}
