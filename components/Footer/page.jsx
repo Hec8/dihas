@@ -7,14 +7,14 @@ export default function Footer() {
         <>
             <footer className="bg-green-800 text-white px-4 sm:px-8 py-8 sm:py-12">
                 <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
-                    
+
                     {/* Left Section - Logo and Description */}
                     <div className="order-1 sm:order-none">
                         <div className="mb-4">
-                            <Image 
-                                src="/assets/logo 1.png"
-                                alt="Diha's tech" 
-                                width={100} 
+                            <Image
+                                src="/assets/dihas.png"
+                                alt="Diha's tech"
+                                width={100}
                                 height={100}
                                 className="mr-4"
                             />
