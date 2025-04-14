@@ -39,3 +39,25 @@ body {
     @apply text-lg text-center mb-12 text-gray-600 max-w-3xl mx-auto;
     font-family: 'Poppins', sans-serif;
 }
+
+@keyframes slideInFromLeft {
+    0% {
+      transform: translateX(-30px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  .delay-100 {
+    animation-delay: 100ms;
+  }
+  .delay-200 {
+    animation-delay: 200ms;
+  }
+  .delay-300 {
+    animation-delay: 300ms;
+  }
+  /* Ajoutez plus de délais si nécessaire */
