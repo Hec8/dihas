@@ -87,13 +87,16 @@ export default function Projet() {
     return (
         <main className="min-h-screen bg-[#E5F2EC]">
             {/* Hero Section */}
-            <section className="bg-green-800/50 text-white py-16 mt-16 relative">
+            <section className="bg-green-800/50 text-white py-16 mt-16 relative min-h-[600px] md:min-h-[700px]">
                 <div className="absolute inset-0 z-0">
                     <Image
                         src="/assets/backproject.png"
                         alt="Background"
                         fill
-                        className="object-cover"
+                        priority
+                        sizes="100vw"
+                        className="object-cover md:object-fill lg:object-cover"
+                        quality={100}
                     />
                 </div>
                 <div className="container mx-auto px-6 relative z-10">
