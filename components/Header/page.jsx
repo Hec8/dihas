@@ -76,7 +76,7 @@ export default function Header() {
                             <Link href="#" className={getLinkStyles('/products')}>
                                 Diha's products
                             </Link>
-                            <Link href="#" className={getLinkStyles('/about')}>
+                            <Link href="/about" className={getLinkStyles('/about')}>
                                 À propos de nous
                             </Link>
                             <Link href="#" className={getLinkStyles('/service')}>
@@ -119,7 +119,7 @@ export default function Header() {
                                     Diha's products
                                 </Link>
                                 <Link
-                                    href="#"
+                                    href="/about"
                                     className={`px-4 py-2 ${pathname === '/about' ? 'bg-[#FFA500] text-white' : 'text-gray-800'}`}
                                     onClick={() => setIsMenuOpen(false)}
                                 >
