@@ -73,7 +73,7 @@ export default function Header() {
 
                         {/* Menu Desktop - Inchangé */}
                         <div className="hidden md:flex h-full">
-                            <Link href="#" className={getLinkStyles('/products')}>
+                            <Link href="https://dihas-product.vercel.app/" className={getLinkStyles('/products')}>
                                 Diha's products
                             </Link>
                             <Link href="#" className={getLinkStyles('/about')}>
@@ -82,10 +82,10 @@ export default function Header() {
                             <Link href="#" className={getLinkStyles('/service')}>
                                 Service
                             </Link>
-                            <Link href="#" className={getLinkStyles('/projet')}>
+                            <Link href="/projet" className={getLinkStyles('/projet')}>
                                 Projet
                             </Link>
-                            <Link href="#" className={getLinkStyles('/blog')}>
+                            <Link href="/blog" className={getLinkStyles('/blog')}>
                                 Blog
                             </Link>
                         </div>
@@ -112,7 +112,7 @@ export default function Header() {
                         <div className="md:hidden bg-white shadow-lg rounded-b-lg">
                             <div className="flex flex-col py-2">
                                 <Link
-                                    href="#"
+                                    href="https://dihas-product.vercel.app/"
                                     className={`px-4 py-2 ${pathname === '/products' ? 'bg-yellow-500 text-white' : 'text-gray-800'}`}
                                     onClick={() => setIsMenuOpen(false)}
                                 >
@@ -133,14 +133,14 @@ export default function Header() {
                                     Service
                                 </Link>
                                 <Link
-                                    href="#"
+                                    href="/projet"
                                     className={`px-4 py-2 ${pathname === '/projet' ? 'bg-yellow-500 text-white' : 'text-gray-800'}`}
                                     onClick={() => setIsMenuOpen(false)}
                                 >
                                     Projet
                                 </Link>
                                 <Link
-                                    href="#"
+                                    href="/blog"
                                     className={`px-4 py-2 ${pathname === '/blog' ? 'bg-yellow-500 text-white' : 'text-gray-800'}`}
                                     onClick={() => setIsMenuOpen(false)}
                                 >

@@ -11,32 +11,32 @@ export default function Hero() {
                             Entreprise de conception, <br />
                             de développement <br />
                             de vente d'application <br />
-                            SaaSet de logiciel de <br />
+                            SaaS et de logiciel de <br />
                             gestion
                         </h1><br />
                         <p className="text-sm mb-8 text-white max-w-md">
-                            De l'idée de développement de marque nous concevrons 
+                            De l'idée de développement de marque nous concevons
                             et développons des applications
                         </p><br />
                         <div className="flex flex-col sm:flex-row gap-4">
                             <button className="bg-green-700 text-white px-6 py-3 rounded flex items-center justify-center">
-                                <img src="/assets/Vector.png" alt="Vector" className="h-5 w-5 mr-2"/>
+                                <img src="/assets/Vector.png" alt="Vector" className="h-5 w-5 mr-2" />
                                 Contactez-nous
                             </button>
                             <button className="bg-[#FFA500] text-white px-6 py-3 rounded flex items-center justify-center">
-                                <img src="/assets/basket.png" alt="Vector" className="h-5 w-5 mr-2"/>
+                                <img src="/assets/basket.png" alt="Vector" className="h-5 w-5 mr-2" />
                                 Commander
                             </button>
                         </div>
                     </div>
-                    
+
                     {/* Partie droite pour la vidéo */}
                     <div className="w-full md:w-1/2 relative">
                         <div className="aspect-video bg-gray-300 bg-opacity-20 rounded-md overflow-hidden">
-                            <video 
-                                autoPlay 
-                                loop 
-                                muted 
+                            <video
+                                autoPlay
+                                loop
+                                muted
                                 playsInline
                                 className="w-full h-full object-cover rounded-md"
                             >
