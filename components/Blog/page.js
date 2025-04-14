@@ -92,7 +92,7 @@ export default function Blog() {
                                 Tout ce que vous avez <br />
                                 toujours voulu savoir <br />
                                 sur les activités <br />
-                                de Diha's
+                                de Diha&apos;s
                             </h1><br />
                             <p className="text-sm mb-6 text-white max-w-md">
                                 Ressources pour les entrepreneurs qui vendent, 

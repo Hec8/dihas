@@ -105,7 +105,7 @@ export default function Projet() {
                                 Mobile
                             </h1>
                             <p className="text-lg mb-8 max-w-xl mx-auto md:mx-0">
-                                Nous sommes une entreprise de développement web et mobile reconnue mondialement. Notre équipe de designers primés et de développeurs experts fait de nous un interlocuteur unique pour des centaines de clients. Diha's s'efforce d'obtenir des résultats exceptionnels grâce à des données de qualité et un marketing intelligent. Nos utilisateurs bénéficient d'excellentes solutions de développement avec WordPress, NextJS, ReactJS, Laravel, Flutter pour concrétiser leur idées
+                                Nous sommes une entreprise de développement web et mobile reconnue mondialement. Notre équipe de designers primés et de développeurs experts fait de nous un interlocuteur unique pour des centaines de clients. Diha&apos;s s&apos;efforce d&apos;obtenir des résultats exceptionnels grâce à des données de qualité et un marketing intelligent. Nos utilisateurs bénéficient d&apos;excellentes solutions de développement avec WordPress, NextJS, ReactJS, Laravel, Flutter pour concrétiser leur idées
                             </p>
                         </div>
                         <div className="w-full md:w-1/2 flex justify-center animate-fadeIn delay-100">
@@ -124,7 +124,7 @@ export default function Projet() {
                                     </li>
                                     <li className="flex items-center gap-2">
                                         <Image src="/assets/certif.png" alt="check" width={20} height={20} />
-                                        <span className="text-gray-600">Rentable et flexible dans l'embauche de développeurs Web</span>
+                                        <span className="text-gray-600">Rentable et flexible dans l&apos;embauche de développeurs Web</span>
                                     </li>
                                     <li className="flex items-center gap-2">
                                         <Image src="/assets/certif.png" alt="check" width={20} height={20} />
