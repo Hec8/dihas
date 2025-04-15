@@ -85,9 +85,9 @@ export default function Blog() {
             {/* Hero Section */}
             <section className="bg-green-800 text-white py-16 mt-16">
                 <div className="container mx-auto px-6">
-                    <div className="flex flex-col md:flex-row items-center justify-between md:gap-2">
+                    <div className="flex flex-col md:flex-row items-center justify-between md:gap-2 animate-fadeIn">
                         {/* Partie gauche avec le texte */}
-                        <div className="w-full md:w-1/2 mb-6 md:mb-0 ml-8">
+                        <div className="w-full md:w-1/2 mb-6 md:mb-0 md:ml-24">
                             <h1 className="text-3xl md:text-4xl font-bold mb-4 leading-tight">
                                 Tout ce que vous avez <br />
                                 toujours voulu savoir <br />
@@ -95,14 +95,14 @@ export default function Blog() {
                                 de Diha&apos;s
                             </h1><br />
                             <p className="text-sm mb-6 text-white max-w-md">
-                                Ressources pour les entrepreneurs qui vendent, 
+                                Ressources pour les entrepreneurs qui vendent,
                                 achètent et développent des entreprises en ligne.
                             </p><br />
-                            <div className="relative max-w-md mr-8">
+                            <div className="relative max-w-md">
                                 <input
                                     type="text"
                                     placeholder="Rechercher..."
-                                    className="w-full px-6 py-3 rounded bg-green-700 border-2 border-white text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/50"
+                                    className="w-full px-6 py-3 rounded-full bg-transparent border-2 border-white text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/50"
                                 />
                                 <button className="absolute right-2 top-1/2 transform -translate-y-1/2">
                                     <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -111,9 +111,9 @@ export default function Blog() {
                                 </button>
                             </div>
                         </div>
-                        
+
                         {/* Partie droite pour l'image */}
-                        <div className="w-full md:w-1/2 relative">
+                        <div className="w-full md:w-1/2 relative animate-fadeIn">
                             <div className="relative w-full md:w-[95%] h-[300px] md:h-[400px] rounded-md overflow-hidden">
                                 <Image
                                     src="/assets/blogheroimg.png"

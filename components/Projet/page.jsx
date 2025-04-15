@@ -19,7 +19,7 @@ export default function Projet() {
         triggerOnce: true,
         threshold: 0.1
     });
-    
+
     const projets = [
         {
             id: 1,
@@ -87,7 +87,7 @@ export default function Projet() {
     return (
         <main className="min-h-screen bg-[#E5F2EC]">
             {/* Hero Section */}
-            <section className="bg-green-800/50 text-white py-16 mt-16 relative min-h-[600px] md:min-h-[700px]">
+            <section className="text-white py-16 mt-16 relative min-h-[600px]">
                 <div className="absolute inset-0 z-0">
                     <Image
                         src="/assets/backproject.png"
@@ -95,13 +95,13 @@ export default function Projet() {
                         fill
                         priority
                         sizes="100vw"
-                        className="object-cover md:object-fill lg:object-cover"
+                        className="object-cover md:object-fill"
                         quality={100}
                     />
                 </div>
-                <div className="container mx-auto px-6 relative z-10">
+                <div className="container mx-auto px-6 relative z-10 mt-4">
                     <div className="flex flex-col md:flex-row items-center justify-center max-w-7xl mx-auto">
-                    <div className="w-full md:w-1/2 mb-10 md:mb-0 md:pr-8 text-center md:text-left md:ml-20 animate-fadeIn">
+                        <div className="w-full md:w-1/2 mb-10 md:mb-0 md:pr-8 text-center md:text-left md:ml-20 animate-fadeIn">
                             <h1 className="text-3xl md:text-4xl font-bold mb-6">
                                 Meilleure Entreprise De <br />
                                 Développement Web Et <br />
@@ -112,9 +112,9 @@ export default function Projet() {
                             </p>
                         </div>
                         <div className="w-full md:w-1/2 flex justify-center animate-fadeIn delay-100">
-                            <div className="bg-white w-full md:w-96 p-6 rounded-lg shadow-lg md:mr-10">
+                            <div className="bg-white w-full md:w-96 p-6 rounded-lg shadow-lg md:mr-10 md:mb-6">
                                 <div className="flex items-center gap-2 mb-4">
-                                    <h3 className="text-black font-bold">Obtenez Votre Consultation</h3><span className='text-[#FFA500] font-bold'>gratuite</span><br/>
+                                    <h3 className="text-black font-bold">Obtenez Votre Consultation</h3><span className='text-[#FFA500] font-bold'>gratuite</span><br />
                                 </div>
                                 <ul className="space-y-4 mb-6">
                                     <li className="flex items-center gap-2">
@@ -160,8 +160,8 @@ export default function Projet() {
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12" ref={projectsRef}>
                         {projets.map((projet, index) => (
-                            <div 
-                                key={projet.id} 
+                            <div
+                                key={projet.id}
                                 className={`bg-white rounded-lg overflow-hidden shadow-lg transition-all duration-500 delay-${index * 100} ${projectsInView ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}
                             >
                                 <div className="relative h-48">
@@ -216,8 +216,8 @@ export default function Projet() {
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-12">
                         {technologies.map((tech, index) => (
-                            <div 
-                                key={index} 
+                            <div
+                                key={index}
                                 className={`bg-gray-200 p-6 rounded-lg transition-all duration-500 delay-${index * 100} ${technologiesInView ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}
                             >
                                 <div className="flex items-center gap-4 mb-4">
@@ -235,9 +235,9 @@ export default function Projet() {
                     </div>
                 </div>
             </section>
-            
+
             <div className="mb-20">
-                <About/>
+                <About />
             </div>
         </main>
     );
