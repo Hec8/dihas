@@ -1,12 +1,11 @@
 'use client'
 import Image from 'next/image'
-import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 
 const AboutUs = () => {
     const [text, setText] = useState('')
-    const [activeSection, setActiveSection] = useState('mission')
+    const [, setActiveSection] = useState('mission')
     const fullText = "Nous contribuons à la transformation digitale en créant des solutions sur mesure pour optimiser les performances et valoriser chaque identité visuelle."
 
     useEffect(() => {
@@ -39,13 +38,6 @@ const AboutUs = () => {
         return () => window.removeEventListener('scroll', handleScroll)
     }, [])
 
-    const scrollToSection = (sectionId) => {
-        const element = document.getElementById(sectionId)
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth' })
-            setActiveSection(sectionId)
-        }
-    }
 
     return (
         <div className="w-full">
@@ -70,69 +62,11 @@ const AboutUs = () => {
                         {/* Contenu sur l'image */}
                         <div className="absolute inset-0">
                             <div className="container mx-auto px-4 h-full relative">
-                                {/* Menu d'ancrage */}
-                                <div className="absolute top-2 right-2 bg-white rounded-lg p-2 shadow-lg w-[150px] z-[2]">
-                                    <h3 className="text-xs font-semibold mb-1.5">Nos filtres</h3>
-                                    <ul className="space-y-1.5">
-                                        <li>
-                                            <button
-                                                onClick={() => scrollToSection('mission')}
-                                                className={`flex items-center w-full text-[10px] transition-colors ${activeSection === 'mission'
-                                                    ? 'text-green-600 font-semibold'
-                                                    : 'text-gray-700 hover:text-green-600'
-                                                    }`}
-                                            >
-                                                <span className={`w-4 h-4 rounded-full flex items-center justify-center mr-1.5 flex-shrink-0 text-[8px] ${activeSection === 'mission'
-                                                    ? 'bg-green-200'
-                                                    : 'bg-green-100'
-                                                    }`}>
-                                                    🎯
-                                                </span>
-                                                <span className="text-left">Qui sommes-nous ?</span>
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <button
-                                                onClick={() => scrollToSection('objectifs')}
-                                                className={`flex items-center w-full text-[10px] transition-colors ${activeSection === 'objectifs'
-                                                    ? 'text-green-600 font-semibold'
-                                                    : 'text-gray-700 hover:text-green-600'
-                                                    }`}
-                                            >
-                                                <span className={`w-4 h-4 rounded-full flex items-center justify-center mr-1.5 flex-shrink-0 text-[8px] ${activeSection === 'objectifs'
-                                                    ? 'bg-green-200'
-                                                    : 'bg-green-100'
-                                                    }`}>
-                                                    ✨
-                                                </span>
-                                                <span className="text-left">Nos Objectifs</span>
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <button
-                                                onClick={() => scrollToSection('valeurs')}
-                                                className={`flex items-center w-full text-[10px] transition-colors ${activeSection === 'valeurs'
-                                                    ? 'text-green-600 font-semibold'
-                                                    : 'text-gray-700 hover:text-green-600'
-                                                    }`}
-                                            >
-                                                <span className={`w-4 h-4 rounded-full flex items-center justify-center mr-1.5 flex-shrink-0 text-[8px] ${activeSection === 'valeurs'
-                                                    ? 'bg-green-200'
-                                                    : 'bg-green-100'
-                                                    }`}>
-                                                    🌟
-                                                </span>
-                                                <span className="text-left">Nos valeurs</span>
-                                            </button>
-                                        </li>
-                                    </ul>
-                                </div>
-
                                 {/* Contenu principal */}
-                                <div className="flex items-center h-full">
-                                    <div className="max-w-[600px] text-white z-[2] pt-8">
-                                        <h1 className="text-5xl font-bold mb-6 drop-shadow-md">À propos de nous</h1>
-                                        <p className="text-white text-lg typewriter-text drop-shadow-md pr-4">
+                                <div className="flex items-center justify-center h-full">
+                                    <div className="max-w-[600px] text-white z-[2] text-center">
+                                        <h1 className="text-6xl font-bold mb-6 drop-shadow-md">À propos de nous</h1>
+                                        <p className="text-white text-xl typewriter-text drop-shadow-md">
                                             {text}
                                             <span className="animate-blink">|</span>
                                         </p>
