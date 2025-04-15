@@ -105,7 +105,7 @@ export default function Blog() {
                                     value={searchQuery}
                                     onChange={handleSearch}
                                     placeholder="Rechercher..."
-                                    className="w-full px-6 py-3 rounded bg-transparent border-white text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/50"
+                                    className="w-full px-6 py-3 rounded bg-transparent border-2 border-white text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/50"
                                 />
                                 <button className="absolute right-2 top-1/2 transform -translate-y-1/2">
                                     <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -117,9 +117,9 @@ export default function Blog() {
 
                         {/* Partie droite pour l'image */}
                         <div className="w-full md:w-1/2 relative">
-                            <div className="relative w-full md:w-[95%] h-[300px] md:h-[400px] rounded-md overflow-hidden">
+                            <div className="relative w-full md:w-[80%] h-[300px] md:h-[400px] rounded-xl overflow-hidden bg-white">
                                 <Image
-                                    src="/assets/blogheroimg.png"
+                                    src="/assets/Axelle2.png"
                                     alt="Blog Hero"
                                     fill
                                     className="object-contain md:object-contain rounded-md"
