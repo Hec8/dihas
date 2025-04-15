@@ -13,12 +13,12 @@ export const metadata = {
     icons: {
         icon: [
             { url: '/favicon.ico' },
-            { url: '/assets/favicon.ico.png', type: 'image/png' },
+            { url: '/assets/favicon.ico', type: 'image/png' },
         ],
         shortcut: ['/shortcut-icon.png'],
         apple: [
             { url: '/apple-icon.png' },
-            { url: '/assets/favicon.ico.png', sizes: '180x180', type: 'image/png' },
+            { url: '/assets/favicon.ico', sizes: '180x180', type: 'image/png' },
         ],
     },
 };
