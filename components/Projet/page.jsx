@@ -77,12 +77,6 @@ export default function Projet() {
         }
     ];
 
-    const stats = [
-        { value: '7+', label: 'Année d\'expérience' },
-        { value: '24+', label: 'Membres de l\'équipe' },
-        { value: '104+', label: 'Clients satisfaits' },
-        { value: '231+', label: 'Projets complets' }
-    ];
 
     return (
         <main className="min-h-screen bg-[#E5F2EC]">
@@ -95,46 +89,59 @@ export default function Projet() {
                         fill
                         priority
                         sizes="100vw"
-                        className="object-cover md:object-fill"
+                        className="object-cover"
                         quality={100}
                     />
+                    <div className="absolute inset-0 bg-black/30" />
                 </div>
-                <div className="container mx-auto px-6 relative z-10 mt-4">
-                    <div className="flex flex-col md:flex-row items-center justify-center max-w-7xl mx-auto">
-                        <div className="w-full md:w-1/2 mb-10 md:mb-0 md:pr-8 text-center md:text-left md:ml-20 animate-fadeIn">
+                <div className="container mx-auto px-6 relative z-10">
+                    <div className="flex flex-col md:flex-row items-center justify-between max-w-7xl mx-auto">
+                        <div className="w-full md:w-1/2 mb-10 md:mb-0 md:pr-8">
                             <h1 className="text-3xl md:text-4xl font-bold mb-6">
                                 Meilleure Entreprise De <br />
                                 Développement Web Et <br />
                                 Mobile
                             </h1>
-                            <p className="text-lg mb-8 max-w-xl mx-auto md:mx-0">
+                            <p className="text-lg mb-8 leading-relaxed">
                                 Nous sommes une entreprise de développement web et mobile reconnue mondialement. Notre équipe de designers primés et de développeurs experts fait de nous un interlocuteur unique pour des centaines de clients. Diha&apos;s s&apos;efforce d&apos;obtenir des résultats exceptionnels grâce à des données de qualité et un marketing intelligent. Nos utilisateurs bénéficient d&apos;excellentes solutions de développement avec WordPress, NextJS, ReactJS, Laravel, Flutter pour concrétiser leur idées
                             </p>
                         </div>
-                        <div className="w-full md:w-1/2 flex justify-center animate-fadeIn delay-100">
-                            <div className="bg-white w-full md:w-96 p-6 rounded-lg shadow-lg md:mr-10 md:mb-6">
-                                <div className="flex items-center gap-2 mb-4">
-                                    <h3 className="text-black font-bold">Obtenez Votre Consultation</h3><span className='text-[#FFA500] font-bold'>gratuite</span><br />
+                        <div className="w-full md:w-[450px] animate-fadeIn">
+                            <div className="bg-white p-8 rounded-2xl shadow-xl">
+                                <div className="mb-6">
+                                    <h3 className="text-2xl font-bold text-gray-800">Obtenez Votre Consultation</h3>
+                                    <div className="flex items-baseline gap-2">
+                                        <span className="text-[#FFA500] font-bold text-xl">Gratuite D&apos;une Heure</span>
+                                        <span className="text-gray-600">maintenant</span>
+                                    </div>
                                 </div>
-                                <ul className="space-y-4 mb-6">
-                                    <li className="flex items-center gap-2">
-                                        <Image src="/assets/certif.png" alt="check" width={20} height={20} />
-                                        <span className="text-gray-600">Respect du calendrier du projet comme date de qualité</span>
+                                <ul className="space-y-6 mb-8">
+                                    <li className="flex items-start gap-4">
+                                        <div className="mt-1">
+                                            <Image src="/assets/certif.png" alt="check" width={24} height={24} className="text-green-500" />
+                                        </div>
+                                        <span className="text-gray-700">Respect du calendrier du projet avec un code de qualité</span>
                                     </li>
-                                    <li className="flex items-center gap-2">
-                                        <Image src="/assets/certif.png" alt="check" width={20} height={20} />
-                                        <span className="text-gray-600">Facilement accessible aux développeurs Web comme Mobile</span>
+                                    <li className="flex items-start gap-4">
+                                        <div className="mt-1">
+                                            <Image src="/assets/certif.png" alt="check" width={24} height={24} className="text-green-500" />
+                                        </div>
+                                        <span className="text-gray-700">Facilement accessible aux développeurs Web comme Mobile</span>
                                     </li>
-                                    <li className="flex items-center gap-2">
-                                        <Image src="/assets/certif.png" alt="check" width={20} height={20} />
-                                        <span className="text-gray-600">Rentable et flexible dans l&apos;embauche de développeurs Web</span>
+                                    <li className="flex items-start gap-4">
+                                        <div className="mt-1">
+                                            <Image src="/assets/certif.png" alt="check" width={24} height={24} className="text-green-500" />
+                                        </div>
+                                        <span className="text-gray-700">Rentable et flexible dans l&apos;embauche de développeurs Web comme Mobile</span>
                                     </li>
-                                    <li className="flex items-center gap-2">
-                                        <Image src="/assets/certif.png" alt="check" width={20} height={20} />
-                                        <span className="text-gray-600">Autorisation de code source sécurisé et complète</span>
+                                    <li className="flex items-start gap-4">
+                                        <div className="mt-1">
+                                            <Image src="/assets/certif.png" alt="check" width={24} height={24} className="text-green-500" />
+                                        </div>
+                                        <span className="text-gray-700">Autorisation de code source sécurisé et complète</span>
                                     </li>
                                 </ul>
-                                <button className="w-full bg-[#FFA500] text-white py-3 rounded-lg hover:bg-[#FF8C00] transition-colors">
+                                <button className="w-full bg-[#FFA500] text-white py-4 rounded-xl text-lg font-semibold hover:bg-[#FF8C00] transition-colors">
                                     Obtenez Une Consultation
                                 </button>
                             </div>
