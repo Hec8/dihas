@@ -1,7 +1,7 @@
 import { Poppins } from 'next/font/google';
 import './globals.css';
 
-const poppins = Poppins({ 
+const poppins = Poppins({
     weight: ['300', '400', '500', '600', '700'],
     subsets: ['latin'],
     display: 'swap',
@@ -13,12 +13,12 @@ export const metadata = {
     icons: {
         icon: [
             { url: '/favicon.ico' },
-            { url: '/icon.png', type: 'image/png' },
+            { url: '/assets/favicon.ico.png', type: 'image/png' },
         ],
         shortcut: ['/shortcut-icon.png'],
         apple: [
             { url: '/apple-icon.png' },
-            { url: '/apple-icon-x3.png', sizes: '180x180', type: 'image/png' },
+            { url: '/assets/favicon.ico.png', sizes: '180x180', type: 'image/png' },
         ],
     },
 };
