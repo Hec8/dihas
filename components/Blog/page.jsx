@@ -75,7 +75,7 @@ export default function Blog() {
     return (
         <main className="min-h-screen bg-[#E5F2EC]">
             {/* Hero Section */}
-            <section className="relative bg-green-800 text-white py-16 mt-16 overflow-hidden">
+            <section className="relative bg-green-800 text-white py-12 mt-6 overflow-hidden">
                 {/* Animation de fond */}
                 <div className="area absolute inset-0">
                     <ul className="circles">
@@ -117,13 +117,14 @@ export default function Blog() {
 
                         {/* Partie droite pour l'image */}
                         <div className="w-full md:w-1/2 relative">
-                            <div className="relative w-full md:w-[80%] h-[300px] md:h-[400px] rounded-xl overflow-hidden bg-white">
+                            <div className="relative w-full h-[500px] md:h-[650px] -mb-16">
                                 <Image
                                     src="/assets/Axelle2.png"
                                     alt="Blog Hero"
                                     fill
-                                    className="object-contain md:object-contain rounded-md"
+                                    className="object-contain"
                                     priority
+                                    style={{ objectPosition: 'bottom right' }}
                                 />
                             </div>
                         </div>

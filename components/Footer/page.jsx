@@ -44,7 +44,7 @@ export default function Footer() {
 
                     {/* Service Links */}
                     <div className="order-4 lg:order-none">
-                        <h3 className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6">Service</h3>
+                        <h3 className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6">Services</h3>
                         <ul className="space-y-4 sm:space-y-8 text-gray-200">
                             <li><a href="#" className="hover:text-yellow-500 transition-colors block">Shopify</a></li>
                             <li><a href="#" className="hover:text-yellow-500 transition-colors block">WordPress</a></li>

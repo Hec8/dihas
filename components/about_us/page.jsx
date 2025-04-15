@@ -44,7 +44,12 @@ const AboutUs = () => {
             {/* Hero Section */}
             <section className="relative py-14 bg-gray-50">
                 <div className="container mx-auto">
-                    <div className="relative h-[450px] mt-10 mb-16 rounded-xl overflow-hidden shadow-xl">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8 }}
+                        className="relative h-[450px] mt-10 mb-16 rounded-xl overflow-hidden shadow-xl"
+                    >
                         {/* Image d'arrière-plan */}
                         <div className="absolute inset-0 w-full h-full">
                             <Image
@@ -64,30 +69,60 @@ const AboutUs = () => {
                             <div className="container mx-auto px-4 h-full relative">
                                 {/* Contenu principal */}
                                 <div className="flex items-center justify-center h-full">
-                                    <div className="max-w-[600px] text-white z-[2] text-center">
-                                        <h1 className="text-6xl font-bold mb-6 drop-shadow-md">À propos de nous</h1>
-                                        <p className="text-white text-xl typewriter-text drop-shadow-md">
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 30 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ duration: 0.8, delay: 0.2 }}
+                                        className="max-w-[600px] text-white z-[2] text-center"
+                                    >
+                                        <motion.h1
+                                            initial={{ opacity: 0, scale: 0.9 }}
+                                            animate={{ opacity: 1, scale: 1 }}
+                                            transition={{ duration: 0.5, delay: 0.3 }}
+                                            className="text-6xl font-bold mb-6 drop-shadow-md"
+                                        >
+                                            À propos de nous
+                                        </motion.h1>
+                                        <motion.p
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: 1 }}
+                                            transition={{ duration: 0.5, delay: 0.4 }}
+                                            className="text-white text-xl typewriter-text drop-shadow-md"
+                                        >
                                             {text}
                                             <span className="animate-blink">|</span>
-                                        </p>
-                                    </div>
+                                        </motion.p>
+                                    </motion.div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
             </section>
 
             {/* Mission Section */}
             <section id="mission" className="py-16 bg-[#f0f7f0]">
                 <div className="container mx-auto px-4">
-                    <h2 className="text-3xl font-bold mb-2 text-center">Notre <span className="text-green-600">Mission</span></h2>
-                    <p className="text-gray-600 mb-8 text-center">
-                        <strong>Concevoir</strong> des solutions digitales innovantes, alliant design, performance et identité de marque.
-                    </p>
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6 }}
+                    >
+                        <h2 className="text-3xl font-bold mb-2 text-center">Notre <span className="text-green-600">Mission</span></h2>
+                        <p className="text-gray-600 mb-8 text-center">
+                            <strong>Concevoir</strong> des solutions digitales innovantes, alliant design, performance et identité de marque.
+                        </p>
+                    </motion.div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start relative">
-                        <div className="relative h-[400px]">
+                        <motion.div
+                            initial={{ opacity: 0, x: -30 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.8 }}
+                            className="relative h-[400px]"
+                        >
                             {/* Image principale */}
                             <div className="relative h-full rounded-lg overflow-hidden border-4 border-green-600">
                                 <Image
@@ -98,7 +133,13 @@ const AboutUs = () => {
                                 />
                             </div>
                             {/* Image du portable superposée */}
-                            <div className="absolute -bottom-10 right-10 w-[220px] h-[280px] z-10">
+                            <motion.div
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.8, delay: 0.3 }}
+                                className="absolute -bottom-10 right-10 w-[220px] h-[280px] z-10"
+                            >
                                 <Image
                                     src="/assets/notre_mission_2.png"
                                     alt="Application mobile"
@@ -106,16 +147,28 @@ const AboutUs = () => {
                                     height={280}
                                     className="object-cover rounded-3xl border-2 border-orange-400"
                                 />
-                            </div>
-                        </div>
-                        <div className="space-y-6 bg-white p-6 rounded-lg shadow-md">
+                            </motion.div>
+                        </motion.div>
+                        <motion.div
+                            initial={{ opacity: 0, x: 30 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.8, delay: 0.2 }}
+                            className="space-y-6 bg-white p-6 rounded-lg shadow-md"
+                        >
                             <p className="text-gray-700 text-justify leading-relaxed">
                                 DIHA'S est spécialisé dans la conception et le développement d'applications web et mobiles ainsi que de solutions numériques sur mesure. De l'idéation à la mise en ligne, nous accompagnons les entreprises dans la création d'expériences numériques innovantes et performantes.
                             </p>
                             <p className="text-gray-700 text-justify leading-relaxed">
                                 Grâce à une approche centrée utilisateur et des technologies modernes, nous transformons les idées en produits numériques fonctionnels, durables et adaptés aux enjeux actuels.
                             </p>
-                            <div className="flex items-center gap-4">
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.6, delay: 0.4 }}
+                                className="flex items-center gap-4"
+                            >
                                 <button className="bg-[#FFA500] hover:bg-[#FF8533] transition-colors text-white px-6 py-3 rounded-lg flex items-center">
                                     Contactez-nous
                                 </button>
@@ -123,8 +176,8 @@ const AboutUs = () => {
                                     Besoin d'aide?<br />
                                     (229) XX XX XX XX
                                 </div>
-                            </div>
-                        </div>
+                            </motion.div>
+                        </motion.div>
                     </div>
                 </div>
             </section>

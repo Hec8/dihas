@@ -70,7 +70,7 @@ const ServicesContent = () => {
         <div className="w-full bg-white">
             {/* Hero Section */}
             <motion.section
-                className="relative w-full h-[550px] mt-16"
+                className="relative w-full h-[650px] md:h-[550px] mt-12 md:mt-16"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1 }}
@@ -82,12 +82,12 @@ const ServicesContent = () => {
                     animate={{ scale: 1 }}
                     transition={{ duration: 1.5, ease: "easeOut" }}
                 >
-                    <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-black/50 z-[1]" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-black/90 to-black/60 z-[1]" />
                     <Image
                         src="/assets/notre_mission.png"
                         alt="Background"
                         fill
-                        className="object-cover"
+                        className="object-cover object-center"
                         priority
                     />
                 </motion.div>
@@ -96,13 +96,13 @@ const ServicesContent = () => {
                 <div className="relative h-full container mx-auto px-4 flex items-center">
                     {/* Texte */}
                     <motion.div
-                        className="max-w-xl text-white z-[2] mt-[-50px] md:mt-0"
+                        className="max-w-xl text-white z-[2] mt-[-150px] md:mt-0"
                         variants={fadeInUp}
                         initial="initial"
                         animate="animate"
                     >
                         <motion.h1
-                            className="text-4xl md:text-6xl font-bold mb-4 md:mb-8"
+                            className="text-3xl sm:text-4xl md:text-6xl font-bold mb-3 md:mb-8"
                             initial={{ x: -50, opacity: 0 }}
                             animate={{ x: 0, opacity: 1 }}
                             transition={{ delay: 0.3, duration: 0.8 }}
@@ -110,7 +110,7 @@ const ServicesContent = () => {
                             Nos Services
                         </motion.h1>
                         <motion.p
-                            className="text-lg md:text-xl opacity-90 leading-relaxed"
+                            className="text-base sm:text-lg md:text-xl opacity-90 leading-relaxed max-w-[90%] sm:max-w-[80%] md:max-w-full"
                             initial={{ x: -50, opacity: 0 }}
                             animate={{ x: 0, opacity: 0.9 }}
                             transition={{ delay: 0.5, duration: 0.8 }}
@@ -119,15 +119,15 @@ const ServicesContent = () => {
                         </motion.p>
                     </motion.div>
 
-                    {/* Images superposées - Masquées sur mobile */}
+                    {/* Images superposées */}
                     <motion.div
-                        className="absolute right-0 top-1/2 -translate-y-1/2 hidden md:flex items-center gap-2 z-[2]"
+                        className="absolute flex justify-center items-center gap-2 z-[2] w-full left-0 md:w-auto md:right-4 md:left-auto top-[auto] bottom-16 md:bottom-auto md:top-1/2 md:-translate-y-1/2"
                         variants={staggerContainer}
                         initial="initial"
                         animate="animate"
                     >
                         <motion.div
-                            className="relative w-[100px] md:w-[120px] h-[180px] md:h-[220px] rounded-xl overflow-hidden shadow-lg"
+                            className="relative w-[90px] sm:w-[100px] md:w-[120px] h-[150px] sm:h-[160px] md:h-[220px] rounded-xl overflow-hidden shadow-lg"
                             variants={imageSlideIn}
                             whileHover={{ scale: 1.05, rotate: -5 }}
                             animate={floatingAnimation.animate}
@@ -140,7 +140,7 @@ const ServicesContent = () => {
                             />
                         </motion.div>
                         <motion.div
-                            className="relative w-[140px] md:w-[160px] h-[240px] md:h-[280px] rounded-xl overflow-hidden shadow-lg z-20"
+                            className="relative w-[110px] sm:w-[120px] md:w-[160px] h-[170px] sm:h-[200px] md:h-[280px] rounded-xl overflow-hidden shadow-lg z-20"
                             variants={imageSlideIn}
                             whileHover={{ scale: 1.1 }}
                             animate={floatingAnimation.animate}
@@ -154,7 +154,7 @@ const ServicesContent = () => {
                             />
                         </motion.div>
                         <motion.div
-                            className="relative w-[100px] md:w-[120px] h-[180px] md:h-[220px] rounded-xl overflow-hidden shadow-lg"
+                            className="relative w-[90px] sm:w-[100px] md:w-[120px] h-[150px] sm:h-[160px] md:h-[220px] rounded-xl overflow-hidden shadow-lg"
                             variants={imageSlideIn}
                             whileHover={{ scale: 1.05, rotate: 5 }}
                             animate={floatingAnimation.animate}
@@ -307,8 +307,8 @@ const ServicesContent = () => {
                     <div className="max-w-4xl mx-auto mb-8 md:mb-16">
                         <div className="flex flex-col md:flex-row gap-8">
                             {/* Left Column: Stacked Images */}
-                            <div className="w-full md:w-1/2 relative h-[400px] md:h-[500px]">
-                                <div className="absolute top-0 left-0 w-[250px] md:w-[300px] h-[200px] md:h-[250px] rounded-xl overflow-hidden shadow-xl transform -rotate-6">
+                            <div className="w-full md:w-1/2 relative h-[400px] md:h-[500px] flex items-center justify-center">
+                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] md:w-[300px] h-[200px] md:h-[250px] rounded-xl overflow-hidden shadow-xl transform -rotate-6">
                                     <Image
                                         src="/assets/planning.png"
                                         alt="Planning"
@@ -316,7 +316,7 @@ const ServicesContent = () => {
                                         className="object-cover"
                                     />
                                 </div>
-                                <div className="absolute top-32 md:top-40 left-8 md:left-12 w-[250px] md:w-[300px] h-[200px] md:h-[250px] rounded-xl overflow-hidden shadow-xl transform rotate-6 z-10">
+                                <div className="absolute top-1/2 left-1/2 -translate-x-1/3 -translate-y-1/4 w-[250px] md:w-[300px] h-[200px] md:h-[250px] rounded-xl overflow-hidden shadow-xl transform rotate-6 z-10">
                                     <Image
                                         src="/assets/conception_front.png"
                                         alt="Conception"
@@ -434,8 +434,8 @@ const ServicesContent = () => {
                                     </div>
 
                                     {/* Right Column: Stacked Images */}
-                                    <div className="relative order-1 md:order-2 h-[300px] md:h-[500px]">
-                                        <div className="absolute top-0 left-0 md:left-auto md:right-0 w-[200px] md:w-[300px] h-[180px] md:h-[250px] rounded-xl overflow-hidden shadow-xl transform rotate-6">
+                                    <div className="relative order-1 md:order-2 h-[300px] md:h-[500px] flex items-center justify-center">
+                                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] md:w-[300px] h-[200px] md:h-[250px] rounded-xl overflow-hidden shadow-xl transform rotate-6">
                                             <Image
                                                 src="/assets/backend.png"
                                                 alt="Back-end"
@@ -443,7 +443,7 @@ const ServicesContent = () => {
                                                 className="object-cover"
                                             />
                                         </div>
-                                        <div className="absolute top-24 md:top-40 left-8 md:left-auto md:right-8 w-[200px] md:w-[300px] h-[180px] md:h-[250px] rounded-xl overflow-hidden shadow-xl transform -rotate-6 z-10">
+                                        <div className="absolute top-1/2 left-1/2 -translate-x-2/3 -translate-y-1/3 w-[250px] md:w-[300px] h-[200px] md:h-[250px] rounded-xl overflow-hidden shadow-xl transform -rotate-6 z-10">
                                             <Image
                                                 src="/assets/assurance_deploiement.png"
                                                 alt="Assurance qualité"
