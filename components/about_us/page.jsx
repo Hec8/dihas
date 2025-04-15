@@ -2,9 +2,11 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
 
-const AboutUsContent = () => {
+const AboutUs = () => {
     const [text, setText] = useState('')
+    const [activeSection, setActiveSection] = useState('mission')
     const fullText = "Nous contribuons à la transformation digitale en créant des solutions sur mesure pour optimiser les performances et valoriser chaque identité visuelle."
 
     useEffect(() => {
@@ -17,78 +19,127 @@ const AboutUsContent = () => {
         return () => clearInterval(timer)
     }, [])
 
-    const scrollToSection = (sectionId) => {
-        const element = document.getElementById(sectionId);
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
+    useEffect(() => {
+        const handleScroll = () => {
+            const sections = ['mission', 'objectifs', 'valeurs']
+            const currentSection = sections.find(section => {
+                const element = document.getElementById(section)
+                if (element) {
+                    const rect = element.getBoundingClientRect()
+                    return rect.top <= 150 && rect.bottom >= 150
+                }
+                return false
+            })
+            if (currentSection) {
+                setActiveSection(currentSection)
+            }
         }
-    };
+
+        window.addEventListener('scroll', handleScroll)
+        return () => window.removeEventListener('scroll', handleScroll)
+    }, [])
+
+    const scrollToSection = (sectionId) => {
+        const element = document.getElementById(sectionId)
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' })
+            setActiveSection(sectionId)
+        }
+    }
 
     return (
         <div className="w-full">
             {/* Hero Section */}
-            <section className="relative h-[400px]">
-                {/* Image d'arrière-plan avec effet d'opacité */}
-                <div className="absolute inset-0 w-full h-full opacity-0 animate-fade-in">
-                    <Image
-                        src="/assets/hero-about.png"
-                        alt="Background"
-                        fill
-                        className="object-cover"
-                        priority
-                    />
-                    {/* Overlay gradient */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-green-800/90 to-green-600/80" />
-                </div>
+            <section className="relative py-14 bg-gray-50">
+                <div className="container mx-auto">
+                    <div className="relative h-[450px] mt-10 mb-16 rounded-xl overflow-hidden shadow-xl">
+                        {/* Image d'arrière-plan */}
+                        <div className="absolute inset-0 w-full h-full">
+                            <Image
+                                src="/assets/hero-about.png"
+                                alt="Background"
+                                fill
+                                className="object-cover"
+                                priority
+                                placeholder="blur"
+                                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDABQODxIPDRQSEBIXFRQdHx0fHRsdHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR3/2wBDAR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR3/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+                            />
+                        </div>
+                        <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-black/50 z-[1]" />
 
-                <div className="container mx-auto px-4 py-20 relative flex justify-between items-start">
-                    {/* Contenu principal */}
-                    <div className="max-w-2xl">
-                        <h1 className="text-4xl font-bold text-white mb-4">À propos de nous</h1>
-                        <p className="text-white text-lg typewriter-text">
-                            {text}
-                            <span className="animate-blink">|</span>
-                        </p>
-                    </div>
+                        {/* Contenu sur l'image */}
+                        <div className="absolute inset-0">
+                            <div className="container mx-auto px-4 h-full relative">
+                                {/* Menu d'ancrage */}
+                                <div className="absolute top-2 right-2 bg-white rounded-lg p-2 shadow-lg w-[150px] z-[2]">
+                                    <h3 className="text-xs font-semibold mb-1.5">Nos filtres</h3>
+                                    <ul className="space-y-1.5">
+                                        <li>
+                                            <button
+                                                onClick={() => scrollToSection('mission')}
+                                                className={`flex items-center w-full text-[10px] transition-colors ${activeSection === 'mission'
+                                                    ? 'text-green-600 font-semibold'
+                                                    : 'text-gray-700 hover:text-green-600'
+                                                    }`}
+                                            >
+                                                <span className={`w-4 h-4 rounded-full flex items-center justify-center mr-1.5 flex-shrink-0 text-[8px] ${activeSection === 'mission'
+                                                    ? 'bg-green-200'
+                                                    : 'bg-green-100'
+                                                    }`}>
+                                                    🎯
+                                                </span>
+                                                <span className="text-left">Qui sommes-nous ?</span>
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button
+                                                onClick={() => scrollToSection('objectifs')}
+                                                className={`flex items-center w-full text-[10px] transition-colors ${activeSection === 'objectifs'
+                                                    ? 'text-green-600 font-semibold'
+                                                    : 'text-gray-700 hover:text-green-600'
+                                                    }`}
+                                            >
+                                                <span className={`w-4 h-4 rounded-full flex items-center justify-center mr-1.5 flex-shrink-0 text-[8px] ${activeSection === 'objectifs'
+                                                    ? 'bg-green-200'
+                                                    : 'bg-green-100'
+                                                    }`}>
+                                                    ✨
+                                                </span>
+                                                <span className="text-left">Nos Objectifs</span>
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button
+                                                onClick={() => scrollToSection('valeurs')}
+                                                className={`flex items-center w-full text-[10px] transition-colors ${activeSection === 'valeurs'
+                                                    ? 'text-green-600 font-semibold'
+                                                    : 'text-gray-700 hover:text-green-600'
+                                                    }`}
+                                            >
+                                                <span className={`w-4 h-4 rounded-full flex items-center justify-center mr-1.5 flex-shrink-0 text-[8px] ${activeSection === 'valeurs'
+                                                    ? 'bg-green-200'
+                                                    : 'bg-green-100'
+                                                    }`}>
+                                                    🌟
+                                                </span>
+                                                <span className="text-left">Nos valeurs</span>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
 
-                    {/* Menu d'ancrage */}
-                    <div className="bg-white rounded-lg p-6 shadow-lg w-[300px]">
-                        <h3 className="text-xl font-semibold mb-4">Nos filtres</h3>
-                        <ul className="space-y-4">
-                            <li>
-                                <button
-                                    onClick={() => scrollToSection('mission')}
-                                    className="flex items-center text-gray-700 hover:text-green-600 transition-colors"
-                                >
-                                    <span className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center mr-3">
-                                        🎯
-                                    </span>
-                                    Qui sommes-nous ?
-                                </button>
-                            </li>
-                            <li>
-                                <button
-                                    onClick={() => scrollToSection('objectifs')}
-                                    className="flex items-center text-gray-700 hover:text-green-600 transition-colors"
-                                >
-                                    <span className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center mr-3">
-                                        ✨
-                                    </span>
-                                    Nos Objectifs
-                                </button>
-                            </li>
-                            <li>
-                                <button
-                                    onClick={() => scrollToSection('valeurs')}
-                                    className="flex items-center text-gray-700 hover:text-green-600 transition-colors"
-                                >
-                                    <span className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center mr-3">
-                                        🌟
-                                    </span>
-                                    Nos valeurs
-                                </button>
-                            </li>
-                        </ul>
+                                {/* Contenu principal */}
+                                <div className="flex items-center h-full">
+                                    <div className="max-w-[600px] text-white z-[2] pt-8">
+                                        <h1 className="text-5xl font-bold mb-6 drop-shadow-md">À propos de nous</h1>
+                                        <p className="text-white text-lg typewriter-text drop-shadow-md pr-4">
+                                            {text}
+                                            <span className="animate-blink">|</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -101,10 +152,10 @@ const AboutUsContent = () => {
                         <strong>Concevoir</strong> des solutions digitales innovantes, alliant design, performance et identité de marque.
                     </p>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                        <div className="relative">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start relative">
+                        <div className="relative h-[400px]">
                             {/* Image principale */}
-                            <div className="relative h-[400px] rounded-lg overflow-hidden">
+                            <div className="relative h-full rounded-lg overflow-hidden border-4 border-green-600">
                                 <Image
                                     src="/assets/notre_mission.png"
                                     alt="Notre mission"
@@ -113,17 +164,17 @@ const AboutUsContent = () => {
                                 />
                             </div>
                             {/* Image du portable superposée */}
-                            <div className="absolute -bottom-10 right-10 w-[150px] h-[200px]">
+                            <div className="absolute -bottom-10 right-10 w-[220px] h-[280px] z-10">
                                 <Image
                                     src="/assets/notre_mission_2.png"
                                     alt="Application mobile"
-                                    width={150}
-                                    height={200}
+                                    width={220}
+                                    height={280}
                                     className="object-cover rounded-3xl border-2 border-orange-400"
                                 />
                             </div>
                         </div>
-                        <div className="space-y-6">
+                        <div className="space-y-6 bg-white p-6 rounded-lg shadow-md">
                             <p className="text-gray-700 text-justify leading-relaxed">
                                 DIHA'S est spécialisé dans la conception et le développement d'applications web et mobiles ainsi que de solutions numériques sur mesure. De l'idéation à la mise en ligne, nous accompagnons les entreprises dans la création d'expériences numériques innovantes et performantes.
                             </p>
@@ -134,6 +185,10 @@ const AboutUsContent = () => {
                                 <button className="bg-[#FFA500] hover:bg-[#FF8533] transition-colors text-white px-6 py-3 rounded-lg flex items-center">
                                     Contactez-nous
                                 </button>
+                                <div className="text-xs text-gray-600">
+                                    Besoin d'aide?<br />
+                                    (229) XX XX XX XX
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -225,53 +280,82 @@ const AboutUsContent = () => {
 
                         {/* Images avec overlay et icônes */}
                         <div className="relative h-[600px] py-8">
-                            <div className="absolute top-8 w-full h-[250px] group">
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.8 }}
+                                className="absolute top-8 w-full h-[250px] group"
+                            >
                                 <Image
                                     src="/assets/objectif1.png"
                                     alt="Solutions"
                                     fill
                                     className="object-cover rounded-lg"
+                                    placeholder="blur"
+                                    blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDABQODxIPDRQSEBIXFRQdHx4eHRoaHSQrJyEkKSQ4Mjc1NjM4PTEwMD0wNzU5LzovWVNGRklLSktCTkJCRklGSkr/2wBDAR..."
+                                    loading="lazy"
                                 />
-                                <div className="absolute bottom-4 left-4">
+                                <motion.div
+                                    whileHover={{ scale: 1.1 }}
+                                    className="absolute bottom-4 left-4"
+                                >
                                     <Image
                                         src="/assets/Solutions.png"
                                         alt="Solutions icon"
                                         width={100}
                                         height={100}
+                                        loading="lazy"
                                     />
-                                </div>
-                            </div>
+                                </motion.div>
+                            </motion.div>
 
-                            <div className="absolute top-[290px] w-full h-[270px] group">
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.8, delay: 0.3 }}
+                                className="absolute top-[290px] w-full h-[270px] group"
+                            >
                                 <Image
                                     src="/assets/objectif2.png"
                                     alt="Innovation"
                                     fill
                                     className="object-cover rounded-lg"
+                                    placeholder="blur"
+                                    blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDABQODxIPDRQSEBIXFRQdHx4eHRoaHSQrJyEkKSQ4Mjc1NjM4PTEwMD0wNzU5LzovWVNGRklLSktCTkJCRklGSkr/2wBDAR..."
+                                    loading="lazy"
                                 />
-                                <div className="absolute bottom-4 left-4">
+                                <motion.div
+                                    whileHover={{ scale: 1.1 }}
+                                    className="absolute bottom-4 left-4"
+                                >
                                     <Image
                                         src="/assets/innovation.png"
                                         alt="Innovation icon"
                                         width={100}
                                         height={100}
+                                        loading="lazy"
                                     />
-                                </div>
-                            </div>
+                                </motion.div>
+                            </motion.div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            {/* Valeurs Section avec effet de retournement et nouvelles icônes */}
+            {/* Valeurs Section */}
             <section id="valeurs" className="py-16 bg-[#f0f7f0]">
-                <div className="container mx-auto px-4">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8 }}
+                    className="container mx-auto px-4"
+                >
                     <h2 className="text-3xl font-bold mb-2 text-center">Nos <span className="text-green-600">Valeurs</span></h2>
                     <p className="text-gray-600 mb-12 text-center">
                         Nos valeurs forment l'essence de notre identité, guidant nos actions et décisions vers un avenir fondé sur l'intégrité, l'innovation et l'engagement.
                     </p>
 
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                         {[
                             {
                                 title: "Engagement",
@@ -315,41 +399,55 @@ const AboutUsContent = () => {
                                 description: "Nous visons l'excellence dans chaque réalisation, en mettant l'accent sur la qualité, la performance et l'innovation."
                             }
                         ].map((valeur, index) => (
-                            <div key={index} className="flip-card">
-                                <div className="flip-card-inner">
-                                    <div className={`flip-card-front ${valeur.color} text-white p-8 rounded-lg flex flex-col items-center justify-center`}>
-                                        <div className="mb-6 text-white">
+                            <motion.div
+                                key={index}
+                                className="flip-card"
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5, delay: index * 0.2 }}
+                            >
+                                <motion.div
+                                    className="flip-card-inner"
+                                    whileHover={{ scale: 1.02 }}
+                                    transition={{ type: "spring", stiffness: 300 }}
+                                >
+                                    <div className={`flip-card-front ${valeur.color} text-white p-8 rounded-lg flex flex-col items-center justify-center shadow-lg`}>
+                                        <motion.div
+                                            className="mb-6 text-white"
+                                            whileHover={{ rotate: 360 }}
+                                            transition={{ duration: 0.8 }}
+                                        >
                                             {valeur.icon}
-                                        </div>
+                                        </motion.div>
                                         <h3 className="text-2xl font-bold text-center">{valeur.title}</h3>
                                     </div>
-                                    <div className={`flip-card-back ${valeur.color} text-white p-6 rounded-lg flex items-center justify-center`}>
+                                    <div className={`flip-card-back ${valeur.color} text-white p-6 rounded-lg flex items-center justify-center shadow-lg`}>
                                         <p className="text-center text-sm leading-tight">{valeur.description}</p>
                                     </div>
-                                </div>
-                            </div>
+                                </motion.div>
+                            </motion.div>
                         ))}
                     </div>
-                </div>
+                </motion.div>
             </section>
 
             <style jsx global>{`
                 @keyframes fade-in {
-                    from { opacity: 0; }
-                    to { opacity: 1; }
+                    from { opacity: 0; transform: translateY(20px); }
+                    to { opacity: 1; transform: translateY(0); }
                 }
 
                 .animate-fade-in {
-                    animation: fade-in 2s ease-out forwards;
+                    animation: fade-in 0.8s ease-out forwards;
                 }
 
                 @keyframes blink {
                     0%, 100% { opacity: 1; }
-                    50% { opacity: 0; }
+                    50% { opacity: 0.6; }
                 }
 
                 .animate-blink {
-                    animation: blink 1s step-end infinite;
+                    animation: blink 2s ease-in-out infinite;
                 }
 
                 .flip-card {
@@ -362,7 +460,7 @@ const AboutUsContent = () => {
                     width: 100%;
                     height: 100%;
                     text-align: center;
-                    transition: transform 0.8s;
+                    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
                     transform-style: preserve-3d;
                 }
 
@@ -381,6 +479,7 @@ const AboutUsContent = () => {
                     flex-direction: column;
                     align-items: center;
                     justify-content: center;
+                    transition: all 0.3s ease;
                 }
 
                 .flip-card-back {
@@ -393,10 +492,22 @@ const AboutUsContent = () => {
                     overflow-wrap: break-word;
                     hyphens: auto;
                     text-align: justify;
+                    line-height: 1.6;
+                }
+
+                @media (max-width: 768px) {
+                    .flip-card {
+                        height: 250px;
+                    }
+                    
+                    .flip-card-front,
+                    .flip-card-back {
+                        padding: 1rem;
+                    }
                 }
             `}</style>
         </div>
     )
 }
 
-export default AboutUsContent
+export default AboutUs

@@ -79,8 +79,8 @@ export default function Header() {
                             <Link href="/about" className={getLinkStyles('/about')}>
                                 À propos de nous
                             </Link>
-                            <Link href="#" className={getLinkStyles('/service')}>
-                                Service
+                            <Link href="/services" className={getLinkStyles('/services')}>
+                                Services
                             </Link>
                             <Link href="/projet" className={getLinkStyles('/projet')}>
                                 Projet
@@ -126,11 +126,11 @@ export default function Header() {
                                     À propos de nous
                                 </Link>
                                 <Link
-                                    href="#"
-                                    className={`px-4 py-2 ${pathname === '/service' ? 'bg-yellow-500 text-white' : 'text-gray-800'}`}
+                                    href="/services"
+                                    className={`px-4 py-2 ${pathname === '/services' ? 'bg-yellow-500 text-white' : 'text-gray-800'}`}
                                     onClick={() => setIsMenuOpen(false)}
                                 >
-                                    Service
+                                    Services
                                 </Link>
                                 <Link
                                     href="/projet"
