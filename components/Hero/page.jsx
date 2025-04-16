@@ -32,7 +32,7 @@ export default function Hero() {
 
                     {/* Partie droite pour la vidéo */}
                     <div className="w-full md:w-1/2 relative">
-                        <div className="aspect-video bg-gray-300 bg-opacity-20 rounded-md overflow-hidden">
+                        <div className="aspect-video rounded-md overflow-hidden">
                             <video
                                 autoPlay
                                 loop

@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
+import { LogIn } from 'lucide-react'
 
 export default function Header() {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -103,7 +104,9 @@ export default function Header() {
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16m-7 6h7"} />
                                 </svg>
                             </button>
-                            <div className="w-8 h-8 bg-gray-300 rounded-full hidden sm:block"></div>
+                            <Link href="/login" className={getLinkStyles('/login')}>
+                                <LogIn className={`${isScrolled ? 'text-gray-800 hover:text-yellow-500' : 'text-white hover:text-yellow-500'} md:mr-4`} />
+                            </Link>
                         </div>
                     </div>
 
