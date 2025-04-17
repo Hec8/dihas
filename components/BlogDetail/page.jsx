@@ -8,8 +8,8 @@ export default function BlogSuite() {
             <main className="container mx-auto px-4 py-8 max-w-6xl">
                 {/* Breadcrumb - Responsive */}
                 <div className="text-sm md:text-xl mb-4 md:mb-6 text-left overflow-hidden text-ellipsis whitespace-nowrap">
-                    <Link href="/"><span className="hover:text-orange-500 text-red-400 font-semibold">Accueil</span></Link> »
-                    <Link href="/blog"><span className="hover:text-orange-500 text-red-400 font-semibold"> Blog</span></Link> »
+                    <Link href="/"><span className="text-green-800 font-semibold">Accueil</span></Link> »
+                    <Link href="/blog"><span className=" text-green-800 font-semibold"> Blog</span></Link> »
                     <span className="text-black font-semibold"> Stratégie marketing digitale : comment la planifier pour un impact durable</span>
                 </div>
 
@@ -94,7 +94,7 @@ export default function BlogSuite() {
                                     {/* Whatsapp */}
                                     <a href="#" className="hover:opacity-80 transition-opacity">
                                         <Image
-                                            src="/assets/Wa.png"
+                                            src="/assets/wa.png"
                                             alt="Partager sur WhatsApp"
                                             width={32}
                                             height={32}
@@ -106,7 +106,7 @@ export default function BlogSuite() {
                     </aside>
 
                     {/* Colonne centrale : Contenu article - Priorité sur mobile */}
-                    <article className="lg:w-2/4 order-3 lg:order-none">
+                    <article className="lg:w-2/4 order-3 lg:order-none leading-relaxed text-justify">
                         {/* Contenu de l'article */}
                         <h1 className="text-3xl font-extrabold text-gray-900 leading-tight mb-4">
                             Stratégie marketing digitale : comment la planifier pour un impact durable
@@ -123,7 +123,7 @@ export default function BlogSuite() {
                         </p>
 
                         <p>
-                            Une stratégie numérique mal conçue peut rebuter les prospects, même si votre offre est excellente. La première impression visuelle — de votre site, de vos contenus ou de votre message - est cruciale. Une stratégie digitale au design attrayant et aux messages bien animés capte l'attention et incite à l'engagement. Des visuels percutants, des messages cohérents et des expériences interactives soulignent un lien fort avec la marque. Une stratégie visuelle et fonctionnelle se distingue dans un marché numérique saturé.
+                            Une stratégie numérique mal conçue peut rebuter les prospects, même si votre offre est excellente. La première impression visuelle de votre site, de vos contenus ou de votre message est cruciale. Une stratégie digitale au design attrayant et aux messages bien animés capte l'attention et incite à l'engagement. Des visuels percutants, des messages cohérents et des expériences interactives soulignent un lien fort avec la marque. Une stratégie visuelle et fonctionnelle se distingue dans un marché numérique saturé.
                         </p>
 
                         <p>
