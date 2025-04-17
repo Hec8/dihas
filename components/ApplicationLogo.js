@@ -6,7 +6,7 @@ const ApplicationLogo = props => (
         alt="Application Logo"
         width={100}
         height={40}
-        className="mr-4"
+        className="mr-8"
         {...props}
     />
 )

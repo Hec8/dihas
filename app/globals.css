@@ -2,62 +2,71 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+
 :root {
-    --primary-color: #0F6B42;
-    --secondary-color: #E5F2EC;
-    --text-color: #333333;
-    --accent-color: #FF9F1C;
-    --background-light: #FFFFFF;
-    --background-mint: #E5F2EC;
+  --primary-color: #0F6B42;
+  --secondary-color: #E5F2EC;
+  --text-color: #333333;
+  --accent-color: #FF9F1C;
+  --background-light: #FFFFFF;
+  --background-mint: #E5F2EC;
 }
 
 @layer base {
-    html {
-        font-family: 'Poppins', sans-serif;
-    }
+  html {
+    font-family: 'Poppins', sans-serif;
+  }
 }
 
 body {
-    color: var(--text-color);
-    background: var(--background-light);
+  color: var(--text-color);
+  background: var(--background-light);
 }
 
 .btn-primary {
-    @apply bg-[#0F6B42] text-white px-6 py-3 rounded-lg hover:bg-[#0A5434] transition-colors;
+  @apply bg-[#0F6B42] text-white px-6 py-3 rounded-lg hover:bg-[#0A5434] transition-colors;
 }
 
 .btn-secondary {
-    @apply bg-[#FF9F1C] text-white px-6 py-3 rounded-lg hover:bg-[#E88F0C] transition-colors;
+  @apply bg-[#FF9F1C] text-white px-6 py-3 rounded-lg hover:bg-[#E88F0C] transition-colors;
 }
 
 .section-title {
-    @apply text-3xl font-bold text-center mb-8 text-[#0F6B42];
-    font-family: 'Poppins', sans-serif;
+  @apply text-3xl font-bold text-center mb-8 text-[#0F6B42];
+  font-family: 'Poppins', sans-serif;
 }
 
 .section-description {
-    @apply text-lg text-center mb-12 text-gray-600 max-w-3xl mx-auto;
-    font-family: 'Poppins', sans-serif;
+  @apply text-lg text-center mb-12 text-gray-600 max-w-3xl mx-auto;
+  font-family: 'Poppins', sans-serif;
 }
 
 @keyframes slideInFromLeft {
-    0% {
-      transform: translateX(-30px);
-      opacity: 0;
-    }
-    100% {
-      transform: translateX(0);
-      opacity: 1;
-    }
+  0% {
+    transform: translateX(-30px);
+    opacity: 0;
   }
-  
-  .delay-100 {
-    animation-delay: 100ms;
+
+  100% {
+    transform: translateX(0);
+    opacity: 1;
   }
-  .delay-200 {
-    animation-delay: 200ms;
-  }
-  .delay-300 {
-    animation-delay: 300ms;
-  }
-  /* Ajoutez plus de délais si nécessaire */
+}
+
+.delay-100 {
+  animation-delay: 100ms;
+}
+
+.delay-200 {
+  animation-delay: 200ms;
+}
+
+.delay-300 {
+  animation-delay: 300ms;
+}
+
+/* Ajoutez plus de délais si nécessaire */

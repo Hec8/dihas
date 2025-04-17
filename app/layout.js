@@ -1,11 +1,5 @@
-import { Poppins } from 'next/font/google';
+import WhatsAppButton from '@/components/WhatsappButton';
 import './globals.css';
-
-const poppins = Poppins({
-    weight: ['300', '400', '500', '600', '700'],
-    subsets: ['latin'],
-    display: 'swap',
-});
 
 export const metadata = {
     title: "Diha's - Solutions Innovantes",
@@ -26,7 +20,13 @@ export const metadata = {
 export default function RootLayout({ children }) {
     return (
         <html lang="fr">
-            <body className={poppins.className}>{children}</body>
+            <head>
+                <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+            </head>
+            <body>
+                {children}
+                <WhatsAppButton />
+            </body>
         </html>
     );
 }

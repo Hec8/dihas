@@ -10,12 +10,7 @@ const Layout = ({ children }) => {
     return (
         <div>
             <div className="text-gray-900 antialiased">
-                <AuthCard
-                    logo={
-                        <Link href="/">
-                            <ApplicationLogo className="w-20 h-20 fill-current" />
-                        </Link>
-                    }>
+                <AuthCard>
                     {children}
                 </AuthCard>
             </div>

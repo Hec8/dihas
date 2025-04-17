@@ -159,9 +159,11 @@ export default function Blog() {
                                             <span>Publié le : {post.date}</span>
                                             <span>{post.author}</span>
                                         </div>
-                                        <button className="w-full bg-[#FFA500] text-white px-4 py-2 rounded-full text-sm hover:bg-[#FF8C00] transition-colors">
-                                            Lire plus
-                                        </button>
+                                        <Link href="/blog-detail">
+                                            <button className="w-full bg-[#FFA500] text-white px-4 py-2 rounded-full text-sm hover:bg-[#FF8C00] transition-colors">
+                                                Lire plus
+                                            </button>
+                                        </Link>
                                     </div>
                                 </div>
                             ))}

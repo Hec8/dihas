@@ -9,6 +9,7 @@ import { useAuth } from '@/hooks/auth'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import AuthSessionStatus from '@/app/(auth)/AuthSessionStatus'
+import ApplicationLogo from '@/components/ApplicationLogo'
 
 const Login = () => {
     const router = useRouter()
@@ -47,16 +48,17 @@ const Login = () => {
     return (
         <>
             <AuthSessionStatus className="mb-4" status={status} />
+            <h2 className='mt-1 mb-3 text-center font-bold text-2xl'>Connexion</h2>
             <form onSubmit={submitForm}>
                 {/* Email Address */}
                 <div>
                     <Label htmlFor="email">Email</Label>
 
-                    <Input
+                    <input
                         id="email"
                         type="email"
                         value={email}
-                        className="block mt-1 w-full"
+                        className="block mt-1 w-full rounded-xl"
                         onChange={event => setEmail(event.target.value)}
                         required
                         autoFocus
@@ -69,11 +71,11 @@ const Login = () => {
                 <div className="mt-4">
                     <Label htmlFor="password">Password</Label>
 
-                    <Input
+                    <input
                         id="password"
                         type="password"
                         value={password}
-                        className="block mt-1 w-full"
+                        className="block mt-1 w-full rounded-xl "
                         onChange={event => setPassword(event.target.value)}
                         required
                         autoComplete="current-password"

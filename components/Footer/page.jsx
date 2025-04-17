@@ -1,6 +1,7 @@
 'use client';
 import { FaFacebookF, FaTwitter, FaLinkedinIn, FaInstagram } from 'react-icons/fa';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Footer() {
     return (
@@ -35,10 +36,11 @@ export default function Footer() {
                     <div className="order-3 lg:order-none lg:ml-12">
                         <h3 className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6">Pages</h3>
                         <ul className="space-y-4 sm:space-y-8 text-gray-200">
-                            <li><a href="#" className="hover:text-yellow-500 transition-colors block">Home it work</a></li>
-                            <li><a href="#" className="hover:text-yellow-500 transition-colors block">Pricing</a></li>
-                            <li><a href="#" className="hover:text-yellow-500 transition-colors block">Blog</a></li>
-                            <li><a href="#" className="hover:text-yellow-500 transition-colors block">Demo</a></li>
+                            <li><Link href="https://dihas-product.vercel.app" className="hover:text-yellow-500 transition-colors block">Dihas Products</Link></li>
+                            <li><Link href="/about" className="hover:text-yellow-500 transition-colors block">A propos de nous</Link></li>
+                            <li><Link href="/services" className="hover:text-yellow-500 transition-colors block">Services</Link></li>
+                            <li><Link href="/projet" className="hover:text-yellow-500 transition-colors block">Projets</Link></li>
+                            <li><Link href="/blog" className="hover:text-yellow-500 transition-colors block">Blog</Link></li>
                         </ul>
                     </div>
 
@@ -46,9 +48,9 @@ export default function Footer() {
                     <div className="order-4 lg:order-none">
                         <h3 className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6">Services</h3>
                         <ul className="space-y-4 sm:space-y-8 text-gray-200">
-                            <li><a href="#" className="hover:text-yellow-500 transition-colors block">Shopify</a></li>
-                            <li><a href="#" className="hover:text-yellow-500 transition-colors block">WordPress</a></li>
-                            <li><a href="#" className="hover:text-yellow-500 transition-colors block">UI/UX Design</a></li>
+                            <li className="hover:text-yellow-500 transition-colors block">Développement web</li>
+                            <li className="hover:text-yellow-500 transition-colors block">Développement mobile</li>
+                            <li className="hover:text-yellow-500 transition-colors block">UI/UX Design</li>
                         </ul>
                     </div>
 
