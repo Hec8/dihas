@@ -1,6 +1,6 @@
 'use client';
 import Image from 'next/image';
-import About from '../About/page';
+import About from '../home/About/page';
 import { useInView } from 'react-intersection-observer';
 
 export default function Projet() {

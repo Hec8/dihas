@@ -136,7 +136,10 @@ export default function Products() {
                             >
                                 <h3 className="text-xl font-semibold mb-2">{product.title}</h3>
                                 <p className="text-gray-600 mb-4">{product.description}</p>
-                                <button className="w-full py-2 px-4 border-2 border-[#0F6B42] text-[#0F6B42] rounded-lg hover:bg-[#FF9F1C] hover:text-white hover:border-transparent transition-all duration-300">
+                                <button
+                                    className="w-full py-2 px-4 border-2 border-[#0F6B42] text-[#0F6B42] rounded-lg hover:bg-[#FF9F1C] hover:text-white hover:border-transparent transition-all duration-300"
+                                    onClick={() => window.open('https://dihas-product.vercel.app/', '_blank')}
+                                >
                                     Voir plus
                                 </button>
                             </motion.div>

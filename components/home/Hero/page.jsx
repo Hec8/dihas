@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+
 export default function Hero() {
     return (
         <section className="bg-green-800 text-white py-16 mt-16">
@@ -27,14 +29,13 @@ export default function Hero() {
                             et développons des applications
                         </p><br />
                         <div className="flex flex-col sm:flex-row gap-4">
-                            <button className="bg-green-700 text-white px-6 py-3 rounded flex items-center justify-center">
-                                <img src="/assets/Vector.png" alt="Vector" className="h-5 w-5 mr-2" />
-                                Contactez-nous
-                            </button>
-                            <button className="bg-[#FFA500] text-white px-6 py-3 rounded flex items-center justify-center">
+                            <Link
+                                href="/contact"
+                                className="bg-[#FFA500] text-white px-6 py-3 rounded-lg flex items-center justify-center transition-all duration-300 transform hover:scale-105 cursor-pointer"
+                            >
                                 <img src="/assets/basket.png" alt="Vector" className="h-5 w-5 mr-2" />
                                 Commander
-                            </button>
+                            </Link>
                         </div>
                     </div>
 
