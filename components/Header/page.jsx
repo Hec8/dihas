@@ -84,7 +84,7 @@ export default function Header() {
                                 Services
                             </Link>
                             <Link href="/projet" className={getLinkStyles('/projet')}>
-                                Projet
+                                Projets
                             </Link>
                             <Link href="/blog" className={getLinkStyles('/blog')}>
                                 Blog
@@ -92,7 +92,7 @@ export default function Header() {
                         </div>
 
                         {/* Menu Mobile/Toggle */}
-                        <div className="flex items-center space-x-4">
+                        <div className="flex items-center ">
                             <button
                                 className={`p-2 md:hidden ${isScrolled
                                     ? 'text-gray-800'
@@ -105,7 +105,7 @@ export default function Header() {
                                 </svg>
                             </button>
                             <Link href="/login" className={getLinkStyles('/login')}>
-                                <LogIn className={`${isScrolled ? 'text-gray-800 hover:text-yellow-500' : 'text-white hover:text-yellow-500'} md:mr-4`} />
+                                <button className={`${isScrolled ? 'text-gray-800 border-black hover:text-yellow-500' : 'text-white hover:bg-yellow-500 border px-3 py-2 rounded-xl'} md:mr-4`}>Connexion</button>
                             </Link>
                         </div>
                     </div>
@@ -140,7 +140,7 @@ export default function Header() {
                                     className={`px-4 py-2 ${pathname === '/projet' ? 'bg-yellow-500 text-white' : 'text-gray-800'}`}
                                     onClick={() => setIsMenuOpen(false)}
                                 >
-                                    Projet
+                                    Projets
                                 </Link>
                                 <Link
                                     href="/blog"

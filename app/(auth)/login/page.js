@@ -61,7 +61,6 @@ const Login = () => {
                         className="block mt-1 w-full rounded-xl"
                         onChange={event => setEmail(event.target.value)}
                         required
-                        autoFocus
                     />
 
                     <InputError messages={errors.email} className="mt-2" />
@@ -78,7 +77,6 @@ const Login = () => {
                         className="block mt-1 w-full rounded-xl "
                         onChange={event => setPassword(event.target.value)}
                         required
-                        autoComplete="current-password"
                     />
 
                     <InputError

@@ -88,7 +88,7 @@ export default function Blog() {
                 <div className="container mx-auto px-6 relative z-10">
                     <div className="flex flex-col md:flex-row items-center justify-between md:gap-2">
                         {/* Partie gauche avec le texte */}
-                        <div className="w-full md:w-1/2 mb-6 md:mb-0 ml-8">
+                        <div className="w-full md:w-1/2 md:mb-6 ml-8">
                             <h1 className="text-3xl md:text-4xl font-bold mb-4 leading-tight">
                                 Tout ce que vous avez <br />
                                 toujours voulu savoir <br />

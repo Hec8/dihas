@@ -98,10 +98,10 @@ export default function Testimony() {
                 <div className="flex justify-center items-center mt-[300px] sm:mt-[350px] md:mt-[400px] gap-4">
                     <button
                         onClick={prevPage}
-                        className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-green-950 flex items-center justify-center hover:bg-white/10 transition-all duration-300 transform active:scale-90"
+                        className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-white flex items-center justify-center hover:bg-white/10 transition-all duration-300 transform active:scale-90"
                     >
                         <svg
-                            className="w-5 h-5 sm:w-6 sm:h-6 text-black"
+                            className="w-5 h-5 sm:w-6 sm:h-6 text-white"
                             viewBox="0 0 24 24"
                             fill="none"
                             stroke="currentColor"
@@ -114,10 +114,10 @@ export default function Testimony() {
                     </button>
                     <button
                         onClick={nextPage}
-                        className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-green-950 flex items-center justify-center hover:bg-white/10 transition-all duration-300 transform active:scale-90"
+                        className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-white flex items-center justify-center hover:bg-white/10 transition-all duration-300 transform active:scale-90"
                     >
                         <svg
-                            className="w-5 h-5 sm:w-6 sm:h-6 text-black"
+                            className="w-5 h-5 sm:w-6 sm:h-6 text-white"
                             viewBox="0 0 24 24"
                             fill="none"
                             stroke="currentColor"
