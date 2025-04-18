@@ -84,10 +84,13 @@ export default function Header() {
                                 Services
                             </Link>
                             <Link href="/projet" className={getLinkStyles('/projet')}>
-                                Projet
+                                Projets
                             </Link>
                             <Link href="/blog" className={getLinkStyles('/blog')}>
                                 Blog
+                            </Link>
+                            <Link href="/contact" className={getLinkStyles('/contact')}>
+                                Contact
                             </Link>
                         </div>
 
@@ -140,7 +143,7 @@ export default function Header() {
                                     className={`px-4 py-2 ${pathname === '/projet' ? 'bg-yellow-500 text-white' : 'text-gray-800'}`}
                                     onClick={() => setIsMenuOpen(false)}
                                 >
-                                    Projet
+                                    Projets
                                 </Link>
                                 <Link
                                     href="/blog"
@@ -148,6 +151,13 @@ export default function Header() {
                                     onClick={() => setIsMenuOpen(false)}
                                 >
                                     Blog
+                                </Link>
+                                <Link
+                                    href="/contact"
+                                    className={`px-4 py-2 ${pathname === '/contact' ? 'bg-yellow-500 text-white' : 'text-gray-800'}`}
+                                    onClick={() => setIsMenuOpen(false)}
+                                >
+                                    Contact
                                 </Link>
                             </div>
                         </div>

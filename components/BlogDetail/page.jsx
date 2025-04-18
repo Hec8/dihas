@@ -1,3 +1,5 @@
+'use client';
+
 import Link from "next/link";
 import Image from "next/image";
 import { Share2 } from "lucide-react";
@@ -288,7 +290,10 @@ export default function BlogSuite() {
                             <p className="text-white mb-6">
                                 Laissez nos développeurs vous aider à en faire une réalité.
                             </p><br />
-                            <button className="bg-[#FFA500] hover:bg-orange-600 text-black font-semibold px-6 py-3 rounded-lg transition-colors duration-300">
+                            <button
+                                onClick={() => window.location.href = '/contact'}
+                                className="bg-[#FFA500] hover:bg-orange-600 text-black font-semibold px-6 py-3 rounded-lg transition-colors duration-300"
+                            >
                                 Contactez-Nous Maintenant
                             </button><br />
                         </div>

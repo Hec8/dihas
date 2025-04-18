@@ -4,8 +4,8 @@ import { motion } from 'framer-motion';
 export default function Goals() {
     const cardVariants = {
         hidden: { opacity: 0, scale: 0.8 },
-        visible: { 
-            opacity: 1, 
+        visible: {
+            opacity: 1,
             scale: 1,
             transition: {
                 duration: 0.5
@@ -21,7 +21,7 @@ export default function Goals() {
 
     return (
         <section className="bg-[#E8F6F8] py-16 px-6 md:px-20 text-center">
-            <motion.h2 
+            <motion.h2
                 className="text-xl md:text-3xl font-semibold mb-2"
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -29,7 +29,7 @@ export default function Goals() {
             >
                 Que voulez-vous faire ?
             </motion.h2>
-            <motion.p 
+            <motion.p
                 className="text-black mb-10"
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -40,7 +40,7 @@ export default function Goals() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {/* Bloc 1 */}
-                <motion.div 
+                <motion.div
                     className="bg-[#D6ECE2] rounded-2xl p-6 flex flex-col items-center justify-between"
                     variants={cardVariants}
                     initial="hidden"
@@ -51,10 +51,11 @@ export default function Goals() {
                     <p className="text-black text-sm mb-6 max-w-xs">
                         Parcourez nos applications mobile/web de différente industries pour créer une entreprise en ligne en 30 jours
                     </p>
-                    <motion.button 
+                    <motion.button
                         className="bg-[#c6e2d5] hover:bg-[#b2d6c8] text-green-800 font-medium px-10 py-4 rounded-full transition"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
+                        onClick={() => window.location.href = '/projets'}
                     >
                         Parcourir
                     </motion.button>
@@ -67,7 +68,7 @@ export default function Goals() {
                 </motion.div>
 
                 {/* Bloc 2 */}
-                <motion.div 
+                <motion.div
                     className="bg-[#F2EBCF] rounded-2xl p-6 flex flex-col items-center justify-between"
                     variants={cardVariants}
                     initial="hidden"
@@ -80,10 +81,11 @@ export default function Goals() {
                         Besoins de logiciel de gestion d'une application Web ou Mobile, d'un site web ou de conception d'identité d'entreprise,
                         Nous sommes disponibles pour toutes vos commandes
                     </p>
-                    <motion.button 
+                    <motion.button
                         className="bg-[#c6e2d5] hover:bg-[#b2d6c8] text-green-800 font-medium px-10 py-4 rounded-full transition"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
+                        onClick={() => window.location.href = '/contact'}
                     >
                         Contactez-nous
                     </motion.button>
