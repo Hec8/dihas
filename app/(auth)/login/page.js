@@ -58,7 +58,7 @@ const Login = () => {
                         id="email"
                         type="email"
                         value={email}
-                        className="block mt-1 w-full rounded-xl"
+                        className="block mt-1 w-full rounded-xl border-gray-300 focus:border-green-800 focus:ring focus:ring-green-800 focus:ring-opacity-50"
                         onChange={event => setEmail(event.target.value)}
                         required
                         autoFocus
@@ -75,7 +75,7 @@ const Login = () => {
                         id="password"
                         type="password"
                         value={password}
-                        className="block mt-1 w-full rounded-xl "
+                        className="block mt-1 w-full rounded-xl border-gray-300 focus:border-green-800 focus:ring focus:ring-green-800 focus:ring-opacity-50"
                         onChange={event => setPassword(event.target.value)}
                         required
                         autoComplete="current-password"
@@ -96,7 +96,7 @@ const Login = () => {
                             id="remember_me"
                             type="checkbox"
                             name="remember"
-                            className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="rounded border-gray-300 text-green-800 shadow-sm focus:border-green-800 focus:ring focus:ring-green-800 focus:ring-opacity-50"
                             onChange={event =>
                                 setShouldRemember(event.target.checked)
                             }
@@ -111,11 +111,16 @@ const Login = () => {
                 <div className="flex items-center justify-end mt-4">
                     <Link
                         href="/forgot-password"
-                        className="underline text-sm text-gray-600 hover:text-gray-900">
+                        className="underline text-sm text-gray-600 hover:text-green-800">
                         Forgot your password?
                     </Link>
 
-                    <Button className="ml-3">Login</Button>
+                    <button
+                        type="submit"
+                        className="ml-3 px-4 py-2 bg-green-800 text-white rounded-xl hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-800 focus:ring-opacity-50 transition-colors"
+                    >
+                        Login
+                    </button>
                 </div>
             </form>
         </>

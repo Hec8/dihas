@@ -117,7 +117,7 @@ export default function Blog() {
 
                         {/* Partie droite pour l'image */}
                         <div className="w-full md:w-1/2 relative">
-                            <div className="relative w-full h-[500px] md:h-[650px] -mb-16">
+                            <div className="relative w-full h-[400px] md:h-[600px] z-10 translate-x-4 md:translate-x-8 translate-y-6">
                                 <Image
                                     src="/assets/Axelle2.png"
                                     alt="Blog Hero"
@@ -129,6 +129,23 @@ export default function Blog() {
                             </div>
                         </div>
                     </div>
+                </div>
+
+                {/* Vague décorative en bas */}
+                <div className="absolute bottom-0 left-0 w-full h-32 md:h-48 z-20">
+                    <svg
+                        viewBox="0 0 1200 120"
+                        preserveAspectRatio="none"
+                        className="absolute bottom-0 w-full h-full"
+                    >
+                        <path
+                            d="M0,40 
+                              C300,100 400,10 600,80 
+                              C800,150 1000,20 1200,70 
+                              L1200,120 L0,120 Z"
+                            className="fill-[#E5F2EC]"
+                        />
+                    </svg>
                 </div>
             </section>
 
