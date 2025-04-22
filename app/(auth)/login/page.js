@@ -68,7 +68,7 @@ const Login = () => {
 
                 {/* Password */}
                 <div className="mt-4">
-                    <Label htmlFor="password">Password</Label>
+                    <Label htmlFor="password">Mot de passe</Label>
 
                     <input
                         id="password"
@@ -101,7 +101,7 @@ const Login = () => {
                         />
 
                         <span className="ml-2 text-sm text-gray-600">
-                            Remember me
+                            Se souvenir de moi
                         </span>
                     </label>
                 </div>
@@ -110,14 +110,14 @@ const Login = () => {
                     <Link
                         href="/forgot-password"
                         className="underline text-sm text-gray-600 hover:text-green-800">
-                        Forgot your password?
+                        Mot de passe oublié?
                     </Link>
 
                     <button
                         type="submit"
                         className="ml-3 px-4 py-2 bg-green-800 text-white rounded-xl hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-800 focus:ring-opacity-50 transition-colors"
                     >
-                        Login
+                        Se connecter
                     </button>
                 </div>
             </form>

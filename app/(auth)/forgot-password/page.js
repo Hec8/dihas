@@ -27,9 +27,7 @@ const Page = () => {
     return (
         <>
             <div className="mb-4 text-sm text-gray-600">
-                Forgot your password? No problem. Just let us know your email
-                address and we will email you a password reset link that
-                will allow you to choose a new one.
+                Vous avez oublié votre mot de passe ? Pas de problème. Indiquez simplement votre adresse e-mail et nous vous enverrons un lien de réinitialisation de mot de passe qui vous permettra d'en choisir un nouveau.
             </div>
 
             {/* Session Status */}
@@ -44,7 +42,7 @@ const Page = () => {
                         type="email"
                         name="email"
                         value={email}
-                        className="block mt-1 w-full"
+                        className="block mt-1 w-full rounded-xl border-gray-300 focus:border-green-800 focus:ring focus:ring-green-800 focus:ring-opacity-50"
                         onChange={event => setEmail(event.target.value)}
                         required
                         autoFocus
@@ -54,7 +52,7 @@ const Page = () => {
                 </div>
 
                 <div className="flex items-center justify-end mt-4">
-                    <Button>Email Password Reset Link</Button>
+                    <Button className="bg-green-800 text-white rounded-xl hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-800 focus:ring-opacity-50 transition-colors">Email Password Reset Link</Button>
                 </div>
             </form>
         </>
