@@ -1,8 +1,64 @@
 'use client';
 
+import { useState } from 'react';
+import axios from '@/lib/axios';
+import toast, { Toaster } from 'react-hot-toast';
+
 export default function Contact() {
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        telephone: '',
+        message: ''
+    });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+
+        try {
+            // 1. Obtenir le cookie CSRF
+            await axios.get('/sanctum/csrf-cookie');
+
+            // 2. Envoyer les données du formulaire
+            const { data } = await axios.post('/api/contact/create', formData);
+
+            toast.success(data.message || "Message envoyé avec succès !");
+
+            // Réinitialiser le formulaire
+            setFormData({
+                name: '',
+                email: '',
+                telephone: '',
+                message: ''
+            });
+
+        } catch (error) {
+            if (error.response) {
+                const errorMessage = error.response.data.message ||
+                    "Erreur lors de l'envoi du message";
+                toast.error(errorMessage);
+            } else {
+                toast.error("Erreur de connexion au serveur");
+            }
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
     return (
         <div className="container mx-auto px-4 py-20 max-w-4xl">
+            <Toaster position="top-right" />
+
             <div className="bg-white rounded-3xl shadow-lg overflow-hidden relative">
                 {/* Partie verte décorative à droite - masquée sur très petit écran */}
                 <div className="absolute right-0 top-0 bottom-0 hidden sm:block w-1/4 md:w-1/3 bg-green-800 rounded-l-[80px]"></div>
@@ -15,11 +71,14 @@ export default function Contact() {
                         Nous comprenons qu'acheter ou faire une commande d'une application n'est pas chose aisée. Pour toutes questions ou besoins d'aide, n'hésitez pas à nous contacter
                     </p>
 
-                    <form className="space-y-6 md:space-y-8">
+                    <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8">
                         <div>
                             <input
                                 type="text"
-                                placeholder="Name *"
+                                name="name"
+                                value={formData.name}
+                                onChange={handleChange}
+                                placeholder="Nom *"
                                 className="w-full px-4 sm:px-6 py-4 md:py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-800 focus:border-green-800 text-base md:text-sm"
                                 required
                             />
@@ -28,15 +87,22 @@ export default function Contact() {
                         <div>
                             <input
                                 type="email"
-                                placeholder="Email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                placeholder="Email *"
                                 className="w-full px-4 sm:px-6 py-4 md:py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-800 focus:border-green-800 text-base md:text-sm"
+                                required
                             />
                         </div>
 
                         <div>
                             <input
                                 type="tel"
-                                placeholder="Phone number *"
+                                name="telephone"
+                                value={formData.telephone}
+                                onChange={handleChange}
+                                placeholder="Téléphone *"
                                 className="w-full px-4 sm:px-6 py-4 md:py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-800 focus:border-green-800 text-base md:text-sm"
                                 required
                             />
@@ -44,17 +110,22 @@ export default function Contact() {
 
                         <div>
                             <textarea
-                                placeholder="Votre message"
+                                name="message"
+                                value={formData.message}
+                                onChange={handleChange}
+                                placeholder="Votre message *"
                                 rows="6"
                                 className="w-full px-4 sm:px-6 py-4 md:py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-800 focus:border-green-800 resize-none text-base md:text-sm"
+                                required
                             ></textarea>
                         </div>
 
                         <button
                             type="submit"
-                            className="w-full bg-green-800 text-white py-4 md:py-3 rounded-lg transition-colors duration-300 text-base md:text-sm hover:bg-green-700"
+                            disabled={isSubmitting}
+                            className={`w-full bg-green-800 text-white py-4 md:py-3 rounded-lg transition-colors duration-300 text-base md:text-sm hover:bg-green-700 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
                         >
-                            SEND
+                            {isSubmitting ? 'Envoi en cours...' : 'ENVOYER'}
                         </button>
                     </form>
 

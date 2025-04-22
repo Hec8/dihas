@@ -35,6 +35,26 @@ const Navigation = ({ user }) => {
                                 active={pathname === '/dashboard'}>
                                 Dashboard
                             </NavLink>
+                            <NavLink
+                                href="/blog-manage"
+                                active={pathname === '/blog-manage'}>
+                                Articles
+                            </NavLink>
+                            <NavLink
+                                href="/newsletter"
+                                active={pathname === '/newsletter'}>
+                                Abonnés
+                            </NavLink>
+                            <NavLink
+                                href="/contact-manage"
+                                active={pathname === '/contact-manage'}>
+                                Messages
+                            </NavLink>
+                            <NavLink
+                                href="/emmployees"
+                                active={pathname === '/emmployees'}>
+                                Employees
+                            </NavLink>
                         </div>
                     </div>
 

@@ -1,7 +1,5 @@
 'use client'
 
-import Button from '@/components/Button'
-import Input from '@/components/Input'
 import InputError from '@/components/InputError'
 import Label from '@/components/Label'
 import Link from 'next/link'
@@ -9,7 +7,6 @@ import { useAuth } from '@/hooks/auth'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import AuthSessionStatus from '@/app/(auth)/AuthSessionStatus'
-import ApplicationLogo from '@/components/ApplicationLogo'
 
 const Login = () => {
     const router = useRouter()
