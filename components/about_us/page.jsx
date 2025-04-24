@@ -1,5 +1,6 @@
 'use client'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 
@@ -169,15 +170,16 @@ const AboutUs = () => {
                                 transition={{ duration: 0.6, delay: 0.4 }}
                                 className="flex items-center gap-4"
                             >
-                                <a href='/contact'>
-                                    <button className="bg-[#FFA500] hover:bg-[#FF8533] transition-colors text-white px-6 py-3 rounded-lg flex items-center">
+                                <button className="bg-[#FFA500] hover:bg-[#FF8533] transition-colors text-white px-6 py-3 rounded-lg flex items-center">
+                                    <Link href="/contact">
                                         Contactez-nous
-                                    </button>
-                                </a>
+                                    </Link>
+                                </button>
                                 <div className="text-xs text-gray-600">
-                                    Besoin d'aide?<br />
-                                    (229) 01 94 97 54 51
+                                    Besoin d&apos;aide?<br />
+                                    <a href="tel:+22994975451" className="hover:text-green-800">+229 94 97 54 51</a>
                                 </div>
+
                             </motion.div>
                         </motion.div>
                     </div>
