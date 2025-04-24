@@ -1,76 +1,50 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Newsletter from '@/components/home/Newsletter/page';
+import axios from '@/lib/axios';
 
 export default function Blog() {
     const [searchQuery, setSearchQuery] = useState('');
+    const [articles, setArticles] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-    const blogPosts = [
-        {
-            id: 1,
-            title: 'La Transformation Digitale',
-            description: 'Levier pour l\'innovation et l\'efficacité des entreprises',
-            image: '/assets/transformation_digitale.png',
-            date: '2024/02/20',
-            author: 'admin@diha.tech'
-        },
-        {
-            id: 2,
-            title: 'Tendances du marché',
-            description: 'Évolution et innovations dans le secteur du...',
-            image: '/assets/Tendances.png',
-            date: '2024/02/20',
-            author: 'admin@diha.tech'
-        },
-        {
-            id: 3,
-            title: 'Stratégies marketing digital',
-            description: 'Les meilleures pratiques pour une stratégie fiscale',
-            image: '/assets/marketing.png',
-            date: '2024/02/20',
-            author: 'admin@diha.tech'
-        },
-        {
-            id: 4,
-            title: 'Stratégies marketing digital',
-            description: 'Les meilleures pratiques pour une stratégie fiscale',
-            image: '/assets/marketing.png',
-            date: '2024/02/20',
-            author: 'admin@diha.tech'
-        },
-        {
-            id: 5,
-            title: 'Stratégies marketing digital',
-            description: 'Les meilleures pratiques pour une stratégie fiscale',
-            image: '/assets/blog6.png',
-            date: '2024/02/20',
-            author: 'admin@diha.tech'
-        },
-        {
-            id: 6,
-            title: 'Stratégies marketing digital',
-            description: 'Les meilleures pratiques pour une stratégie fiscale',
-            image: '/assets/notre_mission.png',
-        },
-        {
-            id: 7,
-            title: 'Stratégies marketing digital',
-            description: 'Les meilleures pratiques pour une stratégie fiscale',
-            image: '/assets/blog7.png',
-        },
-        {
-            id: 8,
-            title: 'Stratégies marketing digital',
-            description: 'Les meilleures pratiques pour une stratégie fiscale',
-            image: '/assets/blog8.png',
-        }
-    ];
+    useEffect(() => {
+        const fetchArticles = async () => {
+            try {
+                const response = await axios.get('/api/blogs/guest');
+                if (response.data && response.data.blogs) {
+                    setArticles(response.data.blogs);
+                }
+            } catch (error) {
+                console.error('Erreur lors de la récupération des articles:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchArticles();
+    }, []);
+
+    // Fonction pour formater la date
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('fr-FR', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit'
+        });
+    };
 
     const handleSearch = (e) => {
         setSearchQuery(e.target.value);
     };
+
+    const filteredArticles = articles.filter(article =>
+        article.titre.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        article.resume.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
     return (
         <main className="min-h-screen bg-[#E5F2EC]">
@@ -154,36 +128,57 @@ export default function Blog() {
                 <div className="container mx-auto max-w-7xl">
                     <h2 className="text-2xl font-bold mb-12 border-l-4 border-[#FFA500] pl-4 mx-4">Dernières nouvelles</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-6">
-                        {blogPosts
-                            .filter(post =>
-                                post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                                post.description.toLowerCase().includes(searchQuery.toLowerCase())
-                            )
-                            .map((post) => (
-                                <div key={post.id} className="bg-white rounded-lg overflow-hidden shadow-md transition-transform hover:scale-105">
+                        {loading ? (
+                            // Afficher des cartes de chargement
+                            [...Array(4)].map((_, index) => (
+                                <div key={index} className="bg-white rounded-lg overflow-hidden shadow-md animate-pulse">
+                                    <div className="relative h-48 bg-gray-200"></div>
+                                    <div className="p-6">
+                                        <div className="h-4 bg-gray-200 rounded w-3/4 mb-3"></div>
+                                        <div className="h-4 bg-gray-200 rounded w-full mb-4"></div>
+                                        <div className="flex items-center justify-between mb-4">
+                                            <div className="h-3 bg-gray-200 rounded w-1/3"></div>
+                                            <div className="h-3 bg-gray-200 rounded w-1/4"></div>
+                                        </div>
+                                        <div className="h-8 bg-gray-200 rounded-full w-full"></div>
+                                    </div>
+                                </div>
+                            ))
+                        ) : filteredArticles.length > 0 ? (
+                            filteredArticles.map((article) => (
+                                <div key={article.id} className="bg-white rounded-lg overflow-hidden shadow-md transition-transform hover:scale-105">
                                     <div className="relative h-48">
                                         <Image
-                                            src={post.image}
-                                            alt={post.title}
+                                            src={article.image || '/assets/default-blog.png'}
+                                            alt={article.titre}
                                             fill
                                             className="object-cover"
+                                            onError={(e) => {
+                                                console.error('Erreur de chargement image:', article.image);
+                                                e.target.src = '/assets/default-blog.png';
+                                            }}
                                         />
                                     </div>
                                     <div className="p-6">
-                                        <h3 className="font-bold text-lg mb-3">{post.title}</h3>
-                                        <p className="text-gray-600 text-sm mb-4">{post.description}</p>
+                                        <h3 className="font-bold text-lg mb-3">{article.titre}</h3>
+                                        <p className="text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-1 text-gray-600">{article.resume}</p>
                                         <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
-                                            <span>Publié le : {post.date}</span>
-                                            <span>{post.author}</span>
+                                            <span>Publié le : {formatDate(article.created_at)}</span>
+                                            <span>{article.writer || 'Admin'}</span>
                                         </div>
-                                        <Link href="/blog-detail">
+                                        <Link href={`/blog/${article.slug}`}>
                                             <button className="w-full bg-[#FFA500] text-white px-4 py-2 rounded-full text-sm hover:bg-[#FF8C00] transition-colors">
                                                 Lire plus
                                             </button>
                                         </Link>
                                     </div>
                                 </div>
-                            ))}
+                            ))
+                        ) : (
+                            <div className="col-span-full text-center py-8 text-gray-500">
+                                Aucun article ne correspond à votre recherche
+                            </div>
+                        )}
                     </div>
                 </div>
             </section>

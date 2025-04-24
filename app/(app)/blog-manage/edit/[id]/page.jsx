@@ -5,40 +5,136 @@ import axios from '@/lib/axios';
 import { useRouter, useParams } from 'next/navigation';
 import toast, { Toaster } from 'react-hot-toast';
 import Header from '@/app/(app)/Header';
+import { useAuth } from '@/hooks/auth';
+import { useEditor, EditorContent } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+import MenuBar from '@/components/MenuBar';
+import Highlight from '@tiptap/extension-highlight';
+import Typography from '@tiptap/extension-typography';
 
 export default function EditBlog() {
     const { id } = useParams();
+    const router = useRouter();
+    const { user } = useAuth();
     const [formData, setFormData] = useState({
         titre: '',
         contenu: '',
         writer: '',
         resume: '',
-        image: null
+        statut: 'en cours',
+        note: '',
+        image: null,
     });
-    const [currentImage, setCurrentImage] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const router = useRouter();
+    const [isLoading, setIsLoading] = useState(true);
+
+    const [editorContent, setEditorContent] = useState('');
+    const [updateTimeout, setUpdateTimeout] = useState(null);
+
+    const editor = useEditor({
+        extensions: [
+            StarterKit.configure({
+                bold: {
+                    HTMLAttributes: {
+                        class: 'font-bold'
+                    }
+                },
+                italic: {
+                    HTMLAttributes: {
+                        class: 'italic'
+                    }
+                }
+            }),
+            Highlight,
+            Typography
+        ],
+        content: formData.contenu,
+        editorProps: {
+            attributes: {
+                class: 'prose max-w-none focus:outline-none'
+            },
+            handleDOMEvents: {
+                keydown: (view, event) => {
+                    if ((event.ctrlKey || event.metaKey) && (event.key === 'b' || event.key === 'i')) {
+                        event.preventDefault();
+                        if (event.key === 'b') {
+                            editor?.chain().focus().toggleBold().run();
+                        } else if (event.key === 'i') {
+                            editor?.chain().focus().toggleItalic().run();
+                        }
+                        return true;
+                    }
+                    return false;
+                }
+            }
+        },
+        onCreate: ({ editor }) => {
+            editor.on('update', () => {
+                // Annuler le timeout précédent s'il existe
+                if (updateTimeout) clearTimeout(updateTimeout);
+                
+                // Créer un nouveau timeout
+                const timeoutId = setTimeout(() => {
+                    const html = editor.getHTML();
+                    setEditorContent(html);
+                    setFormData(prev => ({
+                        ...prev,
+                        contenu: html
+                    }));
+                }, 1000); // Attendre 1 seconde après la dernière modification
+                
+                setUpdateTimeout(timeoutId);
+            });
+        }
+    });
 
     useEffect(() => {
-        fetchArticle();
-    }, [id]);
+        const fetchArticle = async () => {
+            try {
+                console.log("Tentative de récupération de l'article ID:", id);
+                const response = await axios.get(`/api/blog/edit/${id}`);
+                
+                console.log("Réponse complète:", response);
+                console.log("Headers:", response.headers);
+                console.log("Status:", response.status);
+                console.log("Data:", response.data);
 
-    const fetchArticle = async () => {
-        try {
-            const { data } = await axios.get(`/api/blog/${id}`);
-            setFormData({
-                titre: data.article.titre,
-                contenu: data.article.contenu,
-                writer: data.article.writer,
-                resume: data.article.resume,
-                image: null
-            });
-            setCurrentImage(data.article.image);
-        } catch (error) {
-            toast.error('Erreur lors du chargement de l\'article');
-            router.push('/blog');
-        }
-    };
+                if (!response.data || !response.data.article) {
+                    throw new Error("Structure de réponse invalide: " + JSON.stringify(response.data));
+                }
+
+                const article = response.data.article;
+                const content = response.data.article.contenu;
+                if (editor) {
+                    editor.commands.setContent(content);
+                }
+
+                setFormData({
+                    titre: article.titre || '',
+                    contenu: article.contenu || '',
+                    writer: article.writer || '',
+                    resume: article.resume || '',
+                    statut: article.statut || 'en cours',
+                    note: article.note || '',
+                    image: null,
+                });
+
+            } catch (error) {
+                console.error('Erreur complète:', {
+                    message: error.message,
+                    response: error.response?.data,
+                    config: error.config
+                });
+                toast.error(error.response?.data?.message || 'Erreur lors du chargement');
+                router.push('/blog-manage');
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        if (id) fetchArticle();
+    }, [id, router]);
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -60,26 +156,36 @@ export default function EditBlog() {
         setIsSubmitting(true);
 
         try {
-            await axios.get('/sanctum/csrf-cookie');
-
             const formDataToSend = new FormData();
+
+            // Ajouter les champs de base
             formDataToSend.append('titre', formData.titre);
-            formDataToSend.append('contenu', formData.contenu);
-            formDataToSend.append('writer', formData.writer);
             formDataToSend.append('resume', formData.resume);
+            formDataToSend.append('writer', formData.writer);
+            formDataToSend.append('statut', formData.statut);
+            formDataToSend.append('note', formData.note);
+
+            // Ajouter l'image si elle existe
             if (formData.image) {
                 formDataToSend.append('image', formData.image);
             }
 
-            const { data } = await axios.post(`/api/blog/${id}`, formDataToSend, {
+            // Ajouter le contenu de l'éditeur
+            formDataToSend.append('contenu', editorContent || editor?.getHTML() || formData.contenu);
+
+            // Ajouter la méthode PUT
+            formDataToSend.append('_method', 'PUT');
+
+            const response = await axios.post(`/api/blog/${id}`, formDataToSend, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             });
 
-            toast.success(data.message);
-            router.push('/blog');
+            toast.success('Article mis à jour avec succès');
+            router.push('/blog-manage');
         } catch (error) {
+            console.error('Erreur lors de la mise à jour:', error);
             toast.error(error.response?.data?.message || 'Erreur lors de la mise à jour');
         } finally {
             setIsSubmitting(false);
@@ -97,23 +203,125 @@ export default function EditBlog() {
                         <div className="p-6 bg-white border-b border-gray-200">
                             <form onSubmit={handleSubmit} className="space-y-6">
                                 {/* Les champs du formulaire (similaires à CreateBlog) */}
-                                {/* ... */}
+                                {/* Image */}
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700">Image</label>
+                                    <input
+                                        type="file"
+                                        name="image"
+                                        onChange={handleImageChange}
+                                        className="mt-1 block w-full text-sm text-gray-500
+                                        file:mr-4 file:py-2 file:px-4
+                                        file:rounded-md file:border-0
+                                        file:text-sm file:font-semibold
+                                        file:bg-green-50 file:text-green-800
+                                        hover:file:bg-green-100"
+                                        accept="image/*"
+                                    />
+                                    <p className="mt-1 text-sm text-gray-500">Laissez vide pour conserver l'image actuelle</p>
+                                </div>
+                                {/* Titre */}
+                                <div>
+                                <label className="block text-sm font-medium text-gray-700">Titre *</label>
+                                    <input
+                                        type="text"
+                                        name="titre"
+                                        value={formData.titre}
+                                        onChange={handleChange}
+                                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-800 focus:ring focus:ring-green-800 focus:ring-opacity-50"
+                                        required
+                                    />
+                                </div>
 
-                                {currentImage && (
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700">Image actuelle</label>
-                                        <img
-                                            src={currentImage}
-                                            alt="Current"
-                                            className="mt-2 h-40 object-cover rounded-md"
+                                {/* Résumé */}
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700">Résumé *</label>
+                                    <textarea
+                                        name="resume"
+                                        value={formData.resume}
+                                        onChange={handleChange}
+                                        rows="3"
+                                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-800 focus:ring focus:ring-green-800 focus:ring-opacity-50"
+                                        required
+                                    />
+                                </div>
+
+                                {/* Contenu */}
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700">Contenu *</label>
+                                    <div className="mt-1 border rounded-md p-2 min-h-[300px]">
+                                        <div className="border-b mb-2 p-2 flex gap-2">
+                                            <button
+                                                type="button"
+                                                onClick={() => editor?.chain().focus().toggleBold().run()}
+                                                className={`p-2 rounded ${editor?.isActive('bold') ? 'bg-gray-200' : ''}`}
+                                            >
+                                                <strong>B</strong>
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={() => editor?.chain().focus().toggleItalic().run()}
+                                                className={`p-2 rounded ${editor?.isActive('italic') ? 'bg-gray-200' : ''}`}
+                                            >
+                                                <em>I</em>
+                                            </button>
+                                        </div>
+                                        <EditorContent 
+                                            editor={editor} 
+                                            value={formData.contenu}
+                                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-800 focus:ring focus:ring-green-800 focus:ring-opacity-50 min-h-[200px] prose max-w-none"
                                         />
+                                    </div>
+                                </div>
+
+                                {/* Auteur */}
+                                <div>
+                                <label className="block text-sm font-medium text-gray-700">Auteur *</label>
+                                    <input
+                                        type="text"
+                                        name="writer"
+                                        value={formData.writer}
+                                        onChange={handleChange}
+                                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-800 focus:ring focus:ring-green-800 focus:ring-opacity-50"
+                                        required
+                                    />
+                                </div>
+
+                                
+                                
+                                {/* Section Admin (visible seulement pour admin) */}
+                                {user?.role === 'super_admin' && (
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700">Statut</label>
+                                            <select
+                                                name="statut"
+                                                value={formData.statut}
+                                                onChange={handleChange}
+                                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-800 focus:ring focus:ring-green-800 focus:ring-opacity-50"
+                                            >
+                                                <option value="en cours">En cours</option>
+                                                <option value="validé">Validé</option>
+                                                <option value="renvoyé">Renvoyé</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700">Note</label>
+                                            <textarea
+                                                name="note"
+                                                value={formData.note}
+                                                onChange={handleChange}
+                                                rows={2}
+                                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-800 focus:ring focus:ring-green-800 focus:ring-opacity-50"
+                                            />
+                                        </div>
                                     </div>
                                 )}
 
                                 <div className="flex justify-end">
                                     <button
                                         type="button"
-                                        onClick={() => router.push('/blog')}
+                                        onClick={() => router.push('/blog-manage')}
                                         className="mr-4 px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-800"
                                     >
                                         Annuler
@@ -130,7 +338,7 @@ export default function EditBlog() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
         </>
     );
 }

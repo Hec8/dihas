@@ -20,13 +20,14 @@ export default function EmployeeManagement() {
     const fetchEmployees = async () => {
         try {
             const { data } = await axios.get('/api/employees');
-            setEmployees(data);
+            setEmployees(data.employees); // ✅ Corriger ici
             setLoading(false);
         } catch (error) {
             toast.error('Erreur lors du chargement des employés');
             setLoading(false);
         }
     };
+
 
     const handleDelete = async (id) => {
         if (!confirm('Voulez-vous vraiment supprimer cet employé ?')) return;
@@ -93,8 +94,8 @@ export default function EmployeeManagement() {
                                                 </td>
                                                 <td className="px-6 py-4 whitespace-nowrap">
                                                     <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${employee.role === 'admin'
-                                                            ? 'bg-green-100 text-green-800'
-                                                            : 'bg-blue-100 text-blue-800'
+                                                        ? 'bg-green-100 text-green-800'
+                                                        : 'bg-blue-100 text-blue-800'
                                                         }`}>
                                                         {employee.role}
                                                     </span>

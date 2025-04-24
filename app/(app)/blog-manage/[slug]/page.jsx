@@ -17,7 +17,7 @@ export default function BlogArticle() {
     useEffect(() => {
         const fetchArticle = async () => {
             try {
-                const { data } = await axios.get(`/api/blog/${slug}`);
+                const { data } = await axios.get(`/api/blog/view/${slug}`);
                 setArticle(data.article);
             } catch (error) {
                 toast.error(error.response?.data?.message || "Article non trouvé");
@@ -107,10 +107,11 @@ export default function BlogArticle() {
                         <p className="text-lg text-gray-600 mb-6">{article.resume}</p>
                     </div>
 
-                    {/* Contenu de l'article - Version sécurisée sans HTML */}
-                    <div className="px-6 pb-8 whitespace-pre-line">
-                        {formatContent(article.contenu)}
-                    </div>
+                    <div
+                        className="px-6 pb-8 text-justify"
+                        dangerouslySetInnerHTML={{ __html: article.contenu }}
+                    ></div>
+
                 </article>
             </main>
         </div>

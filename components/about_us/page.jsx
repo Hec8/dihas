@@ -169,12 +169,14 @@ const AboutUs = () => {
                                 transition={{ duration: 0.6, delay: 0.4 }}
                                 className="flex items-center gap-4"
                             >
-                                <button className="bg-[#FFA500] hover:bg-[#FF8533] transition-colors text-white px-6 py-3 rounded-lg flex items-center">
-                                    Contactez-nous
-                                </button>
+                                <a href='/contact'>
+                                    <button className="bg-[#FFA500] hover:bg-[#FF8533] transition-colors text-white px-6 py-3 rounded-lg flex items-center">
+                                        Contactez-nous
+                                    </button>
+                                </a>
                                 <div className="text-xs text-gray-600">
                                     Besoin d'aide?<br />
-                                    (229) XX XX XX XX
+                                    (229) 01 94 97 54 51
                                 </div>
                             </motion.div>
                         </motion.div>

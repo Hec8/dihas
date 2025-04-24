@@ -47,7 +47,7 @@ export default function Projet() {
         },
         {
             id: 3,
-            title: 'Académie Internationale De Freelancing (AFB)',
+            title: 'Académie Internationale De Freelancing (AIF)',
             image: '/assets/AFB.png',
             technologies: ['ReactJS', 'NodeJS', 'AWS'],
             features: [
@@ -118,19 +118,19 @@ export default function Projet() {
                                 <ul className="space-y-6 mb-8">
                                     <li className="flex items-start gap-4">
                                         <div className="mt-1">
-                                            <Image src="/assets/certif.png" alt="check" width={24} height={24} className="text-green-500" />
+                                            <Image src="/assets/certif.png" alt="check" width={26} height={26} className="text-green-500" />
                                         </div>
                                         <span className="text-gray-700">Respect du calendrier du projet avec un code de qualité</span>
                                     </li>
                                     <li className="flex items-start gap-4">
                                         <div className="mt-1">
-                                            <Image src="/assets/certif.png" alt="check" width={24} height={24} className="text-green-500" />
+                                            <Image src="/assets/certif.png" alt="check" width={28} height={28} className="text-green-500" />
                                         </div>
                                         <span className="text-gray-700">Facilement accessible aux développeurs Web comme Mobile</span>
                                     </li>
                                     <li className="flex items-start gap-4">
                                         <div className="mt-1">
-                                            <Image src="/assets/certif.png" alt="check" width={24} height={24} className="text-green-500" />
+                                            <Image src="/assets/certif.png" alt="check" width={36} height={36} className="text-green-500" />
                                         </div>
                                         <span className="text-gray-700">Rentable et flexible dans l&apos;embauche de développeurs Web comme Mobile</span>
                                     </li>
@@ -141,9 +141,11 @@ export default function Projet() {
                                         <span className="text-gray-700">Autorisation de code source sécurisé et complète</span>
                                     </li>
                                 </ul>
-                                <button className="w-full bg-[#FFA500] text-white py-4 rounded-xl text-lg font-semibold hover:bg-[#FF8C00] transition-colors">
-                                    Obtenez Une Consultation
-                                </button>
+                                <a href='/contact'>
+                                    <button className="w-full bg-[#FFA500] text-white py-4 rounded-xl text-lg font-semibold hover:bg-[#FF8C00] transition-colors">
+                                        Obtenez Une Consultation
+                                    </button>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -210,11 +212,8 @@ export default function Projet() {
                         <div className={`absolute left-0 top-0 h-full w-[14.2857%] bg-[#FFA500] rounded-l-lg z-0 transition-all duration-1000 ${technologiesInView ? 'translate-x-0' : '-translate-x-full'}`}></div>
                         <div className="relative z-10 p-8 pl-[calc(14.2857%+2rem)]">
                             <h2 className={`text-2xl font-bold transition-all duration-700 delay-300 ${technologiesInView ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'}`}>
-                                Nous Travaillons Sur Des Plateformes De Développement
+                                Nous Travaillons Sur Des Plateformes De Développement Performantes
                             </h2>
-                            <h3 className={`text-xl font-bold text-green-800 transition-all duration-700 delay-400 ${technologiesInView ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'}`}>
-                                Performantes et Performantes
-                            </h3>
                             <p className={`mt-4 transition-all duration-700 delay-500 ${technologiesInView ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'}`}>
                                 Sans une agence de développement expérimentée, votre présence en ligne est menacée. Nous garantissons une expérience fluide sur toutes les plateformes.
                             </p>
