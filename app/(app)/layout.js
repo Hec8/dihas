@@ -12,10 +12,14 @@ const AppLayout = ({ children }) => {
     }
 
     return (
-        <div className="min-h-screen bg-gray-100">
+        <div className="flex min-h-screen bg-gray-100">
+            {/* Barre latérale */}
             <Navigation user={user} />
 
-            <main>{children}</main>
+            {/* Contenu principal */}
+            <main className="flex-1 p-6">
+                {children}
+            </main>
         </div>
     )
 }

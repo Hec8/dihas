@@ -5,6 +5,11 @@ import axios from '@/lib/axios';
 import { useRouter } from 'next/navigation';
 import toast, { Toaster } from 'react-hot-toast';
 import Header from '@/app/(app)/Header';
+import { useEditor, EditorContent } from '@tiptap/react'
+import StarterKit from '@tiptap/starter-kit'
+import MenuBar from '@/components/MenuBar';
+import Highlight from '@tiptap/extension-highlight';
+import Typography from '@tiptap/extension-typography';
 
 export default function CreateBlog() {
     const [formData, setFormData] = useState({
@@ -13,6 +18,31 @@ export default function CreateBlog() {
         contenu: '',
         writer: '',
         resume: '',
+    });
+
+    const [updateTimeout, setUpdateTimeout] = useState(null);
+
+    const editor = useEditor({
+        extensions: [
+            StarterKit,
+            Highlight,
+            Typography
+        ],
+        content: formData.contenu,
+        onUpdate: ({ editor }) => {
+            // Annuler le timeout précédent s'il existe
+            if (updateTimeout) clearTimeout(updateTimeout);
+            
+            // Créer un nouveau timeout
+            const timeoutId = setTimeout(() => {
+                setFormData(prev => ({
+                    ...prev,
+                    contenu: editor.getHTML()
+                }));
+            }, 1000); // Attendre 1 seconde après la dernière modification
+            
+            setUpdateTimeout(timeoutId);
+        },
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const router = useRouter();
@@ -125,15 +155,10 @@ export default function CreateBlog() {
 
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700">Contenu *</label>
-                                    <textarea
-                                        name="contenu"
-                                        value={formData.contenu}
-                                        onChange={handleChange}
-                                        rows={10}
-                                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-800 focus:ring focus:ring-green-800 focus:ring-opacity-50"
-                                        placeholder="Écrivez votre contenu ici... Utilisez des sauts de ligne pour séparer les paragraphes."
-                                        required
-                                    />
+                                    <div className="mt-1 border rounded-md p-2 min-h-[300px]">
+                                        <MenuBar editor={editor} />
+                                        <EditorContent editor={editor} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-800 focus:ring focus:ring-green-800 focus:ring-opacity-50 min-h-[200px] prose max-w-none" />
+                                    </div>
                                 </div>
 
                                 <div className="flex justify-end">

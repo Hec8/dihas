@@ -3,79 +3,56 @@
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import axios from '@/lib/axios';
+import Link from 'next/link';
 
 export default function Blogs() {
-    const [currentPage, setCurrentPage] = useState(0);
-    const [visibleCards, setVisibleCards] = useState([]);
-    const cardsRef = useRef([]);
-    const blogsPerPage = 4;
-
-    const blogs = [
-        {
-            id: 1,
-            title: "La Transformation Digitale",
-            description: "Levier pour l'innovation et l'efficacité des entreprises",
-            image: "/assets/transformation_digitale.png",
-            date: "2025/05/10",
-        },
-        {
-            id: 2,
-            title: "Tendances du marché",
-            description: "Prévisions et innovations dans le secteur du...",
-            image: "/assets/Tendances.png",
-            date: "2025/05/08",
-        },
-        {
-            id: 3,
-            title: "Stratégies marketing digital",
-            description: "Les meilleures pratiques pour une stratégie réussie",
-            image: "/assets/marketing.png",
-            date: "2025/05/12",
-        },
-        {
-            id: 4,
-            title: "Stratégies marketing digital",
-            description: "Les meilleures pratiques pour une stratégie réussie",
-            image: "/assets/marketing.png",
-            date: "2025/05/12",
-        }
-    ];
+    const [articles, setArticles] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        const cardId = entry.target.getAttribute('data-id');
-                        setVisibleCards((prev) => [...prev, cardId]);
-                        observer.unobserve(entry.target);
-                    }
-                });
-            },
-            {
-                threshold: 0.2,
-                rootMargin: '0px'
-            }
-        );
-
-        cardsRef.current.forEach((card) => {
-            if (card) {
-                observer.observe(card);
-            }
-        });
-
-        return () => {
-            cardsRef.current.forEach((card) => {
-                if (card) {
-                    observer.unobserve(card);
+        const fetchArticles = async () => {
+            try {
+                const response = await axios.get('/api/blogs/guest');
+                console.log('Response complète:', response);
+                console.log('Response data:', response.data);
+                
+                if (response.data && response.data.blogs) {
+                    console.log('Articles trouvés:', response.data.blogs);
+                    // Log des URLs d'images
+                    response.data.blogs.forEach(article => {
+                        console.log(`Article ${article.id} - Image URL:`, article.image);
+                    });
+                    setArticles(response.data.blogs);
+                } else {
+                    console.log('Aucun article trouvé dans la réponse');
+                    setArticles([]);
                 }
-            });
+            } catch (error) {
+                console.error('Erreur lors de la récupération des articles:', error);
+                setArticles([]);
+            } finally {
+                setLoading(false);
+            }
         };
-    }, [currentPage]);
 
-    const totalPages = Math.ceil(blogs.length / blogsPerPage);
-    const startIndex = currentPage * blogsPerPage;
-    const displayedBlogs = blogs.slice(startIndex, startIndex + blogsPerPage);
+        fetchArticles();
+    }, []);
+
+    // Fonction pour formater la date
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('fr-FR', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit'
+        });
+    };
+
+
+
+    // Simplifier la pagination pour le moment
+    const displayedArticles = articles;
 
     const nextPage = () => {
         setCurrentPage((prev) => (prev + 1) % totalPages);
@@ -96,90 +73,81 @@ export default function Blogs() {
                     pratiques et les dernières tendances qui inspirent et informent
                 </p>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 w-full">
-                    {displayedBlogs.map((blog, index) => (
-                        <motion.div
-                            key={blog.id}
-                            ref={(el) => (cardsRef.current[index] = el)}
-                            data-id={blog.id}
-                            className={`bg-white rounded-lg overflow-hidden shadow-lg transition-all duration-700 opacity-0 translate-y-20 hover:shadow-xl ${visibleCards.includes(blog.id.toString()) ? 'opacity-100 translate-y-0' : ''
-                                }`}
-                            whileHover={{ y: -2 }}
-                            transition={{ duration: 0.2 }}
-                        >
-                            <div className="relative h-[180px] sm:h-[200px] w-full overflow-hidden">
-                                <Image
-                                    src={blog.image}
-                                    alt={blog.title}
-                                    fill
-                                    className="object-cover"
-                                    sizes="(max-width: 640px) 85vw, (max-width: 1024px) 40vw, 25vw"
-                                    quality={100}
-                                    priority
-                                />
-                            </div>
-                            <div className="p-4">
-                                <h3 className="text-base sm:text-lg font-semibold mb-2 line-clamp-2">
-                                    {blog.title}
-                                </h3>
-                                <p className="text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-3 text-gray-600">
-                                    {blog.description}
-                                </p>
-                                <div className="flex items-center justify-between mb-3">
-                                    <span className="text-xs sm:text-sm text-gray-500">Publié le :</span>
-                                    <span className="text-xs sm:text-sm text-gray-500 ml-2 truncate max-w-[120px]">
-                                        {blog.date}
-                                    </span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 md:gap-6 w-full max-w-4xl mx-auto">
+                    {loading ? (
+                        // Afficher 2 cartes de chargement
+                        [...Array(2)].map((_, index) => (
+                            <motion.div
+                                key={index}
+                                className="bg-white rounded-lg shadow-lg overflow-hidden animate-pulse"
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5, delay: index * 0.1 }}
+                            >
+                                <div className="h-48 bg-gray-200" />
+                                <div className="p-4">
+                                    <div className="h-4 bg-gray-200 rounded w-3/4 mb-2" />
+                                    <div className="h-4 bg-gray-200 rounded w-1/2" />
                                 </div>
-                                <motion.button
-                                    className="w-full py-2 px-3 sm:px-4 border-2 font-semibold border-[#0F6B42] text-[#0F6B42] rounded-lg hover:bg-[#FF9F1C] hover:text-white hover:border-transparent active:border-transparent active:bg-[#FF9F1C] active:text-white transition-all duration-300 text-xs sm:text-sm md:text-base"
-                                    whileTap={{ scale: 0.98 }}
-                                >
-                                    Lire plus
-                                </motion.button>
-                            </div>
-                        </motion.div>
-                    ))}
+                            </motion.div>
+                        ))
+                    ) : articles.length > 0 ? (
+                        articles.map((article, index) => (
+                            <motion.div
+                                key={index}
+                                className="bg-white rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-xl"
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5, delay: index * 0.1 }}
+                                whileHover={{ y: -2 }}
+                            >
+                                <div className="relative h-[180px] sm:h-[200px] w-full overflow-hidden">
+                                    <Image
+                                        src={article.image || '/assets/default-blog.png'}
+                                        alt={article.titre}
+                                        fill
+                                        className="object-cover"
+                                        sizes="(max-width: 640px) 85vw, (max-width: 1024px) 40vw, 25vw"
+                                        quality={100}
+                                        priority
+                                        onError={(e) => {
+                                            console.error('Erreur de chargement image:', article.image);
+                                            e.target.src = '/assets/default-blog.png';
+                                        }}
+                                    />
+                                </div>
+                                <div className="p-4">
+                                    <h3 className="text-base sm:text-lg font-semibold mb-2 line-clamp-2">
+                                        {article.titre}
+                                    </h3>
+                                    <p className="text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-1 text-gray-600">
+                                        {article.resume}
+                                    </p>
+                                    <div className="flex items-center justify-between mb-3">
+                                        <span className="text-xs sm:text-sm text-gray-500">Publié le : {formatDate(article.created_at)}</span>
+                                        <span className="text-xs sm:text-sm text-gray-500 ml-2 truncate max-w-[120px]">
+                                            {article.writer || 'Admin'}
+                                        </span>
+                                    </div>
+                                    <Link href={`/blog/${article.slug}`}>
+                                        <motion.button
+                                            className="w-full py-2 px-3 sm:px-4 border-2 font-semibold border-[#0F6B42] text-[#0F6B42] rounded-lg hover:bg-[#FF9F1C] hover:text-white hover:border-transparent active:border-transparent active:bg-[#FF9F1C] active:text-white transition-all duration-300 text-xs sm:text-sm md:text-base"
+                                            whileTap={{ scale: 0.98 }}
+                                        >
+                                            Lire plus
+                                        </motion.button>
+                                    </Link>
+                                </div>
+                            </motion.div>
+                        ))
+                    ) : (
+                        <div className="col-span-2 text-center py-8 text-gray-500">
+                            Aucun article disponible pour le moment
+                        </div>
+                    )}
                 </div>
 
-                <div className="flex justify-center items-center mt-12 sm:mt-16 md:mt-24 lg:mt-32">
-                    <motion.button
-                        onClick={prevPage}
-                        className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full border-2 border-[#0F6B42] flex items-center justify-center group hover:bg-[#0F6B42] transition-all duration-300 bg-white mr-4"
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}
-                    >
-                        <svg
-                            className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-[#0F6B42] group-hover:text-white transition-colors"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                        >
-                            <path d="M15 18l-6-6 6-6" />
-                        </svg>
-                    </motion.button>
-                    <motion.button
-                        onClick={nextPage}
-                        className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full border-2 border-[#0F6B42] flex items-center justify-center group hover:bg-[#0F6B42] transition-all duration-300 bg-white"
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}
-                    >
-                        <svg
-                            className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-[#0F6B42] group-hover:text-white transition-colors"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                        >
-                            <path d="M9 18l6-6-6-6" />
-                        </svg>
-                    </motion.button>
-                </div>
+                {/* Pagination temporairement désactivée */}
             </div>
 
             <style jsx global>{`

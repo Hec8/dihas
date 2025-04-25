@@ -9,12 +9,12 @@ export default function Dashboard() {
 
     return (
         <>
-            <Header title="Tableau de bord - Admin " />
+            <Header title="Tableau de bord - Créateur de contenu" />
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="mb-8">
                         <h2 className="text-2xl font-semibold text-gray-800 mb-4">Statistiques des articles</h2>
-                        <BlogStats role="super_admin" />
+                        <BlogStats role="createur_contenu" />
                     </div>
                 </div>
             </div>

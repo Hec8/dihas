@@ -1,20 +1,36 @@
 'use client'
 
+import { Suspense } from 'react'
 import InputError from '@/components/InputError'
 import Label from '@/components/Label'
 import Link from 'next/link'
 import { useAuth } from '@/hooks/auth'
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import AuthSessionStatus from '@/app/(auth)/AuthSessionStatus'
 
 const Login = () => {
-    const router = useRouter()
+    return (
+        <Suspense fallback={<div>Chargement...</div>}>
+            <LoginContent />
+        </Suspense>
+    )
+}
 
+const LoginContent = () => {
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const resetParam = searchParams?.get('reset')
     const { login } = useAuth({
         middleware: 'guest',
-        redirectIfAuthenticated: '/dashboard',
-    })
+        redirectIfAuthenticated: user => {
+            // Toujours retourner une string valide
+            if (!user) return '/login';
+            if (user?.role === 'super_admin') return '/dashboard';
+            if (user?.role === 'createur_contenu') return '/content-creator-dashboard';
+            return '/'; // Fallback par défaut
+        },
+    });
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -23,12 +39,16 @@ const Login = () => {
     const [status, setStatus] = useState(null)
 
     useEffect(() => {
-        if (router.reset?.length > 0 && errors.length === 0) {
-            setStatus(atob(router.reset))
+        if (!router || !searchParams) return;
+
+        if (resetParam && errors.length === 0) {
+            setStatus(atob(resetParam))
         } else {
             setStatus(null)
         }
-    }, [router.reset, errors.length])
+    }, [resetParam, errors.length, router, searchParams])
+
+    if (!router || !searchParams) return <div>Chargement...</div>;
 
     const submitForm = async event => {
         event.preventDefault()
