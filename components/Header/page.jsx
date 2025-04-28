@@ -30,8 +30,8 @@ export default function Header() {
                 : 'bg-[#FFA500] text-green-800 h-full flex items-center px-4';
         }
         return isScrolled
-            ? 'text-gray-800 hover:text-yellow-500 h-full flex items-center px-4'
-            : 'text-white hover:text-yellow-500 h-full flex items-center px-4';
+            ? 'text-gray-800 hover:text-[#FFA500] h-full flex items-center px-4'
+            : 'text-white hover:text-[#FFA500] h-full flex items-center px-4';
     };
 
     return (
@@ -107,7 +107,7 @@ export default function Header() {
                                 </svg>
                             </button>
                             <Link href="/login" className={getLinkStyles('/login')}>
-                                <button className={`${isScrolled ? 'text-gray-800 border-black hover:text-yellow-500' : 'text-white hover:bg-yellow-500 border px-3 py-2 rounded-xl'} md:mr-4`}>Connexion</button>
+                                <button className={`${isScrolled ? 'text-gray-800 hover:text-[#FFA500]' : 'text-white hover:text-[#FFA500]'} md:mr-4`}>Connexion</button>
                             </Link>
                         </div>
                     </div>
