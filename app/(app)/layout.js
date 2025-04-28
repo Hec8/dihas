@@ -2,6 +2,7 @@
 
 import { useAuth } from '@/hooks/auth'
 import Navigation from '@/app/(app)/Navigation'
+import DashboardHeader from '@/components/DashboardHeader'
 import Loading from '@/app/(app)/Loading'
 
 const AppLayout = ({ children }) => {
@@ -17,9 +18,12 @@ const AppLayout = ({ children }) => {
             <Navigation user={user} />
 
             {/* Contenu principal */}
-            <main className="flex-1 p-6">
-                {children}
-            </main>
+            <div className="flex-1">
+                <DashboardHeader />
+                <main className="p-6">
+                    {children}
+                </main>
+            </div>
         </div>
     )
 }

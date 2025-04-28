@@ -11,6 +11,9 @@ import StarterKit from '@tiptap/starter-kit';
 import MenuBar from '@/components/MenuBar';
 import Highlight from '@tiptap/extension-highlight';
 import Typography from '@tiptap/extension-typography';
+import Underline from '@tiptap/extension-underline';
+import TextStyle from '@tiptap/extension-text-style';
+import Color from '@tiptap/extension-color';
 
 export default function EditBlog() {
     const { id } = useParams();
@@ -29,7 +32,6 @@ export default function EditBlog() {
     const [isLoading, setIsLoading] = useState(true);
 
     const [editorContent, setEditorContent] = useState('');
-    const [updateTimeout, setUpdateTimeout] = useState(null);
 
     const editor = useEditor({
         extensions: [
@@ -46,21 +48,26 @@ export default function EditBlog() {
                 }
             }),
             Highlight,
-            Typography
+            Typography,
+            Underline,
+            TextStyle,
+            Color
         ],
-        content: formData.contenu,
+        content: '',
         editorProps: {
             attributes: {
                 class: 'prose max-w-none focus:outline-none'
             },
             handleDOMEvents: {
                 keydown: (view, event) => {
-                    if ((event.ctrlKey || event.metaKey) && (event.key === 'b' || event.key === 'i')) {
+                    if ((event.ctrlKey || event.metaKey) && (event.key === 'b' || event.key === 'i' || event.key === 'u')) {
                         event.preventDefault();
                         if (event.key === 'b') {
                             editor?.chain().focus().toggleBold().run();
                         } else if (event.key === 'i') {
                             editor?.chain().focus().toggleItalic().run();
+                        } else if (event.key === 'u') {
+                            editor?.chain().focus().toggleUnderline().run();
                         }
                         return true;
                     }
@@ -69,31 +76,27 @@ export default function EditBlog() {
             }
         },
         onCreate: ({ editor }) => {
+            // Mettre à jour le contenu local sans sauvegarde automatique
             editor.on('update', () => {
-                // Annuler le timeout précédent s'il existe
-                if (updateTimeout) clearTimeout(updateTimeout);
-                
-                // Créer un nouveau timeout
-                const timeoutId = setTimeout(() => {
-                    const html = editor.getHTML();
-                    setEditorContent(html);
-                    setFormData(prev => ({
-                        ...prev,
-                        contenu: html
-                    }));
-                }, 1000); // Attendre 1 seconde après la dernière modification
-                
-                setUpdateTimeout(timeoutId);
+                const html = editor.getHTML();
+                setEditorContent(html);
             });
         }
     });
+
+    // Met à jour le contenu de l'éditeur quand il est prêt et que le contenu est disponible
+    useEffect(() => {
+        if (editor && formData.contenu) {
+            editor.commands.setContent(formData.contenu);
+        }
+    }, [editor, formData.contenu]);
 
     useEffect(() => {
         const fetchArticle = async () => {
             try {
                 console.log("Tentative de récupération de l'article ID:", id);
                 const response = await axios.get(`/api/blog/edit/${id}`);
-                
+
                 console.log("Réponse complète:", response);
                 console.log("Headers:", response.headers);
                 console.log("Status:", response.status);
@@ -111,9 +114,9 @@ export default function EditBlog() {
 
                 setFormData({
                     titre: article.titre || '',
-                    contenu: article.contenu || '',
                     writer: article.writer || '',
                     resume: article.resume || '',
+                    contenu: content || '',
                     statut: article.statut || 'en cours',
                     note: article.note || '',
                     image: null,
@@ -171,7 +174,9 @@ export default function EditBlog() {
             }
 
             // Ajouter le contenu de l'éditeur
-            formDataToSend.append('contenu', editorContent || editor?.getHTML() || formData.contenu);
+            // Récupérer le contenu actuel de l'éditeur
+            const currentContent = editor?.getHTML() || '';
+            formDataToSend.append('contenu', currentContent);
 
             // Ajouter la méthode PUT
             formDataToSend.append('_method', 'PUT');
@@ -222,7 +227,7 @@ export default function EditBlog() {
                                 </div>
                                 {/* Titre */}
                                 <div>
-                                <label className="block text-sm font-medium text-gray-700">Titre *</label>
+                                    <label className="block text-sm font-medium text-gray-700">Titre *</label>
                                     <input
                                         type="text"
                                         name="titre"
@@ -250,25 +255,59 @@ export default function EditBlog() {
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700">Contenu *</label>
                                     <div className="mt-1 border rounded-md p-2 min-h-[300px]">
-                                        <div className="border-b mb-2 p-2 flex gap-2">
+                                        <div className="border-b mb-2 p-2 flex flex-wrap gap-2">
                                             <button
                                                 type="button"
                                                 onClick={() => editor?.chain().focus().toggleBold().run()}
-                                                className={`p-2 rounded ${editor?.isActive('bold') ? 'bg-gray-200' : ''}`}
+                                                className={`p-2 rounded ${editor?.isActive('bold') ? 'bg-gray-200' : 'hover:bg-gray-100'}`}
+                                                title="Gras (Ctrl+B)"
                                             >
                                                 <strong>B</strong>
                                             </button>
                                             <button
                                                 type="button"
                                                 onClick={() => editor?.chain().focus().toggleItalic().run()}
-                                                className={`p-2 rounded ${editor?.isActive('italic') ? 'bg-gray-200' : ''}`}
+                                                className={`p-2 rounded ${editor?.isActive('italic') ? 'bg-gray-200' : 'hover:bg-gray-100'}`}
+                                                title="Italique (Ctrl+I)"
                                             >
                                                 <em>I</em>
                                             </button>
+                                            <button
+                                                type="button"
+                                                onClick={() => editor?.chain().focus().toggleUnderline().run()}
+                                                className={`p-2 rounded ${editor?.isActive('underline') ? 'bg-gray-200' : 'hover:bg-gray-100'}`}
+                                                title="Souligner (Ctrl+U)"
+                                            >
+                                                <u>U</u>
+                                            </button>
+                                            <div className="w-px h-6 bg-gray-300 mx-2 self-center" />
+                                            <input
+                                                type="color"
+                                                onInput={e => editor?.chain().focus().setColor(e.target.value).run()}
+                                                value={editor?.getAttributes('textStyle').color || '#000000'}
+                                                className="w-8 h-8 p-1 rounded cursor-pointer"
+                                                title="Couleur du texte"
+                                            />
+                                            <button
+                                                type="button"
+                                                onClick={() => editor?.chain().focus().unsetColor().run()}
+                                                className="p-2 rounded hover:bg-gray-100"
+                                                title="Supprimer la couleur"
+                                            >
+                                                <span className="text-gray-600">A</span>
+                                            </button>
+                                            <div className="w-px h-6 bg-gray-300 mx-2 self-center" />
+                                            <button
+                                                type="button"
+                                                onClick={() => editor?.chain().focus().toggleHighlight().run()}
+                                                className={`p-2 rounded ${editor?.isActive('highlight') ? 'bg-gray-200' : 'hover:bg-gray-100'}`}
+                                                title="Surligner"
+                                            >
+                                                <span className="bg-yellow-200 px-1">H</span>
+                                            </button>
                                         </div>
-                                        <EditorContent 
-                                            editor={editor} 
-                                            value={formData.contenu}
+                                        <EditorContent
+                                            editor={editor}
                                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-800 focus:ring focus:ring-green-800 focus:ring-opacity-50 min-h-[200px] prose max-w-none"
                                         />
                                     </div>
@@ -276,7 +315,7 @@ export default function EditBlog() {
 
                                 {/* Auteur */}
                                 <div>
-                                <label className="block text-sm font-medium text-gray-700">Auteur *</label>
+                                    <label className="block text-sm font-medium text-gray-700">Auteur *</label>
                                     <input
                                         type="text"
                                         name="writer"
@@ -287,8 +326,8 @@ export default function EditBlog() {
                                     />
                                 </div>
 
-                                
-                                
+
+
                                 {/* Section Admin (visible seulement pour admin) */}
                                 {user?.role === 'super_admin' && (
                                     <div className="grid grid-cols-2 gap-4">

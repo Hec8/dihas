@@ -17,7 +17,7 @@ export default function Testimony() {
         },
         {
             id: 2,
-            name: "Académie Freelancing Bénin (AFB)",
+            name: "Académie Internationale de Freelancing (AIF)",
             role: "Sabine MoFOA, utilisatrice",
             image: "/assets/sabine.png",
             content: "Diha's a joué un rôle clé dans le développement d'AFB. Grâce à leur expertise, notre plateforme de formation offre désormais une expérience utilisateur optimisée, aidant les jeunes à découvrir leur voie et à atteindre leurs objectifs professionnels"

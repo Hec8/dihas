@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Share2 } from "lucide-react";
+import '@/styles/article.css';
 
 export default function BlogDetail({ article, loading }) {
     if (loading) {
@@ -139,13 +140,35 @@ export default function BlogDetail({ article, loading }) {
                         </div>
 
                         {/* Contenu de l'article */}
-                        <div className="prose prose-sm sm:prose text-justify lg:prose-lg max-w-none mt-8 mb-12">
-  {article.contenu ? (
-    <div dangerouslySetInnerHTML={{ __html: article.contenu }} />
-  ) : (
-    <p className="text-gray-500">Le contenu de cet article n'est pas disponible.</p>
-  )}
-</div>
+                        <div 
+                            className="prose prose-sm sm:prose lg:prose-lg max-w-none mt-8 mb-12
+                                     prose-headings:text-gray-800 prose-headings:font-bold
+                                     prose-p:text-justify prose-p:mb-4 prose-p:leading-relaxed
+                                     prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline
+                                     prose-strong:text-gray-900 prose-strong:font-bold
+                                     prose-em:text-gray-800 prose-em:italic
+                                     prose-ul:list-disc prose-ul:pl-6
+                                     prose-ol:list-decimal prose-ol:pl-6
+                                     prose-li:my-2
+                                     prose-blockquote:border-l-4 prose-blockquote:border-gray-300
+                                     prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:my-6
+                                     prose-img:rounded-lg prose-img:shadow-md"
+                        >
+                            {article.contenu ? (
+                                <div 
+                                    dangerouslySetInnerHTML={{ 
+                                        __html: article.contenu
+                                            .replace(/\n/g, '<br/>') // Convertir les retours à la ligne simples en <br/>
+                                            .replace(/\n\n/g, '</p><p>') // Convertir les doubles retours à la ligne en nouveaux paragraphes
+                                    }} 
+                                    className="article-content text-justify"
+                                />
+                            ) : (
+                                <p className="text-gray-500 italic text-center py-4">
+                                    Le contenu de cet article n'est pas disponible.
+                                </p>
+                            )}
+                        </div>
 
                         {/* Navigation entre articles - Responsive */}
                         <div className="flex flex-row sm:flex-row justify-between items-center mt-12 border-t pt-6 gap-4">

@@ -10,6 +10,9 @@ import StarterKit from '@tiptap/starter-kit'
 import MenuBar from '@/components/MenuBar';
 import Highlight from '@tiptap/extension-highlight';
 import Typography from '@tiptap/extension-typography';
+import Underline from '@tiptap/extension-underline';
+import TextStyle from '@tiptap/extension-text-style';
+import Color from '@tiptap/extension-color';
 
 export default function CreateBlog() {
     const [formData, setFormData] = useState({
@@ -24,27 +27,67 @@ export default function CreateBlog() {
 
     const editor = useEditor({
         extensions: [
-            StarterKit,
+            StarterKit.configure({
+                bold: {
+                    HTMLAttributes: {
+                        class: 'font-bold'
+                    }
+                },
+                italic: {
+                    HTMLAttributes: {
+                        class: 'italic'
+                    }
+                }
+            }),
             Highlight,
-            Typography
+            Typography,
+            Underline,
+            TextStyle,
+            Color
         ],
         content: formData.contenu,
-        onUpdate: ({ editor }) => {
-            // Annuler le timeout précédent s'il existe
-            if (updateTimeout) clearTimeout(updateTimeout);
-            
-            // Créer un nouveau timeout
-            const timeoutId = setTimeout(() => {
-                setFormData(prev => ({
-                    ...prev,
-                    contenu: editor.getHTML()
-                }));
-            }, 1000); // Attendre 1 seconde après la dernière modification
-            
-            setUpdateTimeout(timeoutId);
+        editorProps: {
+            attributes: {
+                class: 'prose max-w-none focus:outline-none'
+            },
+            handleDOMEvents: {
+                keydown: (view, event) => {
+                    if ((event.ctrlKey || event.metaKey) && (event.key === 'b' || event.key === 'i')) {
+                        event.preventDefault();
+                        if (event.key === 'b') {
+                            editor?.chain().focus().toggleBold().run();
+                        } else if (event.key === 'i') {
+                            editor?.chain().focus().toggleItalic().run();
+                        } else if (event.key === 'u') {
+                            editor?.chain().focus().toggleUnderline().run();
+                        }
+                        return true;
+                    }
+                    return false;
+                }
+            }
         },
+        onCreate: ({ editor }) => {
+            editor.on('update', () => {
+                // Annuler le timeout précédent s'il existe
+                if (updateTimeout) clearTimeout(updateTimeout);
+
+                // Créer un nouveau timeout
+                const timeoutId = setTimeout(() => {
+                    const html = editor.getHTML();
+                    setEditorContent(html);
+                    setFormData(prev => ({
+                        ...prev,
+                        contenu: html
+                    }));
+                }, 1000); // Attendre 1 seconde après la dernière modification
+
+                setUpdateTimeout(timeoutId);
+            });
+        }
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [editorContent, setEditorContent] = useState('');
     const router = useRouter();
 
     const handleChange = (e) => {
@@ -153,11 +196,57 @@ export default function CreateBlog() {
                                     />
                                 </div>
 
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700">Contenu *</label>
-                                    <div className="mt-1 border rounded-md p-2 min-h-[300px]">
-                                        <MenuBar editor={editor} />
-                                        <EditorContent editor={editor} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-800 focus:ring focus:ring-green-800 focus:ring-opacity-50 min-h-[200px] prose max-w-none" />
+                                <div className="flex flex-col gap-4 w-full">
+                                    <div className="flex flex-col gap-2">
+                                        <label className="block text-sm font-medium text-gray-700">Contenu *</label>
+                                        <div className="mt-1 border rounded-md p-2 min-h-[300px]">
+                                            <div className="border-b mb-2 p-2 flex flex-wrap gap-2 bg-gray-100">
+                                                <button
+                                                    type="button"
+                                                    onClick={() => editor?.chain().focus().toggleBold().run()}
+                                                    className={`p-2 rounded ${editor?.isActive('bold') ? 'bg-gray-200' : ''}`}
+                                                    title="Gras (Ctrl+B)"
+                                                >
+                                                    <strong>B</strong>
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => editor?.chain().focus().toggleItalic().run()}
+                                                    className={`p-2 rounded ${editor?.isActive('italic') ? 'bg-gray-200' : ''}`}
+                                                    title="Italique (Ctrl+I)"
+                                                >
+                                                    <em>I</em>
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => editor?.chain().focus().toggleUnderline().run()}
+                                                    className={`p-2 rounded ${editor?.isActive('underline') ? 'bg-gray-200' : ''}`}
+                                                    title="Souligné (Ctrl+U)"
+                                                >
+                                                    <u>U</u>
+                                                </button>
+                                                <input
+                                                    type="color"
+                                                    onInput={e => editor?.chain().focus().setColor(e.target.value).run()}
+                                                    value={editor?.getAttributes('textStyle').color || '#000000'}
+                                                    className="w-8 h-8 p-0 rounded cursor-pointer"
+                                                    title="Couleur du texte"
+                                                />
+                                                <button
+                                                    type="button"
+                                                    onClick={() => editor?.chain().focus().toggleHighlight().run()}
+                                                    className={`p-2 rounded ${editor?.isActive('highlight') ? 'bg-gray-200' : ''}`}
+                                                    title="Surligner"
+                                                >
+                                                    <span className="bg-yellow-200 px-1">H</span>
+                                                </button>
+                                            </div>
+                                            <EditorContent
+                                                editor={editor}
+                                                value={formData.contenu}
+                                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-800 focus:ring focus:ring-green-800 focus:ring-opacity-50 min-h-[200px] prose max-w-none"
+                                            />
+                                        </div>
                                     </div>
                                 </div>
 

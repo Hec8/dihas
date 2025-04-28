@@ -96,6 +96,8 @@ export default function CreateEmployee() {
                                         <option value="">Choisissez un rôle</option>
                                         <option value="sous_admin">Sous administrateur</option>
                                         <option value="createur_contenu">Créateur de contenu</option>
+                                        <option value="dev">Développeur</option>
+                                        <option value="design">Designer</option>
                                     </select>
                                 </div>
 

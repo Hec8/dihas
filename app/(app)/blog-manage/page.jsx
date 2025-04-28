@@ -156,7 +156,7 @@ export default function BlogList({ user }) {
                                                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                                     <div className="flex items-center space-x-4">
                                                         <Link
-                                                            href={`/blog/${article.slug}`}
+                                                            href={`/blog-manage/${article.slug}`}
                                                             target="_blank"
                                                             rel="noopener noreferrer"
                                                             className="inline-flex items-center px-3 py-2 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
