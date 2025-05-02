@@ -75,6 +75,14 @@ const Navigation = ({ user }) => {
                             Articles
                         </Link>
 
+                        <Link href="/service-manage" className={`block px-4 py-2 rounded-md transition-all duration-200 ${isActive('/service-manage') ? 'bg-white text-green-700 shadow-md transform scale-105' : 'hover:bg-white/10 hover:transform hover:translate-x-1'}`}>
+                            Services
+                        </Link>
+
+                        <Link href="/product-manage" className={`block px-4 py-2 rounded-md transition-all duration-200 ${isActive('/product-manage') ? 'bg-white text-green-700 shadow-md transform scale-105' : 'hover:bg-white/10 hover:transform hover:translate-x-1'}`}>
+                            Produits
+                        </Link>
+
                         {!isContentCreator && (
                             <>
                                 <Link href="/newsletter" className={`block px-4 py-2 rounded-md transition-all duration-200 ${isActive('/newsletter') ? 'bg-white text-green-700 shadow-md transform scale-105' : 'hover:bg-white/10 hover:transform hover:translate-x-1'}`}>
