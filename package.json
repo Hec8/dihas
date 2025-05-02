@@ -26,6 +26,7 @@
     "eslint-config-prettier": "^10.1.2",
     "framer-motion": "^12.7.1",
     "lucide-react": "^0.488.0",
+    "maildev": "^2.2.1",
     "next": "15.2.4",
     "prettier": "^3.5.3",
     "react": "^19.0.0",
