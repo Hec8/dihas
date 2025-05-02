@@ -7,12 +7,12 @@ import toast, { Toaster } from 'react-hot-toast';
 import Header from '@/app/(app)/Header';
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import MenuBar from '@/components/MenuBar';
 import Highlight from '@tiptap/extension-highlight';
 import Typography from '@tiptap/extension-typography';
 import Underline from '@tiptap/extension-underline';
 import TextStyle from '@tiptap/extension-text-style';
 import Color from '@tiptap/extension-color';
+import Image from '@tiptap/extension-image';
 
 export default function CreateBlog() {
     const [formData, setFormData] = useState({
@@ -24,6 +24,7 @@ export default function CreateBlog() {
     });
 
     const [updateTimeout, setUpdateTimeout] = useState(null);
+    const [isUploadingImage, setIsUploadingImage] = useState(false);
 
     const editor = useEditor({
         extensions: [
@@ -43,7 +44,14 @@ export default function CreateBlog() {
             Typography,
             Underline,
             TextStyle,
-            Color
+            Color,
+            Image.configure({
+                inline: true,
+                allowBase64: true,
+                HTMLAttributes: {
+                    class: 'rounded-lg max-w-full h-auto',
+                },
+            })
         ],
         content: formData.contenu,
         editorProps: {
@@ -89,6 +97,40 @@ export default function CreateBlog() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [editorContent, setEditorContent] = useState('');
     const router = useRouter();
+
+    // Fonction pour gérer l'upload d'image dans l'éditeur
+    const handleEditorImageUpload = async (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        setIsUploadingImage(true);
+
+        try {
+            // Créer un FormData pour l'upload
+            const formData = new FormData();
+            formData.append('image', file);
+
+            // Uploader l'image
+            const { data } = await axios.post('/api/upload-editor-image', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+
+            // Insérer l'image dans l'éditeur
+            if (data.url) {
+                editor?.chain().focus().setImage({ src: data.url }).run();
+            }
+
+            toast.success('Image ajoutée avec succès');
+        } catch (error) {
+            toast.error("Erreur lors de l'upload de l'image");
+            console.error(error);
+        } finally {
+            setIsUploadingImage(false);
+            event.target.value = ''; // Réinitialiser l'input file
+        }
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -240,6 +282,22 @@ export default function CreateBlog() {
                                                 >
                                                     <span className="bg-yellow-200 px-1">H</span>
                                                 </button>
+
+                                                {/* Ajoutez le bouton pour insérer une image */}
+                                                <label className="p-2 rounded cursor-pointer hover:bg-gray-200">
+                                                    <input
+                                                        type="file"
+                                                        accept="image/*"
+                                                        onChange={handleEditorImageUpload}
+                                                        className="hidden"
+                                                        disabled={isUploadingImage}
+                                                    />
+                                                    {isUploadingImage ? (
+                                                        <span>Upload...</span>
+                                                    ) : (
+                                                        <span title="Insérer une image">🖼️</span>
+                                                    )}
+                                                </label>
                                             </div>
                                             <EditorContent
                                                 editor={editor}

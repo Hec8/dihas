@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/hooks/auth';
 import axios from '@/lib/axios';
-import { toast } from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function Profile() {
     const { user } = useAuth({ middleware: 'auth' });
@@ -64,7 +64,7 @@ export default function Profile() {
             });
 
             toast.success('Profil mis à jour avec succès');
-            
+
             // Réinitialiser les champs de mot de passe
             setFormData(prev => ({
                 ...prev,
@@ -83,6 +83,7 @@ export default function Profile() {
     return (
         <div className="py-6">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <Toaster position="top-right" />
                 <h1 className="text-2xl font-semibold text-gray-900 mb-6">Mon Profil</h1>
 
                 <div className="bg-white shadow rounded-lg p-6">

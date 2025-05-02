@@ -13,6 +13,10 @@ const Navigation = ({ user }) => {
     const { logout } = useAuth()
     const [dropdownOpen, setDropdownOpen] = useState(false)
     const [PdropdownOpen, setPDropdownOpen] = useState(false)
+    const [DdropdownOpen, setDDropdownOpen] = useState(false)
+    const [CdropdownOpen, setCDropdownOpen] = useState(false)
+    const [FdropdownOpen, setFDropdownOpen] = useState(false)
+    const [RdropdownOpen, setRDropdownOpen] = useState(false)
 
     const isContentCreator = user?.role === 'createur_contenu';
     const isSuperAdmin = user?.role === 'super_admin';
@@ -37,11 +41,11 @@ const Navigation = ({ user }) => {
             {/* Dashboard */}
             <div className="w-11/12">
                 <Link href={isContentCreator ? "/content-creator-dashboard" : "/dashboard"} className="block">
-                    <button 
+                    <button
                         className={`flex items-center justify-between w-full px-4 py-3 rounded-lg font-semibold mb-2 transition-all duration-200 ease-in-out
                         ${isActive(isContentCreator ? '/content-creator-dashboard' : '/dashboard')
-                            ? 'bg-white text-green-700 shadow-lg transform scale-105'
-                            : 'bg-transparent text-white hover:bg-white/20 hover:transform hover:translate-x-1'}`}
+                                ? 'bg-white text-green-700 shadow-lg transform scale-105'
+                                : 'bg-transparent text-white hover:bg-white/20 hover:transform hover:translate-x-1'}`}
                     >
                         <span className="flex items-center gap-3">
                             <FolderCog className={`w-5 h-5 transition-transform duration-200 ${isActive(isContentCreator ? '/content-creator-dashboard' : '/dashboard') ? 'rotate-0' : '-rotate-12'}`} />
@@ -49,8 +53,8 @@ const Navigation = ({ user }) => {
                         </span>
                     </button>
                 </Link>
-
-                {/* Dropdown Gestion du contenu */}
+            </div>
+            {/* Dropdown Gestion du contenu */}
             <div className="w-11/12">
                 <button
                     onClick={() => setDropdownOpen(!dropdownOpen)}
@@ -61,7 +65,7 @@ const Navigation = ({ user }) => {
                         <FolderCog className={`w-5 h-5 transition-transform duration-200 ${dropdownOpen ? 'rotate-0' : '-rotate-12'}`} />
                         Gestion Contenu
                     </span>
-                    <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${dropdownOpen ? 'rotate-180' : ''}`} />
+                    <ChevronDown className={` transition-transform duration-200 ${dropdownOpen ? 'rotate-180' : ''}`} />
                 </button>
 
                 {/* Dropdown Links */}
@@ -90,78 +94,75 @@ const Navigation = ({ user }) => {
                 )}
             </div>
 
-                {/* Gestion de projet */}
-                <div className="mb-2">
-                    <button
-                        onClick={() => setPDropdownOpen(!PdropdownOpen)}
-                        className="flex items-center justify-between w-full px-4 py-3 rounded-lg font-semibold text-white hover:bg-white/20 transition-all duration-200"
-                    >
-                        <span className="flex items-center gap-3">
-                            <FolderCog className="w-5 h-5" />
-                            Gestion projet
-                        </span>
-                        <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${PdropdownOpen ? 'rotate-180' : ''}`} />
-                    </button>
-                </div>
-
-                {/* CRM & Gestion Client */}
-                <div className="mb-2">
-                    <button
-                        onClick={() => setPDropdownOpen(!PdropdownOpen)}
-                        className="flex items-center justify-between w-full px-4 py-3 rounded-lg font-semibold text-white hover:bg-white/20 transition-all duration-200"
-                    >
-                        <span className="flex items-center gap-3">
-                            <FolderCog className="w-5 h-5" />
-                            CRM Gestion Client
-                        </span>
-                        <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${PdropdownOpen ? 'rotate-180' : ''}`} />
-                    </button>
-                </div>
-
-                {/* Développement IT */}
-                <div className="mb-2">
-                    <button
-                        onClick={() => setPDropdownOpen(!PdropdownOpen)}
-                        className="flex items-center justify-between w-full px-4 py-3 rounded-lg font-semibold text-white hover:bg-white/20 transition-all duration-200"
-                    >
-                        <span className="flex items-center gap-3">
-                            <FolderCog className="w-5 h-5" />
-                            Développement IT
-                        </span>
-                        <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${PdropdownOpen ? 'rotate-180' : ''}`} />
-                    </button>
-                </div>
-
-                {/* RH & Recrutement */}
-                <div className="mb-2">
-                    <button
-                        onClick={() => setPDropdownOpen(!PdropdownOpen)}
-                        className="flex items-center justify-between w-full px-4 py-3 rounded-lg font-semibold text-white hover:bg-white/20 transition-all duration-200"
-                    >
-                        <span className="flex items-center gap-3">
-                            <FolderCog className="w-5 h-5" />
-                            RH Recrutement
-                        </span>
-                        <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${PdropdownOpen ? 'rotate-180' : ''}`} />
-                    </button>
-                </div>
-
-                {/* Gestion finance */}
-                <div className="mb-2">
-                    <button
-                        onClick={() => setPDropdownOpen(!PdropdownOpen)}
-                        className="flex items-center justify-between w-full px-4 py-3 rounded-lg font-semibold text-white hover:bg-white/20 transition-all duration-200"
-                    >
-                        <span className="flex items-center gap-3">
-                            <FolderCog className="w-5 h-5" />
-                            Gestion finance
-                        </span>
-                        <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${PdropdownOpen ? 'rotate-180' : ''}`} />
-                    </button>
-                </div>
+            {/* Gestion de projet */}
+            <div className="mb-2">
+                <button
+                    onClick={() => setPDropdownOpen(!PdropdownOpen)}
+                    className="flex items-center justify-between w-full px-4 py-3 rounded-lg font-semibold text-white hover:bg-white/20 transition-all duration-200"
+                >
+                    <span className="flex items-center gap-3">
+                        <FolderCog className="w-5 h-5" />
+                        Gestion de projet
+                    </span>
+                    <ChevronDown className={` transition-transform duration-200 ${PdropdownOpen ? 'rotate-180' : ''}`} />
+                </button>
             </div>
 
-            
+            {/* CRM & Gestion Client */}
+            <div className="mb-2">
+                <button
+                    onClick={() => setCDropdownOpen(!CdropdownOpen)}
+                    className="flex items-center justify-between w-full px-4 py-3 rounded-lg font-semibold text-white hover:bg-white/20 transition-all duration-200"
+                >
+                    <span className="flex items-center gap-3">
+                        <FolderCog className="w-5 h-5" />
+                        CRM Gestion Client
+                    </span>
+                    <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${CdropdownOpen ? 'rotate-180' : ''}`} />
+                </button>
+            </div>
+
+            {/* Développement IT */}
+            <div className="mb-2">
+                <button
+                    onClick={() => setDDropdownOpen(!DdropdownOpen)}
+                    className="flex items-center justify-between w-full px-4 py-3 rounded-lg font-semibold text-white hover:bg-white/20 transition-all duration-200"
+                >
+                    <span className="flex items-center gap-3">
+                        <FolderCog className="w-5 h-5" />
+                        Développement IT
+                    </span>
+                    <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${DdropdownOpen ? 'rotate-180' : ''}`} />
+                </button>
+            </div>
+
+            {/* RH & Recrutement */}
+            <div className="mb-2">
+                <button
+                    onClick={() => setRDropdownOpen(!RdropdownOpen)}
+                    className="flex items-center justify-between w-full px-4 py-3 rounded-lg font-semibold text-white hover:bg-white/20 transition-all duration-200"
+                >
+                    <span className="flex items-center gap-3">
+                        <FolderCog className="w-5 h-5" />
+                        RH Recrutement
+                    </span>
+                    <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${RdropdownOpen ? 'rotate-180' : ''}`} />
+                </button>
+            </div>
+
+            {/* Gestion finance */}
+            <div className="mb-2">
+                <button
+                    onClick={() => setFDropdownOpen(!FdropdownOpen)}
+                    className="flex items-center justify-between w-full px-4 py-3 rounded-lg font-semibold text-white hover:bg-white/20 transition-all duration-200"
+                >
+                    <span className="flex items-center gap-3">
+                        <FolderCog className="w-5 h-5" />
+                        Gestion finance
+                    </span>
+                    <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${FdropdownOpen ? 'rotate-180' : ''}`} />
+                </button>
+            </div>
         </div>
     )
 }

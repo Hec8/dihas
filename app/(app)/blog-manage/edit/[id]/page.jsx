@@ -8,7 +8,6 @@ import Header from '@/app/(app)/Header';
 import { useAuth } from '@/hooks/auth';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import MenuBar from '@/components/MenuBar';
 import Highlight from '@tiptap/extension-highlight';
 import Typography from '@tiptap/extension-typography';
 import Underline from '@tiptap/extension-underline';

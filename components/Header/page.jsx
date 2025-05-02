@@ -73,7 +73,7 @@ export default function Header() {
 
                         {/* Menu Desktop - Inchangé */}
                         <div className="hidden md:flex h-full">
-                            <Link href="https://dihas-product.vercel.app/" className={getLinkStyles('/products')}>
+                            <Link href="/dihas-product" className={getLinkStyles('/dihas-product')}>
                                 Diha's products
                             </Link>
                             <Link href="/about" className={getLinkStyles('/about')}>
