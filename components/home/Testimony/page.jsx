@@ -12,14 +12,14 @@ export default function Testimony() {
             id: 1,
             name: "SPACEBOOST",
             role: "Romaric KOUNDE, utilisateur",
-            image: "/assets/romaric.png",
+            image: "/assets/Romaric.jpeg",
             content: "Grâce à Diha's, SPACEBOOST est devenue une plateforme incontournable pour les campagnes publicitaires basées sur l'influence. Leur expertise a permis de mobiliser efficacement les influenceurs et de maximiser l'impact de nos campagnes marketing"
         },
         {
             id: 2,
             name: "Académie Internationale de Freelancing (AIF)",
             role: "Sabine MoFOA, utilisatrice",
-            image: "/assets/sabine.png",
+            image: "/assets/Sabine.jpeg",
             content: "Diha's a joué un rôle clé dans le développement d'AFB. Grâce à leur expertise, notre plateforme de formation offre désormais une expérience utilisateur optimisée, aidant les jeunes à découvrir leur voie et à atteindre leurs objectifs professionnels"
         }
     ];
@@ -75,9 +75,22 @@ export default function Testimony() {
                                 <Image
                                     src={testimonial.image}
                                     alt={testimonial.name}
-                                    width={72}
-                                    height={72}
-                                    className="rounded-full border-4 border-white w-[72px] h-[72px] sm:w-[84px] sm:h-[84px] md:w-[96px] md:h-[96px]"
+                                    width={96}
+                                    height={96}
+                                    className="rounded-full border-4 border-white object-cover"
+                                    style={{
+                                        width: '96px',
+                                        height: '96px',
+                                        '@media (min-width: 640px)': {
+                                            width: '112px',
+                                            height: '112px',
+                                        },
+                                        '@media (min-width: 768px)': {
+                                            width: '128px',
+                                            height: '128px',
+                                        }
+                                    }}
+                                    priority
                                 />
                             </div>
                             <div className="mt-12 sm:mt-14 md:mt-16 text-center">
