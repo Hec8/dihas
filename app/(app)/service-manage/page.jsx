@@ -1,14 +1,12 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 
 export default function ServiceList({ user }) {
     const router = useRouter();
 
     return (
         <>
-            
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center mb-6">

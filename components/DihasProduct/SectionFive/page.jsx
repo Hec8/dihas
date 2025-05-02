@@ -32,7 +32,7 @@ const SectionFive = () => {
                 Booking est une plateforme simple et rapide de réservation de gest house et de chambre d&apos;hôtel adaptée aux besoins des voyageurs.</p>
 
               <button
-                onClick={() => router.push("/booking")}
+                onClick={() => router.push("/liens/produit/booking")}
                 className="w-36 lg:w-2/3 lg:px-6 lg:py-2 border border-orange-500 font-bold text-orange-500 rounded-lg hover:bg-orange-500 hover:text-white transition mt-auto"
               >
                 Voir plus
@@ -59,7 +59,7 @@ const SectionFive = () => {
                 Une application de gestion complet de clinique médicale, qui vous permet de gérer vos patients, vos rendez-vous et vos factures en toute simplicité.</p>
 
               <button
-                onClick={() => router.push("/clinico")}
+                onClick={() => router.push("/liens/produit/clinico")}
                 className="w-36 lg:w-2/3 lg:px-6 lg:py-2 border border-orange-500 font-bold text-orange-500 rounded-lg hover:bg-orange-500 hover:text-white transition mt-auto"
               >
                 Voir plus

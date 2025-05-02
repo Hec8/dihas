@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Header from '@/app/(app)/Header';
 
 export default function EditService() {
     const [formData, setFormData] = useState({
@@ -33,8 +32,6 @@ export default function EditService() {
 
     return (
         <>
-            <Header title="Éditer le service" />
-
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">

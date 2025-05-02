@@ -31,7 +31,7 @@ const SectionSix = () => {
               </div>
               <div className="flex justify-center">
                 <button
-                  onClick={() => router.push("/businessplan")}
+                  onClick={() => router.push("liens/produit/businessplan")}
                   className="w-36 lg:w-2/3 px-4 py-2 border font-bold border-orange-500 text-orange-500 rounded-lg hover:bg-orange-500 hover:text-white transition"
                 >
                   Voir plus
@@ -60,7 +60,7 @@ const SectionSix = () => {
               </div>
               <div className="flex justify-center">
                 <button
-                  onClick={() => router.push("/evignette")}
+                  onClick={() => router.push("liens/produit/evignette")}
                   className="w-36 lg:w-2/3 px-4 py-2 border border-orange-500 font-bold text-orange-500 rounded-lg hover:bg-orange-500 hover:text-white transition"
                 >
                   Voir plus
@@ -94,7 +94,7 @@ const SectionSix = () => {
               </div>
               <div className="flex justify-center">
                 <button
-                  onClick={() => router.push("/Chantier+")}
+                  onClick={() => router.push("liens/produit/Chantier+")}
                   className="w-36 lg:w-2/3 px-4 py-2 border border-orange-500 font-bold text-orange-500 rounded-lg hover:bg-orange-500 hover:text-white transition"
                 >
                   Voir plus
@@ -123,7 +123,7 @@ const SectionSix = () => {
               </div>
               <div className="flex justify-center">
                 <button
-                  onClick={() => router.push("/reseaupro")}
+                  onClick={() => router.push("liens/produit/reseaupro")}
                   className="w-36 lg:w-2/3 px-4 py-2 border border-orange-500 font-bold text-orange-500 rounded-lg hover:bg-orange-500 hover:text-white transition"
                 >
                   Voir plus
@@ -158,7 +158,7 @@ const SectionSix = () => {
               </div>
               <div className="flex justify-center">
                 <button
-                  onClick={() => router.push("/autocar")}
+                  onClick={() => router.push("liens/produit/autocar")}
                   className="w-36 lg:w-2/3 px-4 py-2 border border-orange-500 font-bold text-orange-500 rounded-lg hover:bg-orange-500 hover:text-white transition"
                 >
                   Voir plus
@@ -188,7 +188,7 @@ const SectionSix = () => {
               </div>
               <div className="flex justify-center">
                 <button
-                  onClick={() => router.push("/fitness")}
+                  onClick={() => router.push("liens/produit/fitness")}
                   className="w-36 lg:w-2/3 px-4 py-2 border border-orange-500 font-bold text-orange-500 rounded-lg hover:bg-orange-500 hover:text-white transition"
                 >
                   Voir plus
@@ -221,7 +221,7 @@ const SectionSix = () => {
               </div>
               <div className="flex justify-center">
                 <button
-                  onClick={() => router.push("/Trootroo")}
+                  onClick={() => router.push("liens/produit/Trootroo")}
                   className="w-36 lg:w-2/3 px-4 py-2 border border-orange-500 font-bold text-orange-500 rounded-lg hover:bg-orange-500 hover:text-white transition"
                 >
                   Voir plus
@@ -249,7 +249,7 @@ const SectionSix = () => {
               </div>
               <div className="flex justify-center">
                 <button
-                  onClick={() => router.push("/wakati")}
+                  onClick={() => router.push("liens/produit/wakati")}
                   className="w-36 lg:w-2/3 px-4 py-2 border border-orange-500 font-bold text-orange-500 rounded-lg hover:bg-orange-500 hover:text-white transition"
                 >
                   Voir plus

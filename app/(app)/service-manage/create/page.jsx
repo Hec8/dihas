@@ -4,7 +4,6 @@ import { useState } from 'react';
 import axios from '@/lib/axios';
 import { useRouter } from 'next/navigation';
 import toast, { Toaster } from 'react-hot-toast';
-import Header from '@/app/(app)/Header';
 
 export default function CreateService() {
     const [formData, setFormData] = useState({
@@ -40,9 +39,7 @@ export default function CreateService() {
 
     return (
         <>
-            <Header title="Créer un service" />
             <Toaster position="top-right" />
-
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">

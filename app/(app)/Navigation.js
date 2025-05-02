@@ -44,7 +44,9 @@ const Navigation = ({ user }) => {
                     height={50}
                     priority
                 />
-            </div><br/><br/>
+            </div>
+            <br />
+            <br />
 
             {/* Menu Items */}
             <div className="flex-1 px-4 space-y-1 overflow-y-auto">
@@ -108,7 +110,7 @@ const Navigation = ({ user }) => {
                                             Services
                                         </Link>
                                         <Link href="/product-manage" className={`block px-4 py-2 rounded-md transition-all ${isActive('/product-manage') ? 'bg-white/20 font-medium' : 'text-white/80 hover:text-white'}`}>
-                                            Diha's Products
+                                            Diha&apos;s Products
                                         </Link>
                                         {isSuperAdmin && (
                                             <Link href="/employees" className={`block px-4 py-2 rounded-md transition-all ${isActive('/employees') ? 'bg-white/20 font-medium' : 'text-white/80 hover:text-white'}`}>
