@@ -77,19 +77,7 @@ export default function Testimony() {
                                     alt={testimonial.name}
                                     width={96}
                                     height={96}
-                                    className="rounded-full border-4 border-white object-cover"
-                                    style={{
-                                        width: '96px',
-                                        height: '96px',
-                                        '@media (min-width: 640px)': {
-                                            width: '112px',
-                                            height: '112px',
-                                        },
-                                        '@media (min-width: 768px)': {
-                                            width: '128px',
-                                            height: '128px',
-                                        }
-                                    }}
+                                    className="rounded-full border-4 border-white object-cover w-[96px] h-[96px] sm:w-[112px] sm:h-[112px] md:w-[128px] md:h-[128px]"
                                     priority
                                 />
                             </div>
