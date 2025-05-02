@@ -15,7 +15,7 @@ const SectionSix = () => {
           <div className="bg-white shadow-[8px_8px_15px_rgba(0,0,0,0.2)] rounded-2xl flex flex-col h-[600px]">
             <div className="h-[300px] relative overflow-hidden">
               <Image
-                src="/Image/Mockup dash 4.jpg"
+                src="/assets/dp/Mockup dash 4.jpg"
                 alt="Application Tranoo"
                 fill
                 className="object-cover rounded-t-2xl"
@@ -44,7 +44,7 @@ const SectionSix = () => {
           <div className="bg-white shadow-[8px_8px_15px_rgba(0,0,0,0.2)] rounded-2xl flex flex-col h-[600px]">
             <div className="h-[300px] relative overflow-hidden">
               <Image
-                src="/Image/Mockup dash 1.jpg"
+                src="/assets/dp/Mockup dash 1.jpg"
                 alt="Application Tranoo"
                 fill
                 className="object-cover rounded-t-2xl"
@@ -78,7 +78,7 @@ const SectionSix = () => {
           <div className="bg-white shadow-[8px_8px_15px_rgba(0,0,0,0.2)] rounded-2xl flex flex-col h-[600px]">
             <div className="h-[300px] relative overflow-hidden">
               <Image
-                src="/Image/Mockup dash-5.jpg"
+                src="/assets/dp/Mockup dash-5.jpg"
                 alt="Application"
                 fill
                 className="object-cover rounded-t-2xl"
@@ -107,7 +107,7 @@ const SectionSix = () => {
           <div className="bg-white shadow-[8px_8px_15px_rgba(0,0,0,0.2)] rounded-2xl flex flex-col h-[600px]">
             <div className="h-[300px] relative overflow-hidden">
               <Image
-                src="/Image/Mockup dash 3.jpg"
+                src="/assets/dp/Mockup dash 3.jpg"
                 alt="Application Tranoo"
                 fill
                 className="object-cover rounded-t-2xl"
@@ -141,7 +141,7 @@ const SectionSix = () => {
           <div className="bg-white shadow-[8px_8px_15px_rgba(0,0,0,0.2)] rounded-2xl flex flex-col h-[600px]">
             <div className="h-[300px] relative overflow-hidden flex items-center justify-center bg-gray-50">
               <Image
-                src="/Image/Auto care.png"
+                src="/assets/dp/Auto care.png"
                 alt="Application"
                 width={250}
                 height={250}
@@ -171,7 +171,7 @@ const SectionSix = () => {
           <div className="bg-white shadow-[8px_8px_15px_rgba(0,0,0,0.2)] rounded-2xl flex flex-col h-[600px]">
             <div className="h-[300px] relative overflow-hidden flex items-center justify-center bg-gray-50">
               <Image
-                src="/Image/fit.png"
+                src="/assets/dp/fit.png"
                 alt="Application Tranoo"
                 width={500}
                 height={300}
@@ -206,7 +206,7 @@ const SectionSix = () => {
           <div className="bg-white shadow-[8px_8px_15px_rgba(0,0,0,0.2)] rounded-2xl flex flex-col h-[600px]">
             <div className="h-[300px] relative overflow-hidden">
               <Image
-                src="/Image/Mockup trotro.png"
+                src="/assets/dp/Mockup trotro.png"
                 alt="Application"
                 fill
                 className="object-cover rounded-t-2xl"
@@ -234,7 +234,7 @@ const SectionSix = () => {
           <div className="bg-white shadow-[8px_8px_15px_rgba(0,0,0,0.2)] rounded-2xl flex flex-col h-[600px]">
             <div className="h-[300px] relative overflow-hidden">
               <Image
-                src="/Image/Mockup wakashi.png"
+                src="/assets/dp/Mockup wakashi.png"
                 alt="Application"
                 fill
                 className="object-cover rounded-t-2xl"

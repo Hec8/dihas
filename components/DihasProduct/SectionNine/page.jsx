@@ -51,7 +51,7 @@ const SectionNine = () => {
                 <div className="min-w-[24px] flex items-center">
                   {openIndex === index && (
                     <Image
-                      src="/Image/Round Minus icon.png"
+                      src="/assets/dp/Round Minus icon.png"
                       alt="Round Minus"
                       width={24}
                       height={24}

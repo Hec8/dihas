@@ -21,7 +21,7 @@ const SectionOne = () => {
           </p>
           <button
             onClick={() => router.push("/sectionsix")}
-            className="relative text-stone-50 text-md  lg:text-xl w-60 lg:w-72 py-1 lg:py-4 rounded-lg font-bold transition duration-300 overflow-hidden group"
+            className="relative text-stone-50 text-md  lg:text-xl w-60 lg:w-72 py-2 lg:py-4 rounded-lg font-bold transition duration-300 overflow-hidden group"
           >
             <span className="absolute inset-0 bg-gradient-to-r from-green-500 via-green-700 to-green-800 transition duration-300 group-hover:opacity-0"></span>
             <span className="absolute inset-0 bg-amber-500 opacity-0 transition duration-300 group-hover:opacity-100"></span>
@@ -32,7 +32,7 @@ const SectionOne = () => {
         </div>
         <Image
           className="lg:w-3/5"
-          src="/Image/Accueil.png"
+          src="/assets/dp/Accueil.png"
           alt="Logo Diha"
           width={500}
           height={500}
@@ -54,7 +54,7 @@ const SectionOne = () => {
           >
             <Image
               className="filter transition duration-300 hover:grayscale-0 opacity-50 hover:opacity-100  grayscale"
-              src={`/Image/${icon}`}
+              src={`/assets/dp/${icon}`}
               alt={`Logo ${icon.split(" ")[0]}`}
               width={70} // Augmente la taille
               height={70}

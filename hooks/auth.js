@@ -49,12 +49,13 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
 
                 // Mutate doit être appelé avant la redirection
                 return mutate().then(() => {
-                    // Redirection basée sur le rôle
-                    if (user?.role === 'createur_contenu') {
-                        window.location.href = '/content-creator-dashboard'
+                    // Utiliser la fonction de redirection fournie
+                    if (redirectIfAuthenticated) {
+                        const redirectPath = redirectIfAuthenticated(user)
+                        window.location.href = redirectPath
                     } else {
-                        // Par défaut, rediriger vers le dashboard standard
-                        window.location.href = '/dashboard'
+                        // Redirection par défaut si aucune fonction n'est fournie
+                        window.location.href = user?.role === 'createur_contenu' ? '/content-creator-dashboard' : '/dashboard'
                     }
                 })
             })
@@ -115,9 +116,12 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     }
 
     useEffect(() => {
-        if (middleware === 'guest' && redirectIfAuthenticated && user)
-            router.push(redirectIfAuthenticated)
-
+        if (middleware === 'guest' && redirectIfAuthenticated && user) {
+            const redirectPath = redirectIfAuthenticated(user)
+            if (redirectPath) {
+                router.push(redirectPath)
+            }
+        }
         if (middleware === 'auth' && (user && !user.email_verified_at))
             router.push('/verify-email')
 

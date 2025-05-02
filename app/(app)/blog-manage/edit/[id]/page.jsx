@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import axios from '@/lib/axios';
 import { useRouter, useParams } from 'next/navigation';
 import toast, { Toaster } from 'react-hot-toast';
-import Header from '@/app/(app)/Header';
 import { useAuth } from '@/hooks/auth';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
@@ -198,8 +197,7 @@ export default function EditBlog() {
 
     return (
         <>
-            <Header title="Éditer l'article" />
-            <Toaster position="top-right" />
+                        <Toaster position="top-right" />
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">

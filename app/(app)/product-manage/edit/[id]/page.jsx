@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import axios from '@/lib/axios';
 import { useRouter, useParams } from 'next/navigation';
 import toast, { Toaster } from 'react-hot-toast';
-import Header from '@/app/(app)/Header';
 import { Plus, Trash2 } from 'lucide-react';
 
 export default function EditProduct() {
@@ -125,8 +124,7 @@ export default function EditProduct() {
 
     return (
         <>
-            <Header title="Éditer le produit" />
-            <Toaster position="top-right" />
+                        <Toaster position="top-right" />
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">

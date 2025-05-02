@@ -23,6 +23,7 @@
     "@tiptap/react": "^2.11.7",
     "@tiptap/starter-kit": "^2.11.7",
     "axios": "^1.8.4",
+    "chart.js": "^4.4.9",
     "date-fns": "^4.1.0",
     "eslint-config-prettier": "^10.1.2",
     "framer-motion": "^12.7.1",

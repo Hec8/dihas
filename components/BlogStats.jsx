@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from '@/lib/axios';
-import { FileText, CheckCircle, AlertCircle } from 'lucide-react';
+import Image from 'next/image';
 
 const BlogStats = ({ role = 'createur_contenu' }) => {
     const [stats, setStats] = useState({
@@ -29,40 +29,52 @@ const BlogStats = ({ role = 'createur_contenu' }) => {
             {
                 label: 'Articles validés',
                 value: stats.validated,
-                icon: <CheckCircle className="w-6 h-6 text-white" />,
+                image: '/assets/iconv.png',
                 bg: 'bg-green-600'
             },
             {
                 label: 'Articles en attente',
                 value: stats.pending,
-                icon: <FileText className="w-6 h-6 text-white" />,
+                image: '/assets/icona.png',
                 bg: 'bg-yellow-500'
             },
             {
                 label: 'Articles renvoyés',
                 value: stats.rejected,
-                icon: <AlertCircle className="w-6 h-6 text-white" />,
+                image: '/assets/icond.png',
                 bg: 'bg-red-600'
+            },
+            {
+                label: 'Articles en ligne',
+                value: stats.validated,
+                image: '/assets/iconv.png',
+                bg: 'bg-green-600'
             }
         ],
         createur_contenu: [
             {
                 label: 'Articles publiés',
                 value: stats.validated,
-                icon: <CheckCircle className="w-6 h-6 text-white" />,
+                image: '/assets/iconv.png',
                 bg: 'bg-green-600'
             },
             {
                 label: 'Articles en révision',
                 value: stats.pending,
-                icon: <FileText className="w-6 h-6 text-white" />,
+                image: '/assets/icona.png',
                 bg: 'bg-yellow-500'
             },
             {
                 label: 'Articles à réécrire',
                 value: stats.rejected,
-                icon: <AlertCircle className="w-6 h-6 text-white" />,
+                image: '/assets/icond.png',
                 bg: 'bg-red-600'
+            },
+            {
+                label: 'Articles en ligne',
+                value: stats.validated,
+                image: '/assets/iconv.png',
+                bg: 'bg-green-600'
             }
         ]
     };
@@ -70,14 +82,20 @@ const BlogStats = ({ role = 'createur_contenu' }) => {
     const currentStats = statsConfig[role] || statsConfig.createur_contenu;
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             {currentStats.map((stat, index) => (
-                <div key={index} className="flex items-center space-x-4 bg-white p-5 rounded-xl shadow">
-                    <div className={`w-14 h-14 flex items-center justify-center rounded-full ${stat.bg}`}>
-                        {stat.icon}
+                <div key={index} className="flex w-45 h-50 items-center space-x-4 bg-white p-5 rounded-xl shadow">
+                    <div className={`w-16 h-16 flex items-center justify-center rounded-xl`}>
+                        <Image
+                            src={stat.image}
+                            alt={stat.label}
+                            width={50}
+                            height={50}
+                            className="text-white"
+                        />
                     </div>
                     <div>
-                        <p className="text-gray-400 text-sm">{stat.label}</p>
+                        <p className="text-black text-sm font-semibold">{stat.label}</p>
                         <p className="text-2xl font-bold text-blue-900">{stat.value}</p>
                     </div>
                 </div>

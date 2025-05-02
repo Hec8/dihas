@@ -18,7 +18,7 @@ const SectionFive = () => {
                                 rounded-2xl flex flex-col items-center gap-2 lg:gap-6 lg:gap-12 w-full lg:w-full lg:max-w-lg">
             <div className="relative flex-shrink-0 lg:flex-shrink-0">
               <Image
-                src="/Image/MockuP reservation.jpg"
+                src="/assets/dp/MockuP reservation.jpg"
                 alt="Application Tranoo"
                 width={400}
                 height={400}
@@ -45,7 +45,7 @@ const SectionFive = () => {
                                 rounded-2xl  flex flex-col items-center gap-2 lg:gap-6 lg:gap-12 w-full lg:w-full lg:max-w-lg">
             <div className="relative  flex-shrink-0 lg:flex-shrink-0">
               <Image
-                src="/Image/Mockup dash 2.jpg"
+                src="/assets/dp/Mockup dash 2.jpg"
                 alt="Application Tranoo"
                 width={400}
                 height={400}

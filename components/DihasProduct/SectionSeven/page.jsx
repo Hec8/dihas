@@ -11,7 +11,7 @@ const SectionSeven = () => {
         <div className="lg:flex-row lg:p-10 lg:justify-end">
           <video
             className="lg:w-[350px] md:w-[250px] md:h-[250px] w-[200px] h-[250px] lg:h-[375px] object-cover rounded-2xl shadow-lg"
-            src="/Image/WhatsApp Vidéo 2025-02-19 à 13.06.59_e7274a93.mp4"
+            src="/assets/dp/WhatsApp Vidéo 2025-02-19 à 13.06.59_e7274a93.mp4"
             controls
             autoPlay
             loop

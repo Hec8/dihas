@@ -1,7 +1,6 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import Header from '@/app/(app)/Header';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import { Pencil } from 'lucide-react';
@@ -12,8 +11,7 @@ export default function ProductList({ user }) {
 
     return (
         <>
-            <Header title="Gestion des produits" />
-
+            
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center mb-6">

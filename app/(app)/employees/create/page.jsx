@@ -4,7 +4,6 @@ import { useState } from 'react';
 import axios from '@/lib/axios';
 import { useRouter } from 'next/navigation';
 import toast, { Toaster } from 'react-hot-toast';
-import Header from '@/app/(app)/Header';
 
 export default function CreateEmployee() {
     const [formData, setFormData] = useState({
@@ -50,8 +49,7 @@ export default function CreateEmployee() {
 
     return (
         <>
-            <Header title="Créer un employé" />
-            <Toaster position="top-right" />
+                        <Toaster position="top-right" />
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">

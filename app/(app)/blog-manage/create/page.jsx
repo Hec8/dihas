@@ -4,7 +4,6 @@ import { useState } from 'react';
 import axios from '@/lib/axios';
 import { useRouter } from 'next/navigation';
 import toast, { Toaster } from 'react-hot-toast';
-import Header from '@/app/(app)/Header';
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Highlight from '@tiptap/extension-highlight';
@@ -178,9 +177,7 @@ export default function CreateBlog() {
 
     return (
         <>
-            <Header title="Créer un nouvel article" />
             <Toaster position="top-right" />
-
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">

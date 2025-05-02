@@ -7,7 +7,7 @@ const SectionThree = () => {
       <div className=" lg:flex-row md:flex-row  items-center flex justify-center flex-col gap-6  border-2 lg:border-4 lg:gap-12 lg:p-8 border-dashed ">
         <Image
           className="rounded-2xl md:w-2/5 lg:w-1/3 w-56 p-4"
-          src="/Image/image2.png"
+          src="/assets/dp/image2.png"
           alt="Logo Diha"
           width={2400}
           height={2000}

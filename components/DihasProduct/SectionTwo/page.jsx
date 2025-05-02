@@ -10,7 +10,7 @@ const SectionTwo = () => {
         <div className="  h-48 w-60  lg:w-1/2 lg:h-72 p-4 lg:p-10 border-2 lg:border-4 border-dashed text-left flex flex-col gap-4 items-start">
           <Image
             className=" w-10 h-10 lg:w-20 lg:h-20"
-            src="/Image/Delivery icon.png"
+            src="/assets/dp/Delivery icon.png"
             alt="Logo Diha"
             width={30}
             height={30}
@@ -27,7 +27,7 @@ const SectionTwo = () => {
         <div className=" h-48 w-60  lg:w-1/2 lg:h-72 p-4 lg:p-10 border-2 lg:border-4 border-dashed  text-left flex flex-col gap-4 items-start">
           <Image
             className="w-10 h-10 lg:w-20 lg:h-20"
-            src="/Image/Health icon.png"
+            src="/assets/dp/Health icon.png"
             alt="Logo Diha"
             width={30}
             height={30}
@@ -45,7 +45,7 @@ const SectionTwo = () => {
       <div className="h-48 w-60  lg:w-1/3 lg:h-72 p-4 lg:p-10 border-2 lg:border-4 border-dashed text-left flex flex-col gap-4 items-start">
         <Image
           className="w-10 h-10 lg:w-20 lg:h-20"
-          src="/Image/Car icon.png"
+          src="/assets/dp/Car icon.png"
           alt="Logo Diha"
           width={30}
           height={30}

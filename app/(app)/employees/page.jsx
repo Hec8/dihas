@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import axios from '@/lib/axios';
 import { useRouter } from 'next/navigation';
 import toast, { Toaster } from 'react-hot-toast';
-import Header from '@/app/(app)/Header';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
 
@@ -48,7 +47,6 @@ export default function EmployeeManagement() {
 
     return (
         <>
-            <Header title="Gestion des employés" />
             <Toaster position="top-right" />
 
             <div className="py-12">
