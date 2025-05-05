@@ -127,18 +127,6 @@ export default function BlogList() {
                                                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                                     <div className="flex items-center space-x-4">
                                                         <Link
-                                                            href={`/service-manage/${service.slug}`}
-                                                            target="_blank"
-                                                            rel="noopener noreferrer"
-                                                            className="inline-flex items-center px-2 py-2 border border-transparent text-xs font-medium rounded-lg shadow-sm text-white bg-green-700 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                                                            title="Voir le service"
-                                                        >
-                                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                                                                <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                                                                <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
-                                                            </svg>
-                                                        </Link>
-                                                        <Link
                                                             href={`/service-manage/edit/${service.id}`}
                                                             className="inline-block text-white bg-yellow-500 px-2 py-1.5 rounded-lg hover:text-green-800"
                                                             title="Éditer"

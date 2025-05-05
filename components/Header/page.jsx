@@ -117,8 +117,8 @@ export default function Header() {
                         <div className="md:hidden bg-white shadow-lg rounded-b-lg">
                             <div className="flex flex-col py-2">
                                 <Link
-                                    href="https://dihas-product.vercel.app/"
-                                    className={`px-4 py-2 ${pathname === '/products' ? 'bg-yellow-500 text-white' : 'text-gray-800'}`}
+                                    href="/dihas-product"
+                                    className={`px-4 py-2 ${pathname === '/dihas-product' ? 'bg-yellow-500 text-white' : 'text-gray-800'}`}
                                     onClick={() => setIsMenuOpen(false)}
                                 >
                                     Diha's products
