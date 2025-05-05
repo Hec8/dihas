@@ -51,8 +51,8 @@ const Navigation = ({ user }) => {
             {/* Menu Items */}
             <div className="flex-1 px-4 space-y-1 overflow-y-auto">
                 {/* Dashboard */}
-                <Link 
-                    href={isContentCreator ? "/content-creator-dashboard" : "/dashboard"} 
+                <Link
+                    href={isContentCreator ? "/content-creator-dashboard" : "/dashboard"}
                     className="block"
                 >
                     <motion.div
@@ -93,7 +93,7 @@ const Navigation = ({ user }) => {
                                 exit={{ opacity: 0, height: 0 }}
                                 transition={{ duration: 0.2 }}
                                 className="mt-1 ml-8 space-y-1 overflow-hidden"
-                            >   
+                            >
                                 {/* Liens accessibles uniquement aux administrateurs */}
                                 {!isContentCreator && (
                                     <>
@@ -106,12 +106,6 @@ const Navigation = ({ user }) => {
                                         <Link href="/contact-manage" className={`block px-4 py-2 rounded-md transition-all ${isActive('/contact-manage') ? 'bg-white/20 font-medium' : 'text-white/80 hover:text-white'}`}>
                                             Messages
                                         </Link>
-                                        <Link href="/service-manage" className={`block px-4 py-2 rounded-md transition-all ${isActive('/service-manage') ? 'bg-white/20 font-medium' : 'text-white/80 hover:text-white'}`}>
-                                            Services
-                                        </Link>
-                                        <Link href="/product-manage" className={`block px-4 py-2 rounded-md transition-all ${isActive('/product-manage') ? 'bg-white/20 font-medium' : 'text-white/80 hover:text-white'}`}>
-                                            Diha&apos;s Products
-                                        </Link>
                                         {isSuperAdmin && (
                                             <Link href="/employees" className={`block px-4 py-2 rounded-md transition-all ${isActive('/employees') ? 'bg-white/20 font-medium' : 'text-white/80 hover:text-white'}`}>
                                                 Employees
@@ -122,6 +116,12 @@ const Navigation = ({ user }) => {
                                 {/* Liens accessibles aux créateurs de contenu */}
                                 <Link href="/blog-manage" className={`block px-4 py-2 rounded-md transition-all ${isActive('/blog-manage') ? 'bg-white/20 font-medium' : 'text-white/80 hover:text-white'}`}>
                                     Gestion des articles
+                                </Link>
+                                <Link href="/service-manage" className={`block px-4 py-2 rounded-md transition-all ${isActive('/service-manage') ? 'bg-white/20 font-medium' : 'text-white/80 hover:text-white'}`}>
+                                    Services
+                                </Link>
+                                <Link href="/product-manage" className={`block px-4 py-2 rounded-md transition-all ${isActive('/product-manage') ? 'bg-white/20 font-medium' : 'text-white/80 hover:text-white'}`}>
+                                    Diha&apos;s Products
                                 </Link>
                             </motion.div>
                         )}

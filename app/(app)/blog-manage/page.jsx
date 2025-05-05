@@ -87,7 +87,7 @@ export default function BlogList() {
                                 Confirmation des articles
                             </button>
                         )}
-                        
+
                         <button
                             onClick={() => router.push('/blog-manage/create')}
                             className="px-6 py-4 bg-green-700 text-white rounded-xl hover:bg-green-700 flex items-center gap-2"

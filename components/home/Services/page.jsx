@@ -2,10 +2,32 @@
 
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import axios from '@/lib/axios';
 import Image from 'next/image';
 
 export default function Services() {
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [dynamicServices, setDynamicServices] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    const defaultServices = [
+        {
+            title: "Développement Web",
+            content: "Solutions web sur mesure",
+            icon: "/assets/web.png"
+        },
+        {
+            title: "Développement Mobile",
+            content: "Applications iOS et Android",
+            icon: "/assets/mobile.png"
+        },
+        {
+            title: "Design UI/UX",
+            content: "Interfaces utilisateur optimisées",
+            icon: "/assets/design.png"
+        }
+    ];
 
     const industries = [
         { icon: "🏭", name: "Industrie technologique", isEmoji: true },
@@ -25,6 +47,26 @@ export default function Services() {
         const timer = setInterval(() => {
             setCurrentIndex((prevIndex) => (prevIndex + 1) % industries.length);
         }, 3000);
+
+        const fetchServices = async () => {
+            setIsLoading(true);
+            setError(null);
+            try {
+                const response = await axios.get('/api/services');
+                if (response.status === 200 && response.data?.length > 0) {
+                    setDynamicServices(response.data);
+                } else {
+                    setError("Aucun service disponible pour le moment :)");
+                }
+            } catch (error) {
+                console.error('Erreur API:', error);
+                setError("Échec du chargement.");
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchServices();
         return () => clearInterval(timer);
     }, [industries.length]);
 
@@ -76,6 +118,50 @@ export default function Services() {
         );
     };
 
+    const ServiceCard = ({ service, index }) => (
+        <motion.div
+            key={`service-${index}`}
+            className="bg-white rounded-lg p-6 md:p-8 text-center shadow-lg w-full max-w-sm mx-auto"
+            variants={cardVariants}
+            whileHover="hover"
+        >
+            <motion.div
+                className="w-16 h-16 mx-auto mb-4 flex items-center justify-center"
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: 0.2 * index, duration: 0.5 }}
+            >
+                {service.icon ? (
+                    <div className="relative w-full h-full">
+                        <img
+                            src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}${service.icon}`}
+                            alt={service.title}
+                            className="object-contain" // Important pour les images externes
+                            onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src = '/default-service.png';
+                            }}
+                        />
+                    </div>
+                ) : (
+                    <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center">
+                        <span className="text-xl">🔧</span>
+                    </div>
+                )}
+            </motion.div>
+            <h3 className="text-xl font-bold text-green-800 mb-2">{service.title}</h3>
+            <p className="text-gray-600 mb-4">{service.content}</p>
+            <motion.button
+                className="bg-[#FFA500] text-white px-6 py-2 rounded-full hover:bg-[#FF8C00] transition-colors mt-4"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+            // onClick={() => router.push(`/services/${service.slug}`)}
+            >
+                En savoir plus
+            </motion.button>
+        </motion.div>
+    );
+
     return (
         <section className="py-16 px-4 bg-[#E5F2EC]">
             {/* Titre */}
@@ -89,107 +175,25 @@ export default function Services() {
 
             {/* Cartes de services */}
             <div className="container mx-auto px-4">
+                {isLoading ? (
+                    <div className="flex justify-center items-center py-12">
+                        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#FFA500]"></div>
+                    </div>
+                ) : error && (
+                    <div className="text-center text-orange-600 py-4 mb-8">
+                        {error}
+                    </div>
+                )}
+
                 <motion.div
                     className="grid grid-cols-1 md:grid-cols-3 gap-8 justify-items-center"
                     variants={containerVariants}
                     initial="hidden"
                     animate="visible"
                 >
-                    {/* Développement Web */}
-                    <motion.div
-                        className="bg-white rounded-lg p-6 md:p-8 text-center shadow-lg w-full max-w-sm mx-auto"
-                        variants={cardVariants}
-                        whileHover="hover"
-                    >
-                        <motion.div
-                            className="w-16 h-16 mx-auto mb-4 flex items-center justify-center"
-                            initial={{ scale: 0 }}
-                            animate={{ scale: 1 }}
-                            transition={{ delay: 0.2, duration: 0.5 }}
-                        >
-                            <Image
-                                src="/assets/web.png"
-                                alt="Développement Web"
-                                width={48}
-                                height={48}
-                                className="object-contain"
-                            />
-                        </motion.div>
-                        <h3 className="text-xl font-bold text-green-800 mb-2">Développement</h3>
-                        <p className="text-gray-600 mb-4">Web</p>
-                        <motion.button
-                            className="bg-[#FFA500] text-white px-6 py-2 rounded-full hover:bg-[#FF8C00] transition-colors mt-4"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            onClick={() => window.location.href = '/services'}
-                        >
-                            En savoir plus
-                        </motion.button>
-                    </motion.div>
-
-                    {/* Développement Mobile */}
-                    <motion.div
-                        className="bg-white rounded-lg p-6 md:p-8 text-center shadow-lg w-full max-w-sm mx-auto"
-                        variants={cardVariants}
-                        whileHover="hover"
-                    >
-                        <motion.div
-                            className="w-16 h-16 mx-auto mb-4 flex items-center justify-center"
-                            initial={{ scale: 0 }}
-                            animate={{ scale: 1 }}
-                            transition={{ delay: 1, duration: 0.5 }}
-                        >
-                            <Image
-                                src="/assets/mobile.png"
-                                alt="Développement Mobile"
-                                width={48}
-                                height={48}
-                                className="object-contain"
-                            />
-                        </motion.div>
-                        <h3 className="text-xl font-bold text-green-800 mb-2">Développement</h3>
-                        <p className="text-gray-600 mb-4">Mobile</p>
-                        <motion.button
-                            className="bg-[#FFA500] text-white px-6 py-2 rounded-full hover:bg-[#FF8C00] transition-colors mt-4"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            onClick={() => window.location.href = '/services'}
-                        >
-                            En savoir plus
-                        </motion.button>
-                    </motion.div>
-
-                    {/* Design */}
-                    <motion.div
-                        className="bg-white rounded-lg p-6 md:p-8 text-center shadow-lg w-full max-w-sm mx-auto"
-                        variants={cardVariants}
-                        whileHover="hover"
-                    >
-                        <motion.div
-                            className="w-16 h-16 mx-auto mb-4 flex items-center justify-center"
-                            initial={{ scale: 0 }}
-                            animate={{ scale: 1 }}
-                            transition={{ delay: 1.8, duration: 0.5 }}
-                        >
-                            <Image
-                                src="/assets/design.png"
-                                alt="Design"
-                                width={48}
-                                height={48}
-                                className="object-contain"
-                            />
-                        </motion.div>
-                        <h3 className="text-xl font-bold text-green-800 mb-2">Design</h3>
-                        <p className="text-gray-600 mb-4">UI, UX et Identité de marque</p>
-                        <motion.button
-                            className="bg-[#FFA500] text-white px-6 py-2 rounded-full hover:bg-[#FF8C00] transition-colors mt-4"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            onClick={() => window.location.href = '/services'}
-                        >
-                            En savoir plus
-                        </motion.button>
-                    </motion.div>
+                    {(dynamicServices).map((service, index) => (
+                        <ServiceCard key={`service-card-${index}`} service={service} index={index} />
+                    ))}
                 </motion.div>
             </div>
 

@@ -15,7 +15,7 @@ const SectionFive = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 md:gap-20 lg:grid-cols-2 gap-6 lg:gap-32">
           {/* Premier bloc  */}
           <div className="bg-white shadow-[8px_8px_15px_rgba(0,0,0,0.2)] 
-                                rounded-2xl flex flex-col items-center gap-2 lg:gap-6 lg:gap-12 w-full lg:w-full lg:max-w-lg">
+                                rounded-2xl flex flex-col items-center gap-2 lg:gap-12 w-full lg:w-full lg:max-w-lg">
             <div className="relative flex-shrink-0 lg:flex-shrink-0">
               <Image
                 src="/assets/dp/MockuP reservation.jpg"
@@ -26,7 +26,7 @@ const SectionFive = () => {
               />
             </div>
 
-            <div className="w-full justify-center items-center pb-8 flex flex-col gap-4 gap-1">
+            <div className="w-full justify-center items-center pb-8 flex flex-col gap-4">
               <h2 className="text-green-800 lg:text-lg text-center lg:w-2/3 text-sm font-bold">Booking : Application web et mobile prête à vendre</h2>
               <p className="text-sm w-40 lg:w-2/3 text-center lg:text-lg leading-relaxed lg:leading-relaxed">
                 Booking est une plateforme simple et rapide de réservation de gest house et de chambre d&apos;hôtel adaptée aux besoins des voyageurs.</p>
@@ -42,7 +42,7 @@ const SectionFive = () => {
 
           {/* Deuxième bloc clinico */}
           <div className="bg-white  shadow-[8px_8px_15px_rgba(0,0,0,0.2)] 
-                                rounded-2xl  flex flex-col items-center gap-2 lg:gap-6 lg:gap-12 w-full lg:w-full lg:max-w-lg">
+                                rounded-2xl  flex flex-col items-center gap-2 lg:gap-12 w-full lg:w-full lg:max-w-lg">
             <div className="relative  flex-shrink-0 lg:flex-shrink-0">
               <Image
                 src="/assets/dp/Mockup dash 2.jpg"
@@ -53,7 +53,7 @@ const SectionFive = () => {
               />
             </div>
 
-            <div className="  w-full justify-center items-center pb-8  flex flex-col gap-4 gap-1 ">
+            <div className="  w-full justify-center items-center pb-8  flex flex-col gap-4 ">
               <h2 className=" text-green-800 lg:text-lg text-center lg:w-2/3 text-sm font-bold">Clinico : Application web et mobile prête à vendre</h2>
               <p className="text-sm w-40 lg:w-2/3 text-center lg:text-lg leading-relaxed lg:leading-relaxed">
                 Une application de gestion complet de clinique médicale, qui vous permet de gérer vos patients, vos rendez-vous et vos factures en toute simplicité.</p>

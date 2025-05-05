@@ -20,7 +20,7 @@ const SectionOne = () => {
             Commencez ici et maintenant!
           </p>
           <button
-            onClick={() => router.push("/sectionsix")}
+            onClick={() => router.push("/contact")}
             className="relative text-stone-50 text-md  lg:text-xl w-60 lg:w-72 py-2 lg:py-4 rounded-lg font-bold transition duration-300 overflow-hidden group"
           >
             <span className="absolute inset-0 bg-gradient-to-r from-green-500 via-green-700 to-green-800 transition duration-300 group-hover:opacity-0"></span>

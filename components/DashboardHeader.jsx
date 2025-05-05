@@ -48,7 +48,7 @@ export default function DashboardHeader() {
         try {
             await axios.post(`/api/notifications/${id}/read`);
             await fetchUnreadCount();
-            setNotifications(notifications.map(notif => 
+            setNotifications(notifications.map(notif =>
                 notif.id === id ? { ...notif, read_at: new Date().toISOString() } : notif
             ));
         } catch (error) {
@@ -101,10 +101,10 @@ export default function DashboardHeader() {
                     </h2>
                     {/* Barre de recherche */}
                     {!shouldHideSearchBar(pathname) && (
+                        <div className="relative max-w-md">
+                            {/* Votre code de barre de recherche */}
                             <div className="relative max-w-md">
-                                {/* Votre code de barre de recherche */}
-                                <div className="relative max-w-md">
-                                <button 
+                                <button
                                     onClick={() => router.back()}
                                     className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 rounded-full"
                                 >
@@ -115,13 +115,13 @@ export default function DashboardHeader() {
                                 <input
                                     type="text"
                                     placeholder="Rechercher..."
-                                    className="w-full px-6 py-3 rounded-2xl bg-white border border-transparent text-black placeholder-black/70 focus:ring-transparent focus:outline-none focus:ring-2 focus:ring-white/50"
+                                    className="w-full px-6 py-3 rounded-2xl bg-white border border-transparent text-black placeholder-black/70 focus:ring-transparent focus:outline-none focus:ring-2"
                                 />
                             </div>
                         </div>
                     )}
-                        <div className='flex justify-end items-center gap-2'>
-                            {/* Notifications */}
+                    <div className='flex justify-end items-center gap-2'>
+                        {/* Notifications */}
                         <div className="relative">
                             <button
                                 onClick={() => setShowNotifications(!showNotifications)}

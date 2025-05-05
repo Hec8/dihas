@@ -20,7 +20,7 @@ export default function Testimony() {
             name: "Académie Internationale de Freelancing (AIF)",
             role: "Sabine MoFOA, utilisatrice",
             image: "/assets/Sabine.jpeg",
-            content: "Diha's a joué un rôle clé dans le développement d'AFB. Grâce à leur expertise, notre plateforme de formation offre désormais une expérience utilisateur optimisée, aidant les jeunes à découvrir leur voie et à atteindre leurs objectifs professionnels"
+            content: "Diha's a joué un rôle clé dans le développement d'AIF. Grâce à leur expertise, notre plateforme de formation offre désormais une expérience utilisateur optimisée, aidant les jeunes à découvrir leur voie et à atteindre leurs objectifs professionnels"
         }
     ];
 

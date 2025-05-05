@@ -1,17 +1,62 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import axios from '@/lib/axios';
 
 const SectionSix = () => {
   const router = useRouter();
+  const [dynamicProducts, setDynamicProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get('/api/products');
+        setDynamicProducts(response.data);
+      } catch (error) {
+        console.error('Erreur lors de la récupération des produits:', error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   return (
     <div id="sectionsix" className="lg:pl-20 lg:pr-20 p-4">
       <div className="lg:flex-row flex flex-col justify-center items-center">
         <div className="grid grid-cols-1 md:grid-cols-2 md:gap-20 lg:grid-cols-2 gap-6 lg:gap-32">
 
-          {/* Premier bloc business */}
+          {/* Produits dynamiques */}
+          {dynamicProducts.map((product, index) => (
+            <div key={`dynamic-${index}`} className="bg-white shadow-[8px_8px_15px_rgba(0,0,0,0.2)] rounded-2xl flex flex-col h-[600px]">
+              <div className="h-[300px] relative overflow-hidden">
+                <Image
+                  src={product.image || '/assets/default-product.jpg'}
+                  alt={product.name}
+                  fill
+                  className="object-cover rounded-t-2xl"
+                />
+              </div>
+              <div className="p-6 flex flex-col justify-between flex-grow">
+                <div>
+                  <h2 className="text-green-800 lg:text-lg text-center text-sm font-bold mb-4">{product.name}</h2>
+                  <p className="text-sm lg:text-lg text-center leading-relaxed lg:leading-relaxed">
+                    {product.description}
+                  </p>
+                </div>
+                <div className="flex justify-center">
+                  <button
+                    onClick={() => router.push(`liens/produit/${product.slug || product.id}`)}
+                    className="w-36 lg:w-2/3 px-4 py-2 border border-orange-500 font-bold text-orange-500 rounded-lg hover:bg-orange-500 hover:text-white transition"
+                  >
+                    Voir plus
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+
+          {/* Produit statique existant - Réseau Pro */}
           <div className="bg-white shadow-[8px_8px_15px_rgba(0,0,0,0.2)] rounded-2xl flex flex-col h-[600px]">
             <div className="h-[300px] relative overflow-hidden">
               <Image

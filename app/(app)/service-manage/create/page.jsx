@@ -3,23 +3,47 @@
 import { useState } from 'react';
 import axios from '@/lib/axios';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/hooks/auth'; // Importez votre hook useAuth
 import toast, { Toaster } from 'react-hot-toast';
 
 export default function CreateService() {
     const [formData, setFormData] = useState({
         title: '',
         content: '',
-        is_active: true
+        is_active: false,
+        icon: null
     });
+    const [iconPreview, setIconPreview] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const router = useRouter();
+    const { user } = useAuth();
 
     const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: type === 'checkbox' ? checked : value
-        }));
+        const { name, value, type, checked, files } = e.target;
+
+        if (type === 'file') {
+            const file = files[0];
+            setFormData(prev => ({
+                ...prev,
+                [name]: file
+            }));
+
+            // Créer une URL pour la prévisualisation
+            if (file) {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    setIconPreview(reader.result);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                setIconPreview(null);
+            }
+        } else {
+            setFormData(prev => ({
+                ...prev,
+                [name]: type === 'checkbox' ? checked : value
+            }));
+        }
     };
 
     const handleSubmit = async (e) => {
@@ -27,7 +51,20 @@ export default function CreateService() {
         setIsSubmitting(true);
 
         try {
-            const response = await axios.post('/api/services', formData);
+            const submitData = new FormData();
+            submitData.append('title', formData.title);
+            submitData.append('content', formData.content);
+            submitData.append('is_active', formData.is_active ? '1' : '0'); // Convertir en string
+
+            if (formData.icon) {
+                submitData.append('icon', formData.icon);
+            }
+
+            const response = await axios.post('/api/services', submitData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                }
+            });
             toast.success('Service créé avec succès');
             router.push('/service-manage');
         } catch (error) {
@@ -73,18 +110,48 @@ export default function CreateService() {
                                     />
                                 </div>
 
-                                <div className="flex items-center">
-                                    <input
-                                        type="checkbox"
-                                        name="is_active"
-                                        checked={formData.is_active}
-                                        onChange={handleChange}
-                                        className="h-4 w-4 text-green-800 focus:ring-green-800 border-gray-300 rounded"
-                                    />
-                                    <label className="ml-2 block text-sm text-gray-900">
-                                        Service actif
+                                <div className="space-y-4">
+                                    <label className="block text-sm font-medium text-gray-700">
+                                        Icône du service (optionnel)
                                     </label>
+                                    <input
+                                        type="file"
+                                        name="icon"
+                                        onChange={handleChange}
+                                        accept="image/*"
+                                        className="block w-full text-sm text-gray-500
+                                            file:mr-4 file:py-2 file:px-4
+                                            file:rounded-md file:border-0
+                                            file:text-sm file:font-semibold
+                                            file:bg-green-50 file:text-green-700
+                                            hover:file:bg-green-100"
+                                    />
+                                    {iconPreview && (
+                                        <div className="mt-2">
+                                            <img
+                                                src={iconPreview}
+                                                alt="Prévisualisation"
+                                                className="w-24 h-24 object-contain"
+                                            />
+                                        </div>
+                                    )}
                                 </div>
+
+                                {/* Afficher la checkbox uniquement pour les super admins */}
+                                {user?.role === 'super_admin' && (
+                                    <div className="flex items-center">
+                                        <input
+                                            type="checkbox"
+                                            name="is_active"
+                                            checked={formData.is_active}
+                                            onChange={handleChange}
+                                            className="h-4 w-4 text-green-800 focus:ring-green-800 border-gray-300 rounded"
+                                        />
+                                        <label className="ml-2 block text-sm text-gray-900">
+                                            Service actif
+                                        </label>
+                                    </div>
+                                )}
 
                                 <div className="flex justify-end">
                                     <button
