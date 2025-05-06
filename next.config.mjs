@@ -5,6 +5,12 @@ const nextConfig = {
       {
         source: "/api/:path*",  // Toutes les routes /api/*
         destination: "https://negative-honor-hec8-2159b031.koyeb.app/api/:path*",  // Redirige vers Laravel
+        credentials: 'include',
+        headers: {
+          'X-XSRF-TOKEN': getCookie('XSRF-TOKEN'), // Fonction à implémenter
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }
       },
     ];
   },
