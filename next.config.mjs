@@ -1,5 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async rewrites() {
+    return [
+      {
+        source: "/api/:path*",  // Toutes les routes /api/*
+        destination: "https://negative-honor-hec8-2159b031.koyeb.app/api/:path*",  // Redirige vers Laravel
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {
