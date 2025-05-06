@@ -103,7 +103,7 @@ export default function BlogArticle() {
                                 />
                             ) : (
                                 <Image
-                                    src={`http://localhost:8000/images/${article.image.replace('images/', '')}`}
+                                    src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/images/${article.image.replace('images/', '')}`}
                                     alt={article.titre}
                                     fill
                                     className="object-cover"

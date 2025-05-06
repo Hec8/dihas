@@ -325,7 +325,7 @@ const Page = () => {
         </Card>
       </div>
       {/* Section défilante produits */}
-      <div className="h-screen border border border-red-500 border-gray-100 bg-green-50 rounded-xl overflow-hidden transition-all duration-700 ease-in-out bg-white relative">
+      <div className="h-screen border border-red-500 rounded-xl overflow-hidden transition-all duration-700 ease-in-out bg-white relative">
         {products.map((product, index) => (
           <div
             key={index}
