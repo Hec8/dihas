@@ -18,7 +18,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             }),
     )
 
-    const csrf = () => axios.get('/sanctum/csrf-cookie')
+    const csrf = () => axios.get('https://negative-honor-hec8-2159b031.koyeb.app/sanctum/csrf-cookie', { withCredentials: true })
 
     const register = async ({ setErrors, ...props }) => {
         await csrf()
@@ -36,7 +36,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     }
 
     const login = async ({ setErrors, setStatus, ...props }) => {
-        await fetchCsrfCookie()
+        await csrf()
 
         setErrors([])
         setStatus(null)
@@ -68,7 +68,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
 
 
     const forgotPassword = async ({ setErrors, setStatus, email }) => {
-        await fetchCsrfCookie()
+        await csrf()
 
         setErrors([])
         setStatus(null)
@@ -84,7 +84,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     }
 
     const resetPassword = async ({ setErrors, setStatus, ...props }) => {
-        await fetchCsrfCookie()
+        await csrf()
 
         setErrors([])
         setStatus(null)
