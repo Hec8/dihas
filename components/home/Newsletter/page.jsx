@@ -34,11 +34,13 @@ export default function Newsletter() {
         }
 
         try {
+            const backendUrl = 'https://negative-honor-hec8-2159b031.koyeb.app';
+            
             // 1. Obtenir le cookie CSRF directement du backend
-            await axios.get('https://negative-honor-hec8-2159b031.koyeb.app/sanctum/csrf-cookie');
+            await axios.get(`${backendUrl}/sanctum/csrf-cookie`);
 
-            // 2. Envoyer les données
-            const { data } = await axios.post('/api/newsletter/subscribe', {
+            // 2. Envoyer les données directement au backend
+            const { data } = await axios.post(`${backendUrl}/api/newsletter/subscribe`, {
                 email
             });
 
