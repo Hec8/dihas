@@ -34,11 +34,13 @@ export default function Newsletter() {
         }
 
         try {
+            const backendUrl = 'https://negative-honor-hec8-2159b031.koyeb.app';
+            
             // 1. Obtenir le cookie CSRF
-            await axios.get('/sanctum/csrf-cookie');
+            await axios.get(`${backendUrl}/sanctum/csrf-cookie`);
 
             // 2. Envoyer les données
-            const { data } = await axios.post('/api/newsletter/subscribe', { email });
+            const { data } = await axios.post(`${backendUrl}/api/newsletter/subscribe`, { email });
 
             toast.success(data.message || "Inscription réussie !");
             setEmail('');
