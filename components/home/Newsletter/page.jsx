@@ -34,10 +34,7 @@ export default function Newsletter() {
         }
 
         try {
-            // 1. Obtenir le cookie CSRF
-            await axios.get('/sanctum/csrf-cookie');
-
-            // 2. Envoyer les données
+            // Envoyer les données
             const { data } = await axios.post('/api/newsletter/subscribe', {
                 email // Changé pour envoyer 'email' au lieu de 'subscribers'
             });
