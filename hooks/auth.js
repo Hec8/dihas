@@ -18,9 +18,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             }),
     )
 
-    axios.get('https://negative-honor-hec8-2159b031.koyeb.app/sanctum/csrf-cookie', {
-        withCredentials: true
-    })
+    const csrf = () => axios.get('/sanctum/csrf-cookie')
 
     const register = async ({ setErrors, ...props }) => {
         await csrf()
