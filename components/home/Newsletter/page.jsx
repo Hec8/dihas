@@ -34,32 +34,26 @@ export default function Newsletter() {
         }
 
         try {
-            const response = await fetch('https://negative-honor-hec8-2159b031.koyeb.app/api/newsletter/subscribe', {
-                method: 'POST',
+            // Créer une instance Axios spécifique pour cette requête
+            const instance = axios.create({
+                baseURL: process.env.NEXT_PUBLIC_BACKEND_URL || 'https://negative-honor-hec8-2159b031.koyeb.app',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Accept': 'application/json'
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
                 },
-                body: JSON.stringify({ email })
+                withCredentials: false
             });
 
-            const data = await response.json();
-            if (!response.ok) {
-                throw new Error(data.message || 'Erreur serveur');
-            }
-
+            // Faire la requête sans CSRF token
+            const { data } = await instance.post('/api/newsletter/subscribe', { email });
+            
             toast.success(data.message || "Inscription réussie !");
             setEmail('');
         } catch (error) {
-            if (error.response) {
-                const errorMessage = error.response.data.message ||
-                    error.response.data.errors?.email?.[0] ||
-                    "Erreur lors de l'inscription";
-                toast.error(errorMessage);
-            } else {
-                toast.error("Erreur de connexion au serveur");
-                console.error('Erreur:', error);
-            }
+            console.error('Erreur détaillée:', error);
+            const message = error.response?.data?.message || error.message || "Erreur lors de l'inscription";
+            toast.error(message);
         }
     };
 
