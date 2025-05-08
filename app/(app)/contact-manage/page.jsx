@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import axios from '@/lib/axios';
 import { useRouter } from 'next/navigation';
 import toast, { Toaster } from 'react-hot-toast';
-import Header from '@/app/(app)/Header';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
 
@@ -58,8 +57,7 @@ export default function ContactMessages() {
 
     return (
         <>
-            <Header title="Messages de contact" />
-            <Toaster position="top-right" />
+                        <Toaster position="top-right" />
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">

@@ -61,7 +61,7 @@ export default function Projects() {
         },
         {
             id: 3,
-            title: "Académie Freelancing Bénin (AFB)",
+            title: "Académie Internationale de Freelancing (AIF)",
             description: [
                 "Développement de compétences",
                 "Accompagnement des jeunes",

@@ -7,27 +7,34 @@ import toast, { Toaster } from 'react-hot-toast';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import Image from 'next/image';
+import { useAuth } from '@/hooks/auth';
 
 export default function BlogArticle() {
     const { slug } = useParams();
     const router = useRouter();
+    const { user } = useAuth({ middleware: 'auth' });
     const [article, setArticle] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchArticle = async () => {
             try {
-                const { data } = await axios.get(`/api/blog/${slug}`);
+                if (!user) return; // Attendre que l'utilisateur soit chargé
+                const { data } = await axios.get(`/api/blog/preview/${slug}`);
                 setArticle(data.article);
             } catch (error) {
+                console.error('Erreur complète:', error);
                 toast.error(error.response?.data?.message || "Article non trouvé");
+                if (error.response?.status === 401) {
+                    router.push('/login');
+                }
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchArticle();
-    }, [slug]);
+        if (user) fetchArticle();
+    }, [slug, user]);
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -82,17 +89,28 @@ export default function BlogArticle() {
             {/* Contenu de l'article */}
             <main className="max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
                 <article className="bg-white shadow overflow-hidden sm:rounded-lg">
-                    {/* Image de l'article - Version corrigée avec Next.js Image */}
+                    {/* Image de l'article */}
                     {article.image && (
                         <div className="relative h-64 md:h-96 w-full">
-                            <Image
-                                src={`http://localhost:8000${article.image}`}
-                                alt={article.titre}
-                                fill
-                                className="object-cover"
-                                priority
-                                unoptimized={true} // Si vous avez des problèmes avec les images locales
-                            />
+                            {article.image.startsWith('http') ? (
+                                <Image
+                                    src={article.image}
+                                    alt={article.titre}
+                                    fill
+                                    className="object-cover"
+                                    priority
+                                    unoptimized={true}
+                                />
+                            ) : (
+                                <Image
+                                    src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/images/${article.image.replace('images/', '')}`}
+                                    alt={article.titre}
+                                    fill
+                                    className="object-cover"
+                                    priority
+                                    unoptimized={true}
+                                />
+                            )}
                         </div>
                     )}
 
@@ -107,10 +125,11 @@ export default function BlogArticle() {
                         <p className="text-lg text-gray-600 mb-6">{article.resume}</p>
                     </div>
 
-                    {/* Contenu de l'article - Version sécurisée sans HTML */}
-                    <div className="px-6 pb-8 whitespace-pre-line">
-                        {formatContent(article.contenu)}
-                    </div>
+                    <div
+                        className="px-6 pb-8 text-justify"
+                        dangerouslySetInnerHTML={{ __html: article.contenu }}
+                    ></div>
+
                 </article>
             </main>
         </div>

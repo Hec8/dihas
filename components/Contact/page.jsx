@@ -60,8 +60,17 @@ export default function Contact() {
             <Toaster position="top-right" />
 
             <div className="bg-white rounded-3xl shadow-lg overflow-hidden relative">
-                {/* Partie verte décorative à droite - masquée sur très petit écran */}
-                <div className="absolute right-0 top-0 bottom-0 hidden sm:block w-1/4 md:w-1/3 bg-green-800 rounded-l-[80px]"></div>
+                {/* Partie verte décorative à droite avec animation */}
+                <div className="absolute right-0 top-0 bottom-0 hidden sm:block w-1/4 md:w-1/3 bg-green-800 rounded-l-[80px] overflow-hidden">
+                    {/* Ajout de l'animation des cercles/carrés */}
+                    <div className="area w-full h-full">
+                        <ul className="circles">
+                            {[...Array(10)].map((_, index) => (
+                                <li key={index}></li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
 
                 {/* Contenu principal */}
                 <div className="relative z-10 p-4 sm:p-8 md:p-12 w-full sm:w-3/4 md:w-2/3">
@@ -78,7 +87,7 @@ export default function Contact() {
                                 name="name"
                                 value={formData.name}
                                 onChange={handleChange}
-                                placeholder="Nom *"
+                                placeholder="Nom "
                                 className="w-full px-4 sm:px-6 py-4 md:py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-800 focus:border-green-800 text-base md:text-sm"
                                 required
                             />
@@ -90,7 +99,7 @@ export default function Contact() {
                                 name="email"
                                 value={formData.email}
                                 onChange={handleChange}
-                                placeholder="Email *"
+                                placeholder="Email "
                                 className="w-full px-4 sm:px-6 py-4 md:py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-800 focus:border-green-800 text-base md:text-sm"
                                 required
                             />
@@ -102,7 +111,7 @@ export default function Contact() {
                                 name="telephone"
                                 value={formData.telephone}
                                 onChange={handleChange}
-                                placeholder="Téléphone *"
+                                placeholder="Téléphone "
                                 className="w-full px-4 sm:px-6 py-4 md:py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-800 focus:border-green-800 text-base md:text-sm"
                                 required
                             />
@@ -113,7 +122,7 @@ export default function Contact() {
                                 name="message"
                                 value={formData.message}
                                 onChange={handleChange}
-                                placeholder="Votre message *"
+                                placeholder="Votre message "
                                 rows="6"
                                 className="w-full px-4 sm:px-6 py-4 md:py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-800 focus:border-green-800 resize-none text-base md:text-sm"
                                 required
@@ -135,18 +144,8 @@ export default function Contact() {
                             <div className="flex items-center gap-2">
                                 <img src="/assets/phone.png" alt="Phone" className="w-6 h-6 opacity-70" />
                                 <div>
-                                    <div className="text-sm font-medium text-gray-600">PHONE</div>
-                                    <div>03 5432 1234</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="flex items-center gap-3">
-                            <div className="flex items-center gap-2">
-                                <img src="/assets/fax.png" alt="Fax" className="w-6 h-6 opacity-70" />
-                                <div>
-                                    <div className="text-sm font-medium text-gray-600">FAX</div>
-                                    <div>03 5432 1234</div>
+                                    <div className="text-sm font-medium text-gray-600">TÉLÉPHONE</div>
+                                    <a href="tel:+22994975451" className="hover:text-green-800">+229 94 97 54 51</a>
                                 </div>
                             </div>
                         </div>
@@ -156,13 +155,67 @@ export default function Contact() {
                                 <img src="/assets/mail.png" alt="Email" className="w-6 h-6 opacity-70" />
                                 <div>
                                     <div className="text-sm font-medium text-gray-600">EMAIL</div>
-                                    <div>info@marcc.com.au</div>
+                                    <a href="mailto:contact@dihas.tech" className="hover:text-green-800">contact@dihas.tech</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            {/* Ajout des styles CSS pour l'animation */}
+            <style jsx global>{`
+                .area {
+                    /* Styles de base pour la zone d'animation */
+                    position: relative; /* Important pour le positionnement absolu des enfants */
+                }
+                .circles {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    overflow: hidden; /* Masque les éléments qui sortent */
+                    margin: 0;
+                    padding: 0;
+                    pointer-events: none; /* Empêche l'interaction avec les carrés */
+                }
+                .circles li {
+                    position: absolute;
+                    display: block;
+                    list-style: none;
+                    width: 20px;
+                    height: 20px;
+                    /* Couleur légèrement plus claire que le fond vert pour visibilité */
+                    background: rgba(255, 255, 255, 0.15);
+                    animation: animate 25s linear infinite;
+                    bottom: -150px; /* Commence en dehors de l'écran */
+                }
+                /* Styles pour les différentes tailles et délais d'animation */
+                .circles li:nth-child(1) { left: 25%; width: 80px; height: 80px; animation-delay: 0s; animation-duration: 20s; border-radius: 50%; }
+                .circles li:nth-child(2) { left: 10%; width: 20px; height: 20px; animation-delay: 2s; animation-duration: 12s; }
+                .circles li:nth-child(3) { left: 70%; width: 40px; height: 40px; animation-delay: 4s; animation-duration: 18s; border-radius: 50%; }
+                .circles li:nth-child(4) { left: 40%; width: 60px; height: 60px; animation-delay: 0s; animation-duration: 15s; border-radius: 50%; }
+                .circles li:nth-child(5) { left: 65%; width: 20px; height: 20px; animation-delay: 0s; }
+                .circles li:nth-child(6) { left: 75%; width: 110px; height: 110px; animation-delay: 3s; border-radius: 50%; }
+                .circles li:nth-child(7) { left: 35%; width: 150px; height: 150px; animation-delay: 7s; border-radius: 50%; }
+                .circles li:nth-child(8) { left: 50%; width: 25px; height: 25px; animation-delay: 15s; animation-duration: 45s; }
+                .circles li:nth-child(9) { left: 20%; width: 15px; height: 15px; animation-delay: 2s; animation-duration: 35s; border-radius: 50%; }
+                .circles li:nth-child(10) { left: 85%; width: 150px; height: 150px; animation-delay: 0s; animation-duration: 11s; }
+
+                @keyframes animate {
+                    0% {
+                        transform: translateY(0) rotate(0deg);
+                        opacity: 1;
+                        border-radius: 0; /* Carré au début */
+                    }
+                    100% {
+                        transform: translateY(-1000px) rotate(720deg); /* Monte et tourne */
+                        opacity: 0;
+                        border-radius: 50%; /* Devient un cercle à la fin */
+                    }
+                }
+            `}</style>
         </div>
     );
 }

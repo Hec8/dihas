@@ -1,47 +1,88 @@
 'use client'
 
+import { Suspense } from 'react'
 import InputError from '@/components/InputError'
 import Label from '@/components/Label'
 import Link from 'next/link'
 import { useAuth } from '@/hooks/auth'
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import AuthSessionStatus from '@/app/(auth)/AuthSessionStatus'
+import axios from '@/lib/axios' // <-- Ajouté
+import toast from 'react-hot-toast' // <-- Ajouté
 
 const Login = () => {
-    const router = useRouter()
+    return (
+        <Suspense fallback={<div>Chargement...</div>}>
+            <LoginContent />
+        </Suspense>
+    )
+}
 
+const LoginContent = () => {
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const resetParam = searchParams?.get('reset')
     const { login } = useAuth({
         middleware: 'guest',
-        redirectIfAuthenticated: '/dashboard',
-    })
+        redirectIfAuthenticated: user => {
+            // Toujours retourner une string valide
+            if (!user) return '/login';
+            if (user?.role === 'super_admin') return '/dashboard';
+            if (user?.role === 'createur_contenu') return '/content-creator-dashboard';
+            return '/'; // Fallback par défaut
+        },
+    });
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [shouldRemember, setShouldRemember] = useState(false)
     const [errors, setErrors] = useState([])
     const [status, setStatus] = useState(null)
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
-        if (router.reset?.length > 0 && errors.length === 0) {
-            setStatus(atob(router.reset))
+        if (!router || !searchParams) return;
+
+        if (resetParam && errors.length === 0) {
+            setStatus(atob(resetParam))
         } else {
             setStatus(null)
         }
-    }, [router.reset, errors.length])
+    }, [resetParam, errors.length, router, searchParams])
 
-    const submitForm = async event => {
+    if (!router || !searchParams) return <div>Chargement...</div>;
+
+    const submitForm = async (event) => {
+        setIsSubmitting(true);
         event.preventDefault()
 
-        login({
-            email,
-            password,
-            remember: shouldRemember,
-            setErrors,
-            setStatus,
-        })
-    }
+        try {
+            // 1. Obtenir le token CSRF
+            await axios.get('/sanctum/csrf-cookie')
 
+            // 2. Effectuer le login
+            await login({
+                email,
+                password,
+                remember: shouldRemember,
+                setErrors,
+                setStatus
+            })
+
+            // 3. Redirection après login réussi
+            const user = await axios.get('/api/user').then(res => res.data)
+            if (user?.role === 'super_admin') window.location.href = '/dashboard'
+            else if (user?.role === 'createur_contenu') window.location.href = '/content-creator-dashboard'
+            else window.location.href = '/'
+
+        } catch (error) {
+            console.error('Login error:', error)
+            if (error.response?.status === 419) {
+                toast.error('Session expirée, veuillez rafraîchir la page')
+            }
+        }
+    }
     return (
         <>
             <AuthSessionStatus className="mb-4" status={status} />
@@ -112,9 +153,10 @@ const Login = () => {
 
                     <button
                         type="submit"
+                        disabled={isSubmitting}
                         className="ml-3 px-4 py-2 bg-green-800 text-white rounded-xl hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-800 focus:ring-opacity-50 transition-colors"
                     >
-                        Se connecter
+                        {isSubmitting ? 'Connexion en cours...' : 'Se connecter'}
                     </button>
                 </div>
             </form>

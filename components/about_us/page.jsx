@@ -1,5 +1,6 @@
 'use client'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 
@@ -170,12 +171,15 @@ const AboutUs = () => {
                                 className="flex items-center gap-4"
                             >
                                 <button className="bg-[#FFA500] hover:bg-[#FF8533] transition-colors text-white px-6 py-3 rounded-lg flex items-center">
-                                    Contactez-nous
+                                    <Link href="/contact">
+                                        Contactez-nous
+                                    </Link>
                                 </button>
                                 <div className="text-xs text-gray-600">
-                                    Besoin d'aide?<br />
-                                    (229) XX XX XX XX
+                                    Besoin d&apos;aide?<br />
+                                    <a href="tel:+22994975451" className="hover:text-green-800">+229 94 97 54 51</a>
                                 </div>
+
                             </motion.div>
                         </motion.div>
                     </div>

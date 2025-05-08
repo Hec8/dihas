@@ -12,15 +12,15 @@ export default function Testimony() {
             id: 1,
             name: "SPACEBOOST",
             role: "Romaric KOUNDE, utilisateur",
-            image: "/assets/romaric.png",
+            image: "/assets/Romaric.jpeg",
             content: "Grâce à Diha's, SPACEBOOST est devenue une plateforme incontournable pour les campagnes publicitaires basées sur l'influence. Leur expertise a permis de mobiliser efficacement les influenceurs et de maximiser l'impact de nos campagnes marketing"
         },
         {
             id: 2,
-            name: "Académie Freelancing Bénin (AFB)",
+            name: "Académie Internationale de Freelancing (AIF)",
             role: "Sabine MoFOA, utilisatrice",
-            image: "/assets/sabine.png",
-            content: "Diha's a joué un rôle clé dans le développement d'AFB. Grâce à leur expertise, notre plateforme de formation offre désormais une expérience utilisateur optimisée, aidant les jeunes à découvrir leur voie et à atteindre leurs objectifs professionnels"
+            image: "/assets/Sabine.jpeg",
+            content: "Diha's a joué un rôle clé dans le développement d'AIF. Grâce à leur expertise, notre plateforme de formation offre désormais une expérience utilisateur optimisée, aidant les jeunes à découvrir leur voie et à atteindre leurs objectifs professionnels"
         }
     ];
 
@@ -75,9 +75,10 @@ export default function Testimony() {
                                 <Image
                                     src={testimonial.image}
                                     alt={testimonial.name}
-                                    width={72}
-                                    height={72}
-                                    className="rounded-full border-4 border-white w-[72px] h-[72px] sm:w-[84px] sm:h-[84px] md:w-[96px] md:h-[96px]"
+                                    width={96}
+                                    height={96}
+                                    className="rounded-full border-4 border-white object-cover w-[96px] h-[96px] sm:w-[112px] sm:h-[112px] md:w-[128px] md:h-[128px]"
+                                    priority
                                 />
                             </div>
                             <div className="mt-12 sm:mt-14 md:mt-16 text-center">
@@ -98,10 +99,10 @@ export default function Testimony() {
                 <div className="flex justify-center items-center mt-[300px] sm:mt-[350px] md:mt-[400px] gap-4">
                     <button
                         onClick={prevPage}
-                        className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-white flex items-center justify-center hover:bg-white/10 transition-all duration-300 transform active:scale-90"
+                        className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-green-700 flex items-center justify-center bg-white hover:bg-white/10 transition-all duration-300 transform active:scale-90"
                     >
                         <svg
-                            className="w-5 h-5 sm:w-6 sm:h-6 text-white"
+                            className="w-5 h-5 sm:w-6 sm:h-6 text-green-800"
                             viewBox="0 0 24 24"
                             fill="none"
                             stroke="currentColor"
@@ -114,10 +115,10 @@ export default function Testimony() {
                     </button>
                     <button
                         onClick={nextPage}
-                        className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-white flex items-center justify-center hover:bg-white/10 transition-all duration-300 transform active:scale-90"
+                        className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-green-700 flex items-center justify-center bg-white hover:bg-white/10 transition-all duration-300 transform active:scale-90"
                     >
                         <svg
-                            className="w-5 h-5 sm:w-6 sm:h-6 text-white"
+                            className="w-5 h-5 sm:w-6 sm:h-6 text-green-800"
                             viewBox="0 0 24 24"
                             fill="none"
                             stroke="currentColor"

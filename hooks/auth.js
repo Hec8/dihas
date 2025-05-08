@@ -41,9 +41,22 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         setErrors([])
         setStatus(null)
 
-        axios
+        return axios
             .post('/login', props)
-            .then(() => mutate())
+            .then(async response => {
+                // Récupérer les données utilisateur si elles sont retournées par l'API
+                const user = response.data.user || null
+
+                // Mutate doit être appelé avant la redirection
+                await mutate()
+                // Redirection basée sur le rôle
+                if (user?.role === 'createur_contenu') {
+                    window.location.href = '/content-creator-dashboard'
+                } else {
+                    // Par défaut, rediriger vers le dashboard standard
+                    window.location.href = '/dashboard'
+                }
+            })
             .catch(error => {
                 if (error.response.status !== 422) throw error
 

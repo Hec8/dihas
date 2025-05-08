@@ -1,0 +1,94 @@
+/* Styles pour le contenu de l'article */
+.article-content {
+    /* Espacement et mise en page */
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
+.article-content.text-justify {
+    text-align: justify;
+    text-justify: inter-word;
+    word-spacing: -0.05em;
+    hyphens: auto;
+}
+
+/* Styles pour les éléments TipTap */
+.article-content [style*="color:"] {
+    display: inline;
+}
+
+.article-content mark {
+    background-color: #fef08a;
+    padding: 0.125em 0;
+}
+
+.article-content u {
+    text-decoration: underline;
+}
+
+/* Styles pour les blocs de code et citations */
+.article-content pre {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+}
+
+.article-content blockquote {
+    font-style: italic;
+    color: #4b5563;
+    padding: 0.5rem 0 0.5rem 1rem;
+    border-left: 4px solid #e5e7eb;
+    margin: 1.5rem 0;
+}
+
+/* Styles pour les listes */
+.article-content ul,
+.article-content ol {
+    padding-left: 1.5rem;
+    margin: 1rem 0;
+}
+
+.article-content li {
+    margin: 0.5rem 0;
+}
+
+/* Styles pour les images */
+.article-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    margin: 1.5rem 0;
+}
+
+/* Styles pour les tableaux */
+.article-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+}
+
+.article-content th,
+.article-content td {
+    border: 1px solid #e5e7eb;
+    padding: 0.75rem;
+    text-align: left;
+}
+
+.article-content th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+}
+
+/* Styles pour les liens */
+.article-content a {
+    color: #2563eb;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.article-content a:hover {
+    text-decoration: underline;
+    color: #1d4ed8;
+}

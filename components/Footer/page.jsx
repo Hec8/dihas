@@ -25,10 +25,9 @@ export default function Footer() {
                             De l'idée de développement de marque, nous concevons et développons des applications.
                         </p>
                         <div className="flex space-x-6 mt-4 text-xl">
-                            <a href="#" className="hover:text-yellow-500 transition-colors"><FaFacebookF /></a>
-                            <a href="#" className="hover:text-yellow-500 transition-colors"><FaTwitter /></a>
-                            <a href="#" className="hover:text-yellow-500 transition-colors"><FaLinkedinIn /></a>
-                            <a href="#" className="hover:text-yellow-500 transition-colors"><FaInstagram /></a>
+                            <a href="https://www.facebook.com/Dihas.tech" className="hover:text-yellow-500 transition-colors"><FaFacebookF /></a>
+                            <a href="https://www.linkedin.com/company/105786573/admin/dashboard/" className="hover:text-yellow-500 transition-colors"><FaLinkedinIn /></a>
+                            <a href="https://www.instagram.com/dihas.tech/" className="hover:text-yellow-500 transition-colors"><FaInstagram /></a>
                         </div>
                     </div>
 
