@@ -54,8 +54,8 @@ const LoginContent = () => {
     if (!router || !searchParams) return <div>Chargement...</div>;
 
     const submitForm = async (event) => {
-        setIsSubmitting(true);
         event.preventDefault()
+        setIsSubmitting(true)
 
         try {
             // 1. Obtenir le token CSRF

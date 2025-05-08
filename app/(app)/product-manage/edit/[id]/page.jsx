@@ -57,7 +57,7 @@ export default function EditProduct() {
     const handleFeatureChange = (index, value) => {
         setFormData(prev => ({
             ...prev,
-            features: prev.features.map((feature, i) => 
+            features: prev.features.map((feature, i) =>
                 i === index ? { ...feature, value } : feature
             )
         }));
@@ -83,7 +83,7 @@ export default function EditProduct() {
 
         try {
             const formDataToSend = new FormData();
-            
+
             Object.keys(formData).forEach(key => {
                 if (key !== 'homepage_image' && key !== 'logo' && key !== 'detail_images' && key !== 'features') {
                     formDataToSend.append(key, formData[key]);
@@ -124,7 +124,7 @@ export default function EditProduct() {
 
     return (
         <>
-                        <Toaster position="top-right" />
+            <Toaster position="top-right" />
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
