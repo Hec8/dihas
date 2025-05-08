@@ -34,17 +34,19 @@ export default function Newsletter() {
         }
 
         try {
-            // Créer une instance Axios spécifique pour cette requête
-            const instance = axios.create({
-                baseURL: process.env.NEXT_PUBLIC_BACKEND_URL || 'https://negative-honor-hec8-2159b031.koyeb.app',
+            const response = await fetch('https://negative-honor-hec8-2159b031.koyeb.app/api/newsletter/subscribe', {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
                 },
-                withCredentials: false
+                body: JSON.stringify({ email })
             });
 
-            const { data } = await instance.post('/api/newsletter/subscribe', { email });
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(data.message || 'Erreur serveur');
+            }
 
             toast.success(data.message || "Inscription réussie !");
             setEmail('');
