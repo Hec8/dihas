@@ -18,9 +18,10 @@ const Login = () => {
 }
 
 const LoginContent = () => {
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const router = useRouter();
     const searchParams = useSearchParams();
-    const resetParam = searchParams?.get('reset')
+    const resetParam = searchParams?.get('reset') 
     const { login } = useAuth({
         middleware: 'guest',
         redirectIfAuthenticated: user => {
@@ -52,6 +53,7 @@ const LoginContent = () => {
 
     const submitForm = async event => {
         event.preventDefault()
+        setIsSubmitting(true)
 
         login({
             email,
@@ -132,9 +134,10 @@ const LoginContent = () => {
 
                     <button
                         type="submit"
+                        disabled={isSubmitting}
                         className="ml-3 px-4 py-2 bg-green-800 text-white rounded-xl hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-800 focus:ring-opacity-50 transition-colors"
                     >
-                        Se connecter
+                        {isSubmitting ? 'Connexion en cours...' : 'Se connecter'}
                     </button>
                 </div>
             </form>

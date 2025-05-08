@@ -6,6 +6,26 @@ import { Share2 } from "lucide-react";
 import '@/styles/article.css';
 
 export default function BlogDetail({ article, loading }) {
+    const currentUrl = typeof window !== "undefined" ? window.location.href : '';
+
+    const shareLinks = {
+        facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`,
+        linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(currentUrl)}`,
+        whatsapp: `https://wa.me/?text=${encodeURIComponent(currentUrl)}`,
+        instagram: `https://www.instagram.com/?url=${encodeURIComponent(currentUrl)}`,
+      };
+    function formatTextAsHTML(text) {
+        return (
+            '<p>' +
+            text
+                .trim()
+                .replace(/\n{2,}/g, '</p><p>')  // double retour = nouveau paragraphe
+                .replace(/\n/g, '<br/>')        // simple retour = saut de ligne
+                + '</p>'
+        );
+    }
+    
+
     if (loading) {
         return (
             <div className="mt-14">
@@ -66,7 +86,7 @@ export default function BlogDetail({ article, loading }) {
                 <div className="flex flex-col lg:flex-row gap-6 md:gap-8">
                     {/* Colonne gauche : Détails - Mobile en premier */}
                     <aside className="lg:w-1/4 order-1 lg:order-none">
-                        <div className="lg:sticky lg:top-4 bg-blue-50 p-4 rounded-lg shadow-md border-l-4 border-[#FFA500]">
+                        <div className="lg:sticky lg:top-4 bg-green-200 p-4 rounded-lg shadow-md border-l-4 border-[#FFA500]">
                             <h2 className="font-bold text-lg mb-4 border-b-2 border-[#FFA500] pb-2 uppercase">DÉTAILS DE L'ARTICLE</h2>
                             <div className="space-y-3 text-sm">
                                 <div className="flex items-start">
@@ -86,7 +106,7 @@ export default function BlogDetail({ article, loading }) {
                             <h3 className="font-semibold mb-3">Partager cet article</h3>
                             <div className="flex gap-4">
                                 {/* Facebook */}
-                                <a href="#" className="hover:opacity-80 transition-opacity">
+                                <a aria-label="Partager sur Facebook" href={shareLinks.facebook} target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
                                 <Image 
                                     src="/assets/fb.png" 
                                     alt="Partager sur Facebook"
@@ -95,8 +115,8 @@ export default function BlogDetail({ article, loading }) {
                                 />
                                 </a>
                                 
-                                {/* Twitter */}
-                                <a href="#" className="hover:opacity-80 transition-opacity">
+                                {/* Instagram */}
+                                <a aria-label="Partager sur Instagram" href={shareLinks.instagram} target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
                                 <Image 
                                     src="/assets/insta.png" 
                                     alt="Partager sur Instagram"
@@ -106,7 +126,7 @@ export default function BlogDetail({ article, loading }) {
                                 </a>
                                 
                                 {/* LinkedIn */}
-                                <a href="#" className="hover:opacity-80 transition-opacity">
+                                <a aria-label="Partager sur LinkedIn" href={shareLinks.linkedin} target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
                                 <Image 
                                     src="/assets/LkIn.png" 
                                     alt="Partager sur LinkedIn"
@@ -116,7 +136,7 @@ export default function BlogDetail({ article, loading }) {
                                 </a>
                                 
                                 {/* Autres réseaux si besoin */}
-                                <a href="#" className="hover:opacity-80 transition-opacity">
+                                <a aria-label="Partager sur WhatsApp" href={shareLinks.whatsapp} target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
                                 <Image 
                                     src="/assets/wa.png" 
                                     alt="Partager sur WhatsApp"
@@ -142,26 +162,24 @@ export default function BlogDetail({ article, loading }) {
                         {/* Contenu de l'article */}
                         <div 
                             className="prose prose-sm sm:prose lg:prose-lg max-w-none mt-8 mb-12
-                                     prose-headings:text-gray-800 prose-headings:font-bold
-                                     prose-p:text-justify prose-p:mb-4 prose-p:leading-relaxed
-                                     prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline
-                                     prose-strong:text-gray-900 prose-strong:font-bold
-                                     prose-em:text-gray-800 prose-em:italic
-                                     prose-ul:list-disc prose-ul:pl-6
-                                     prose-ol:list-decimal prose-ol:pl-6
-                                     prose-li:my-2
-                                     prose-blockquote:border-l-4 prose-blockquote:border-gray-300
-                                     prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:my-6
-                                     prose-img:rounded-lg prose-img:shadow-md"
+                                    prose-headings:text-gray-800 prose-headings:font-bold
+                                    prose-p:text-justify prose-p:mb-4 prose-p:leading-relaxed
+                                    prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline
+                                    prose-strong:text-gray-900 prose-strong:font-bold
+                                    prose-em:text-gray-800 prose-em:italic
+                                    prose-ul:list-disc prose-ul:pl-6
+                                    prose-ol:list-decimal prose-ol:pl-6
+                                    prose-li:my-2
+                                    prose-blockquote:border-l-4 prose-blockquote:border-gray-300
+                                    prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:my-6
+                                    prose-img:rounded-lg prose-img:shadow-md"
                         >
                             {article.contenu ? (
-                                <div 
-                                    dangerouslySetInnerHTML={{ 
-                                        __html: article.contenu
-                                            .replace(/\n/g, '<br/>') // Convertir les retours à la ligne simples en <br/>
-                                            .replace(/\n\n/g, '</p><p>') // Convertir les doubles retours à la ligne en nouveaux paragraphes
-                                    }} 
-                                    className="article-content text-justify"
+                                <div
+                                dangerouslySetInnerHTML={{
+                                    __html: formatTextAsHTML(article.contenu)
+                                  }}
+                                  className="article-content text-justify"
                                 />
                             ) : (
                                 <p className="text-gray-500 italic text-center py-4">
@@ -169,6 +187,7 @@ export default function BlogDetail({ article, loading }) {
                                 </p>
                             )}
                         </div>
+
 
                         {/* Navigation entre articles - Responsive */}
                         <div className="flex flex-row sm:flex-row justify-between items-center mt-12 border-t pt-6 gap-4">
@@ -205,7 +224,7 @@ export default function BlogDetail({ article, loading }) {
                     </div>
 
                     {/* Bloc d'aide - Déplacé à l'intérieur du div sticky */}
-                    <div className="bg-blue-50 p-4 rounded-lg shadow-md text-center">
+                    <div className="bg-green-200 p-4 rounded-lg shadow-md text-center">
                     <h3 className="font-bold mb-4 text-md">
                         Avez-vous besoin d'aide avec les services de développement d'applications et de sites Web ?
                     </h3>

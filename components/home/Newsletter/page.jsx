@@ -34,11 +34,7 @@ export default function Newsletter() {
         }
 
         try {
-            const { data } = await axios.post(
-                'https://negative-honor-hec8-2159b031.koyeb.app/api/newsletter/subscribe', 
-                { email },
-                { withCredentials: false } // Désactiver l'envoi des cookies car pas besoin d'auth
-            );
+            const { data } = await axios.post('/api/newsletter/subscribe', { email });
 
             toast.success(data.message || "Inscription réussie !");
             setEmail('');

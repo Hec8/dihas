@@ -34,9 +34,9 @@ const Navigation = ({ user }) => {
     }
 
     return (
-        <div className="min-h-screen w-64 bg-green-700 text-white flex flex-col py-6">
+        <div className="min-h-screen w-[300px] bg-green-700 text-white flex flex-col py-6">
             {/* Logo */}
-            <div className="px-6 mb-8 ml-6">
+            <div className="px-6 mb-8 ml-10">
                 <Image
                     src="/assets/logo-blanc.png"
                     alt="Logo dashboard"

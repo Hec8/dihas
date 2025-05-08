@@ -127,7 +127,7 @@ export default function Blog() {
             <section className="py-16 px-4">
                 <div className="container mx-auto max-w-7xl">
                     <h2 className="text-2xl font-bold mb-12 border-l-4 border-[#FFA500] pl-4 mx-4">Dernières nouvelles</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-6">
                         {loading ? (
                             // Afficher des cartes de chargement
                             [...Array(4)].map((_, index) => (
@@ -146,13 +146,15 @@ export default function Blog() {
                             ))
                         ) : filteredArticles.length > 0 ? (
                             filteredArticles.map((article) => (
-                                <div key={article.id} className="bg-white rounded-lg overflow-hidden shadow-md transition-transform hover:scale-105">
-                                    <div className="relative h-48">
-                                        <Image
+                                <div key={article.id} className="bg-white rounded-lg overflow-hidden shadow-md transition-transform hover:scale-105 hover:shadow-xl">
+                                    <div className="relative h-[180px] sm:h-[200px] w-full overflow-hidden">
+                                        <Image 
                                             src={article.image || '/assets/default-blog.png'}
                                             alt={article.titre}
                                             fill
+                                            sizes="(max-width: 640px) 85vw, (max-width: 1024px) 40vw, 25vw"
                                             className="object-cover"
+                                            priority
                                             onError={(e) => {
                                                 console.error('Erreur de chargement image:', article.image);
                                                 e.target.src = '/assets/default-blog.png';
