@@ -34,7 +34,17 @@ export default function Newsletter() {
         }
 
         try {
-            const { data } = await axios.post('/api/newsletter/subscribe', { email });
+            // Créer une instance Axios spécifique pour cette requête
+            const instance = axios.create({
+                baseURL: process.env.NEXT_PUBLIC_BACKEND_URL || 'https://negative-honor-hec8-2159b031.koyeb.app',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                withCredentials: false
+            });
+
+            const { data } = await instance.post('/api/newsletter/subscribe', { email });
 
             toast.success(data.message || "Inscription réussie !");
             setEmail('');
@@ -46,6 +56,7 @@ export default function Newsletter() {
                 toast.error(errorMessage);
             } else {
                 toast.error("Erreur de connexion au serveur");
+                console.error('Erreur:', error);
             }
         }
     };
