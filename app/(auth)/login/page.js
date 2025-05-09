@@ -70,24 +70,19 @@ const LoginContent = () => {
             })
 
             // 2. Effectuer le login directement sur le backend
-            // const loginResponse = await fetch('https://negative-honor-hec8-2159b031.koyeb.app/login', {
-            //     method: 'POST',
-            //     credentials: 'include',
-            //     headers: {
-            //         'Accept': 'application/json',
-            //         'Content-Type': 'application/json',
-            //         'X-Requested-With': 'XMLHttpRequest',
-            //     },
-            //     body: JSON.stringify({
-            //         email,
-            //         password,
-            //         remember: shouldRemember
-            //     })
-            // })
-            const loginResponse = await login({
-                email: email,
-                password: password,
-                remember: shouldRemember
+            const loginResponse = await fetch('https://negative-honor-hec8-2159b031.koyeb.app/login', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                body: JSON.stringify({
+                    email,
+                    password,
+                    remember: shouldRemember
+                })
             })
 
             if (!loginResponse.ok) {
