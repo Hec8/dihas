@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import AuthSessionStatus from '@/app/(auth)/AuthSessionStatus'
 import axios from '@/lib/axios' // <-- Ajouté
-import toast, { Toaster } from 'react-hot-toast' // <-- Ajouté
+import toast from 'react-hot-toast' // <-- Ajouté
 
 const Login = () => {
     return (
@@ -23,7 +23,7 @@ const LoginContent = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const resetParam = searchParams?.get('reset')
-    const { login, } = useAuth({
+    const { login } = useAuth({
         middleware: 'guest',
         redirectIfAuthenticated: user => {
             // Toujours retourner une string valide
@@ -70,33 +70,17 @@ const LoginContent = () => {
             // Forcer la redirection après un court délai
             setTimeout(() => {
                 // Redirection manuelle vers la page appropriée
-                const redirectTo = user && user.role === 'super_admin' ? '/dashboard' : '/content_creator_dashboard';
+                const redirectTo = user && user.role === 'super_admin' ? '/dashboard' : '/content-creator-dashboard';
                 window.location.href = redirectTo;
             }, 500);
-
-            // const user = await userResponse.json()
-
-            // toast.success('Connexion reussie !');
-
-            // // Redirection
-            // if (user?.role === 'super_admin') window.location.href = '/dashboard'
-            // else if (user?.role === 'createur_contenu') window.location.href = '/content-creator-dashboard'
-            // else window.location.href = '/'
-
-        } catch (error) {
-            if (error.response?.status === 422) {
-                setErrors(error.response.data.errors)
-            } else if (error.response?.status === 419) {
-                toast.error('Session expirée, veuillez rafraîchir la page')
-            }
         } finally {
             setIsSubmitting(false)
         }
+
     }
     return (
         <>
             <AuthSessionStatus className="mb-4" status={status} />
-            <Toaster position="top-right" />
             <h2 className='mt-1 mb-3 text-center font-bold text-2xl'>Connexion</h2>
             <form onSubmit={submitForm}>
                 {/* Email Address */}
