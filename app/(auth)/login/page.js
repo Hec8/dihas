@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import AuthSessionStatus from '@/app/(auth)/AuthSessionStatus'
 import axios from '@/lib/axios' // <-- Ajouté
-import toast from 'react-hot-toast' // <-- Ajouté
+import toast, { Toaster } from 'react-hot-toast' // <-- Ajouté
 
 const Login = () => {
     return (
@@ -23,7 +23,7 @@ const LoginContent = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const resetParam = searchParams?.get('reset')
-    const { login } = useAuth({
+    const { login, } = useAuth({
         middleware: 'guest',
         redirectIfAuthenticated: user => {
             // Toujours retourner une string valide
@@ -58,55 +58,18 @@ const LoginContent = () => {
         setIsSubmitting(true)
 
         try {
-            // 1. Obtenir le cookie CSRF directement du backend
-            await fetch('https://negative-honor-hec8-2159b031.koyeb.app/sanctum/csrf-cookie', {
-                method: 'GET',
-                credentials: 'include',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest',
-                }
+
+            // 2. Effectuer le login
+            await login({
+                email,
+                password,
+                remember: shouldRemember,
+                setErrors,
+                setStatus
             })
-
-            // 2. Effectuer le login directement sur le backend
-            const loginResponse = await fetch('https://negative-honor-hec8-2159b031.koyeb.app/login', {
-                method: 'POST',
-                credentials: 'include',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest',
-                },
-                body: JSON.stringify({
-                    email,
-                    password,
-                    remember: shouldRemember
-                })
-            })
-
-            if (!loginResponse.ok) {
-                throw new Error('Erreur de connexion')
-            }
-
-            // 3. Récupérer l'utilisateur
-            const userResponse = await fetch('https://negative-honor-hec8-2159b031.koyeb.app/api/user', {
-                method: 'GET',
-                credentials: 'include',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest',
-                }
-            })
-            
-            if (!userResponse.ok) {
-                throw new Error('Erreur lors de la récupération des données utilisateur')
-            }
-            
-            const user = await userResponse.json()
-
-            // Redirection
+            toast.success('Connexion réussie');
+            // 3. Redirection après login réussi
+            const user = await axios.get('/api/user').then(res => res.data)
             if (user?.role === 'super_admin') window.location.href = '/dashboard'
             else if (user?.role === 'createur_contenu') window.location.href = '/content-creator-dashboard'
             else window.location.href = '/'
@@ -124,6 +87,7 @@ const LoginContent = () => {
     return (
         <>
             <AuthSessionStatus className="mb-4" status={status} />
+            <Toaster position="top-right" />
             <h2 className='mt-1 mb-3 text-center font-bold text-2xl'>Connexion</h2>
             <form onSubmit={submitForm}>
                 {/* Email Address */}
