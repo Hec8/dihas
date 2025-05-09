@@ -28,6 +28,12 @@ const nextConfig = {
       {
         source: '/login',
         destination: 'https://negative-honor-hec8-2159b031.koyeb.app/login',
+        method: ['GET', 'POST'],
+      },
+      {
+        source: '/logout',
+        destination: 'https://negative-honor-hec8-2159b031.koyeb.app/logout',
+        method: ['POST'],
       }
     ]
   },
