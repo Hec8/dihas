@@ -59,15 +59,15 @@ const LoginContent = () => {
 
         try {
             // 1. Obtenir le cookie CSRF directement du backend
-            // await fetch('https://negative-honor-hec8-2159b031.koyeb.app/sanctum/csrf-cookie', {
-            //     method: 'GET',
-            //     credentials: 'include',
-            //     headers: {
-            //         'Accept': 'application/json',
-            //         'Content-Type': 'application/json',
-            //         'X-Requested-With': 'XMLHttpRequest',
-            //     }
-            // })
+            await fetch('https://negative-honor-hec8-2159b031.koyeb.app/sanctum/csrf-cookie', {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                }
+            })
 
             // 2. Effectuer le login directement sur le backend
             // const loginResponse = await fetch('https://negative-honor-hec8-2159b031.koyeb.app/login', {
