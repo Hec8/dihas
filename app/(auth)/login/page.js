@@ -59,36 +59,70 @@ const LoginContent = () => {
 
         try {
             // 1. Obtenir le cookie CSRF directement du backend
-            // Axios va automatiquement stocker le cookie CSRF dans le navigateur
-            await axios.get('https://negative-honor-hec8-2159b031.koyeb.app/sanctum/csrf-cookie', {
-                withCredentials: true
+            const csrfResponse = await fetch('https://negative-honor-hec8-2159b031.koyeb.app/sanctum/csrf-cookie', {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                }
             })
-
-            // 2. Effectuer le login directement sur le backend
-            // Axios va automatiquement inclure le cookie CSRF dans l'en-tête X-XSRF-TOKEN
-            const loginResponse = await axios.post('https://negative-honor-hec8-2159b031.koyeb.app/login', {
-                email,
-                password,
-                remember: shouldRemember
-            }, {
-                withCredentials: true,
+            
+            // Vérifier si nous avons reçu les cookies
+            const cookies = document.cookie
+            console.log('Cookies après CSRF:', cookies)
+            
+            // Extraire le token XSRF-TOKEN des cookies
+            const xsrfCookie = cookies.split(';').find(cookie => cookie.trim().startsWith('XSRF-TOKEN='))
+            let xsrfToken = ''
+            
+            if (xsrfCookie) {
+                xsrfToken = decodeURIComponent(xsrfCookie.split('=')[1])
+                console.log('XSRF Token trouvé:', xsrfToken)
+            } else {
+                console.warn('XSRF Token non trouvé dans les cookies')
+            }
+            
+            // 2. Effectuer le login directement sur le backend avec le token CSRF explicite
+            const loginResponse = await fetch('https://negative-honor-hec8-2159b031.koyeb.app/login', {
+                method: 'POST',
+                credentials: 'include',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-XSRF-TOKEN': xsrfToken
+                },
+                body: JSON.stringify({
+                    email,
+                    password,
+                    remember: shouldRemember
+                })
             })
+
+            // Vérifier si la réponse de login est OK
+            if (!loginResponse.ok) {
+                const errorData = await loginResponse.json().catch(() => ({}))
+                console.error('Erreur de login:', loginResponse.status, errorData)
+                throw new Error(`Erreur de connexion: ${loginResponse.status}`)
+            }
 
             // 3. Récupérer l'utilisateur
-            const userResponse = await axios.get('https://negative-honor-hec8-2159b031.koyeb.app/api/user', {
-                withCredentials: true,
+            const userResponse = await fetch('https://negative-honor-hec8-2159b031.koyeb.app/api/user', {
+                method: 'GET',
+                credentials: 'include',
                 headers: {
                     'Accept': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest'
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-XSRF-TOKEN': xsrfToken
                 }
             })
 
-            const user = userResponse.data
+            if (!userResponse.ok) {
+                throw new Error(`Erreur lors de la récupération des données utilisateur: ${userResponse.status}`)
+            }
+
+            const user = await userResponse.json()
 
             // Redirection
             if (user?.role === 'super_admin') window.location.href = '/dashboard'
@@ -98,12 +132,24 @@ const LoginContent = () => {
         } catch (error) {
             console.error('Erreur de connexion:', error)
             
-            if (error.response?.status === 422) {
-                setErrors(error.response.data.errors)
-            } else if (error.response?.status === 419) {
-                toast.error('Session expirée, veuillez rafraîchir la page')
+            // Gestion des erreurs spécifiques
+            if (error.message?.includes('419')) {
+                toast.error('Session expirée ou CSRF token invalide. Veuillez rafraîchir la page.')
+                console.error('Erreur CSRF détectée. Vérifiez les cookies et les en-têtes.')
+            } else if (error.message?.includes('422')) {
+                // Erreur de validation
+                toast.error('Données invalides. Vérifiez vos informations.')
+                // Essayer de récupérer les erreurs de validation si possible
+                try {
+                    const errorData = JSON.parse(error.message.split('JSON: ')[1] || '{}')
+                    if (errorData.errors) {
+                        setErrors(errorData.errors)
+                    }
+                } catch (e) {
+                    console.error('Impossible de parser les erreurs de validation:', e)
+                }
             } else {
-                toast.error('Erreur de connexion. Veuillez réessayer.')
+                toast.error(`Erreur de connexion: ${error.message || 'Veuillez réessayer.'}`)
             }
         } finally {
             setIsSubmitting(false)
