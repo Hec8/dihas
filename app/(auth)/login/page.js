@@ -59,20 +59,29 @@ const LoginContent = () => {
 
         try {
 
-            // 2. Effectuer le login
             await login({
-                email,
-                password,
+                email: formData.email,
+                password: formData.password,
                 remember: shouldRemember,
                 setErrors,
-                setStatus
+                setStatus,
             })
-            toast.success('Connexion réussie');
-            // 3. Redirection après login réussi
-            const user = await axios.get('/api/user').then(res => res.data)
-            if (user?.role === 'super_admin') window.location.href = '/dashboard'
-            else if (user?.role === 'createur_contenu') window.location.href = '/content-creator-dashboard'
-            else window.location.href = '/'
+
+            // Forcer la redirection après un court délai
+            setTimeout(() => {
+                // Redirection manuelle vers la page appropriée
+                const redirectTo = user && user.role === 'super_admin' ? '/dashboard' : '/content_creator_dashboard';
+                window.location.href = redirectTo;
+            }, 500);
+
+            // const user = await userResponse.json()
+
+            // toast.success('Connexion reussie !');
+
+            // // Redirection
+            // if (user?.role === 'super_admin') window.location.href = '/dashboard'
+            // else if (user?.role === 'createur_contenu') window.location.href = '/content-creator-dashboard'
+            // else window.location.href = '/'
 
         } catch (error) {
             if (error.response?.status === 422) {
