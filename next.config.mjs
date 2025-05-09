@@ -18,25 +18,44 @@ const nextConfig = {
   async rewrites() {
     return [
       {
+        source: '/csrf-token', // Utilisez votre route personnalisée
+        destination: 'https://negative-honor-hec8-2159b031.koyeb.app/csrf-token',
+      },
+      {
         source: '/api/:path*',
         destination: 'https://negative-honor-hec8-2159b031.koyeb.app/api/:path*',
       },
-      // Ajoutez d'autres redirections si nécessaire
+      {
+        source: '/login',
+        destination: 'https://negative-honor-hec8-2159b031.koyeb.app/login',
+      }
     ]
   },
   async headers() {
     return [
       {
-        source: '/api/:path*',
+        source: '/:path*',
         headers: [
-          { key: 'Access-Control-Allow-Credentials', value: 'true' },
-          { key: 'Access-Control-Allow-Origin', value: 'https://dihas.vercel.app' },
-          { key: 'Access-Control-Allow-Methods', value: 'GET,OPTIONS,PATCH,DELETE,POST,PUT' },
-          { key: 'Access-Control-Allow-Headers', value: 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version' },
-        ],
-      },
+          {
+            key: 'Access-Control-Allow-Credentials',
+            value: 'true'
+          },
+          {
+            key: 'Access-Control-Allow-Origin',
+            value: 'https://dihas.vercel.app'
+          },
+          {
+            key: 'Access-Control-Allow-Methods',
+            value: 'GET,OPTIONS,PATCH,DELETE,POST,PUT'
+          },
+          {
+            key: 'Access-Control-Allow-Headers',
+            value: 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+          }
+        ]
+      }
     ]
-  },
+  }
 }
 
 export default nextConfig;

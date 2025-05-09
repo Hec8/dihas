@@ -58,29 +58,41 @@ const LoginContent = () => {
         setIsSubmitting(true)
 
         try {
-            // 1. Obtenir le token CSRF
-            await axios.get('/sanctum/csrf-cookie')
-
-            // 2. Effectuer le login
-            await login({
-                email,
-                password,
-                remember: shouldRemember,
-                setErrors,
-                setStatus
+            // 1. Obtenir le token CSRF via votre route personnalisée
+            const csrfResponse = await axios.get('/csrf-token', {
+                withCredentials: true
             })
 
-            // 3. Redirection après login réussi
-            const user = await axios.get('/api/user').then(res => res.data)
+            // 2. Configurez le token CSRF pour les requêtes suivantes
+            axios.defaults.headers.common['X-XSRF-TOKEN'] = csrfResponse.data.token
+
+            // 3. Effectuer le login
+            const loginResponse = await axios.post('/login', {
+                email,
+                password,
+                remember: shouldRemember
+            }, {
+                withCredentials: true
+            })
+
+            // 3. Récupérer l'utilisateur
+            const user = await axios.get('https://negative-honor-hec8-2159b031.koyeb.app/api/user', {
+                withCredentials: true
+            }).then(res => res.data)
+
+            // Redirection
             if (user?.role === 'super_admin') window.location.href = '/dashboard'
             else if (user?.role === 'createur_contenu') window.location.href = '/content-creator-dashboard'
             else window.location.href = '/'
 
         } catch (error) {
-            console.error('Login error:', error)
-            if (error.response?.status === 419) {
+            if (error.response?.status === 422) {
+                setErrors(error.response.data.errors)
+            } else if (error.response?.status === 419) {
                 toast.error('Session expirée, veuillez rafraîchir la page')
             }
+        } finally {
+            setIsSubmitting(false)
         }
     }
     return (
