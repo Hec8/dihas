@@ -58,54 +58,37 @@ const LoginContent = () => {
         setIsSubmitting(true)
 
         try {
-            // 1. Obtenir le cookie CSRF
-            const csrfResponse = await fetch('https://negative-honor-hec8-2159b031.koyeb.app/sanctum/csrf-cookie', {
-                method: 'GET',
-                credentials: 'include'
+            // 1. Obtenir le cookie CSRF directement du backend
+            // Axios va automatiquement stocker le cookie CSRF dans le navigateur
+            await axios.get('https://negative-honor-hec8-2159b031.koyeb.app/sanctum/csrf-cookie', {
+                withCredentials: true
             })
 
-            // Extraire le token XSRF-TOKEN du cookie
-            const getCookie = (name) => {
-                const value = `; ${document.cookie}`
-                const parts = value.split(`; ${name}=`)
-                if (parts.length === 2) return parts.pop().split(';').shift()
-            }
-            const xsrfToken = getCookie('XSRF-TOKEN')
-
-            // 2. Effectuer le login avec le token CSRF
-            const loginResponse = await fetch('https://negative-honor-hec8-2159b031.koyeb.app/login', {
-                method: 'POST',
-                credentials: 'include',
+            // 2. Effectuer le login directement sur le backend
+            // Axios va automatiquement inclure le cookie CSRF dans l'en-tête X-XSRF-TOKEN
+            const loginResponse = await axios.post('https://negative-honor-hec8-2159b031.koyeb.app/login', {
+                email,
+                password,
+                remember: shouldRemember
+            }, {
+                withCredentials: true,
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
-                    'X-XSRF-TOKEN': xsrfToken, // Ajout du token CSRF
-                    'X-Requested-With': 'XMLHttpRequest'
-                },
-                body: JSON.stringify({
-                    email,
-                    password,
-                    remember: shouldRemember
-                })
-            })
-
-            if (!loginResponse.ok) {
-                const errorData = await loginResponse.json()
-                throw new Error(errorData.message || 'Erreur de connexion')
-            }
-
-            // 3. Récupérer l'utilisateur avec le token CSRF
-            const userResponse = await fetch('https://negative-honor-hec8-2159b031.koyeb.app/api/user', {
-                method: 'GET',
-                credentials: 'include',
-                headers: {
-                    'Accept': 'application/json',
-                    'X-XSRF-TOKEN': xsrfToken, // Ajout du token CSRF
                     'X-Requested-With': 'XMLHttpRequest'
                 }
             })
 
-            const user = await userResponse.json()
+            // 3. Récupérer l'utilisateur
+            const userResponse = await axios.get('https://negative-honor-hec8-2159b031.koyeb.app/api/user', {
+                withCredentials: true,
+                headers: {
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+
+            const user = userResponse.data
 
             // Redirection
             if (user?.role === 'super_admin') window.location.href = '/dashboard'
@@ -113,12 +96,14 @@ const LoginContent = () => {
             else window.location.href = '/'
 
         } catch (error) {
-            console.error('Login error:', error)
-            if (error.message.includes('422')) {
-                const errorData = await error.response.json()
-                setErrors(errorData.errors)
+            console.error('Erreur de connexion:', error)
+            
+            if (error.response?.status === 422) {
+                setErrors(error.response.data.errors)
+            } else if (error.response?.status === 419) {
+                toast.error('Session expirée, veuillez rafraîchir la page')
             } else {
-                toast.error(error.message || 'Une erreur est survenue')
+                toast.error('Erreur de connexion. Veuillez réessayer.')
             }
         } finally {
             setIsSubmitting(false)
