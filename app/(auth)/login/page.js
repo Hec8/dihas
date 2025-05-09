@@ -58,20 +58,53 @@ const LoginContent = () => {
         setIsSubmitting(true)
 
         try {
-            // Effectuer le login directement - l'intercepteur dans lib/axios.js
-            // va automatiquement rediriger vers /api/login et gérer le CSRF
-            const loginResponse = await axios.post('/login', {
-                email,
-                password,
-                remember: shouldRemember
-            }, {
-                withCredentials: true
+            // 1. Obtenir le cookie CSRF directement du backend
+            await fetch('https://negative-honor-hec8-2159b031.koyeb.app/sanctum/csrf-cookie', {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                }
             })
 
+            // 2. Effectuer le login directement sur le backend
+            const loginResponse = await fetch('https://negative-honor-hec8-2159b031.koyeb.app/login', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                body: JSON.stringify({
+                    email,
+                    password,
+                    remember: shouldRemember
+                })
+            })
+
+            if (!loginResponse.ok) {
+                throw new Error('Erreur de connexion')
+            }
+
             // 3. Récupérer l'utilisateur
-            const user = await axios.get('https://negative-honor-hec8-2159b031.koyeb.app/api/user', {
-                withCredentials: true
-            }).then(res => res.data)
+            const userResponse = await fetch('https://negative-honor-hec8-2159b031.koyeb.app/api/user', {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                }
+            })
+            
+            if (!userResponse.ok) {
+                throw new Error('Erreur lors de la récupération des données utilisateur')
+            }
+            
+            const user = await userResponse.json()
 
             // Redirection
             if (user?.role === 'super_admin') window.location.href = '/dashboard'
