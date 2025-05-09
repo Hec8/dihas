@@ -18,8 +18,8 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/csrf-token', // Utilisez votre route personnalisée
-        destination: 'https://negative-honor-hec8-2159b031.koyeb.app/csrf-token',
+        source: '/sanctum/csrf-cookie',
+        destination: 'https://negative-honor-hec8-2159b031.koyeb.app/sanctum/csrf-cookie',
       },
       {
         source: '/api/:path*',
