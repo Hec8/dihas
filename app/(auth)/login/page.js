@@ -58,25 +58,29 @@ const LoginContent = () => {
         setIsSubmitting(true)
 
         try {
-            // 1. Obtenir le cookie CSRF directement du backend
-            await fetch('https://negative-honor-hec8-2159b031.koyeb.app/sanctum/csrf-cookie', {
+            // 1. Obtenir le cookie CSRF
+            const csrfResponse = await fetch('https://negative-honor-hec8-2159b031.koyeb.app/sanctum/csrf-cookie', {
                 method: 'GET',
-                credentials: 'include',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest',
-                }
+                credentials: 'include'
             })
 
-            // 2. Effectuer le login directement sur le backend
+            // Extraire le token XSRF-TOKEN du cookie
+            const getCookie = (name) => {
+                const value = `; ${document.cookie}`
+                const parts = value.split(`; ${name}=`)
+                if (parts.length === 2) return parts.pop().split(';').shift()
+            }
+            const xsrfToken = getCookie('XSRF-TOKEN')
+
+            // 2. Effectuer le login avec le token CSRF
             const loginResponse = await fetch('https://negative-honor-hec8-2159b031.koyeb.app/login', {
                 method: 'POST',
                 credentials: 'include',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-XSRF-TOKEN': xsrfToken, // Ajout du token CSRF
+                    'X-Requested-With': 'XMLHttpRequest'
                 },
                 body: JSON.stringify({
                     email,
@@ -86,23 +90,20 @@ const LoginContent = () => {
             })
 
             if (!loginResponse.ok) {
-                throw new Error('Erreur de connexion')
+                const errorData = await loginResponse.json()
+                throw new Error(errorData.message || 'Erreur de connexion')
             }
 
-            // 3. Récupérer l'utilisateur
+            // 3. Récupérer l'utilisateur avec le token CSRF
             const userResponse = await fetch('https://negative-honor-hec8-2159b031.koyeb.app/api/user', {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
                     'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-XSRF-TOKEN': xsrfToken, // Ajout du token CSRF
+                    'X-Requested-With': 'XMLHttpRequest'
                 }
             })
-
-            if (!userResponse.ok) {
-                throw new Error('Erreur lors de la récupération des données utilisateur')
-            }
 
             const user = await userResponse.json()
 
@@ -112,10 +113,12 @@ const LoginContent = () => {
             else window.location.href = '/'
 
         } catch (error) {
-            if (error.response?.status === 422) {
-                setErrors(error.response.data.errors)
-            } else if (error.response?.status === 419) {
-                toast.error('Session expirée, veuillez rafraîchir la page')
+            console.error('Login error:', error)
+            if (error.message.includes('422')) {
+                const errorData = await error.response.json()
+                setErrors(errorData.errors)
+            } else {
+                toast.error(error.message || 'Une erreur est survenue')
             }
         } finally {
             setIsSubmitting(false)
