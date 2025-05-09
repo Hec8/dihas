@@ -23,26 +23,6 @@ const nextConfig = {
       }
     ],
   },
-  async rewrites() {
-    return [
-      {
-        source: '/sanctum/csrf-cookie',
-        destination: 'https://negative-honor-hec8-2159b031.koyeb.app/sanctum/csrf-cookie',
-      },
-      {
-        source: '/api/:path*',
-        destination: 'https://negative-honor-hec8-2159b031.koyeb.app/api/:path*',
-      },
-      {
-        source: '/login',
-        destination: 'https://negative-honor-hec8-2159b031.koyeb.app/login',
-      },
-      {
-        source: '/logout',
-        destination: 'https://negative-honor-hec8-2159b031.koyeb.app/logout',
-      }
-    ]
-  },
   async headers() {
     return [
       {
