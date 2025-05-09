@@ -58,13 +58,13 @@ const LoginContent = () => {
         setIsSubmitting(true)
 
         try {
-            // 1. Obtenir le token CSRF via votre route personnalisée
-            const csrfResponse = await axios.get('/csrf-token', {
+            // 1. Obtenir le token CSRF via Sanctum
+            await axios.get('/sanctum/csrf-cookie', {
                 withCredentials: true
             })
 
-            // 2. Configurez le token CSRF pour les requêtes suivantes
-            axios.defaults.headers.common['X-XSRF-TOKEN'] = csrfResponse.data.token
+            // 2. Le cookie XSRF-TOKEN est automatiquement défini et utilisé
+            // par axios grâce à l'intercepteur dans lib/axios.js
 
             // 3. Effectuer le login
             const loginResponse = await axios.post('/login', {
