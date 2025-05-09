@@ -1,42 +1,36 @@
 import { NextResponse } from 'next/server';
-import axios from 'axios';
 
 export async function POST(request) {
   try {
     // Obtenir le corps de la requête
     const body = await request.json();
-
-    // Obtenir le token CSRF d'abord
-    await axios.get('https://negative-honor-hec8-2159b031.koyeb.app/sanctum/csrf-cookie', {
-      withCredentials: true,
-    });
-
-    // Faire la requête au backend
-    const response = await axios.post('https://negative-honor-hec8-2159b031.koyeb.app/login', body, {
+    const bodyString = JSON.stringify(body);
+    
+    // Faire la requête directement avec fetch natif
+    const response = await fetch('https://negative-honor-hec8-2159b031.koyeb.app/login', {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'X-Requested-With': 'XMLHttpRequest',
       },
-      withCredentials: true,
+      body: bodyString,
+      credentials: 'include',
     });
 
-    // Créer une réponse avec les données du backend
-    const nextResponse = NextResponse.json(response.data);
+    // Lire le corps de la réponse
+    const responseData = await response.json();
 
-    // Copier les cookies de la réponse du backend
-    if (response.headers['set-cookie']) {
-      for (const cookie of response.headers['set-cookie']) {
-        nextResponse.headers.append('Set-Cookie', cookie);
-      }
-    }
-
-    return nextResponse;
+    // Créer une réponse
+    return NextResponse.json(responseData, {
+      status: response.status,
+      headers: response.headers,
+    });
   } catch (error) {
-    console.error('Login error:', error.response?.data || error.message);
+    console.error('Login error:', error.message);
     return NextResponse.json(
-      error.response?.data || { message: 'Une erreur est survenue' },
-      { status: error.response?.status || 500 }
+      { message: 'Une erreur est survenue lors de la connexion' },
+      { status: 500 }
     );
   }
 }
