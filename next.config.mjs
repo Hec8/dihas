@@ -4,7 +4,7 @@ const nextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: 'https://negative-honor-hec8-2159b031.koyeb.app/api/:path*',
+        destination: 'https://dihas-back.onrender.com/api/:path*',
       },
     ]
   },
@@ -18,7 +18,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'negative-honor-hec8-2159b031.koyeb.app', // Retirez le 'https://' ici
+        hostname: 'dihas-back.onrender.com', // Retirez le 'https://' ici
         pathname: '/images/**'
       }
     ],
