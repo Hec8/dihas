@@ -23,15 +23,8 @@ const LoginContent = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const resetParam = searchParams?.get('reset')
-    const { login } = useAuth({
-        middleware: 'guest',
-        redirectIfAuthenticated: user => {
-            // Toujours retourner une string valide
-            if (!user) return '/login';
-            if (user?.role === 'super_admin') return '/dashboard';
-            if (user?.role === 'createur_contenu') return '/content-creator-dashboard';
-            return '/'; // Fallback par défaut
-        },
+    const { login, user } = useAuth({
+        middleware: 'guest'
     });
 
     const [email, setEmail] = useState('')
@@ -42,103 +35,98 @@ const LoginContent = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
-        if (!router || !searchParams) return;
-
-        if (resetParam && errors.length === 0) {
-            setStatus(atob(resetParam))
-        } else {
-            setStatus(null)
+        if(user){
+            if(user.role === 'super_admin'){
+                window.location.href = '/dashboard'
+            }else{
+                window.location.href = '/content-creator-dashboard'
+            }
         }
-    }, [resetParam, errors.length, router, searchParams])
-
-    if (!router || !searchParams) return <div>Chargement...</div>;
+    }, [user])
 
     const submitForm = async (event) => {
         event.preventDefault()
         setIsSubmitting(true)
 
         try {
-            // Configuration pour toutes les requêtes
-            const baseURL = 'https://negative-honor-hec8-2159b031.koyeb.app'
-            const baseHeaders = {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest',
-            }
-            
-            // 1. Obtenir le cookie CSRF directement du backend
-            console.log('1. Demande du cookie CSRF...')
-            await axios.get(`${baseURL}/sanctum/csrf-cookie`, {
-                withCredentials: true,
-                withXSRFToken: true
-            })
-            
-            // Vérifier les cookies après la requête CSRF
-            console.log('Cookies après CSRF:', document.cookie)
-            
-            // 2. Effectuer le login en utilisant axios avec la configuration CSRF
-            console.log('2. Tentative de connexion...')
-            const loginResponse = await axios.post(`${baseURL}/login`, {
-                email,
-                password,
-                remember: shouldRemember
-            }, {
-                withCredentials: true,
-                withXSRFToken: true,
-                headers: baseHeaders
+            await login({
+                email: email,
+                password: password,
+                remember: shouldRemember,
+                setErrors,
+                setStatus
             })
 
-            console.log('Login réussi:', loginResponse.status)
-            
-            // 3. Récupérer l'utilisateur
-            console.log('3. Récupération des données utilisateur...')
-            const userResponse = await axios.get(`${baseURL}/api/user`, {
-                withCredentials: true,
-                withXSRFToken: true,
-                headers: baseHeaders
-            })
-            
-            console.log('Utilisateur récupéré:', userResponse.status)
-            const user = userResponse.data
-
-            // Redirection
-            if (user?.role === 'super_admin') window.location.href = '/dashboard'
-            else if (user?.role === 'createur_contenu') window.location.href = '/content-creator-dashboard'
-            else window.location.href = '/'
-
-        } catch (error) {
-            console.error('Erreur de connexion:', error)
-            
-            // Gestion des erreurs avec axios
-            if (error.response) {
-                // La requête a été faite et le serveur a répondu avec un code d'erreur
-                console.error('Erreur de réponse:', error.response.status, error.response.data)
-                
-                if (error.response.status === 419) {
-                    toast.error('Session expirée ou CSRF token invalide. Veuillez rafraîchir la page.')
-                    console.log('Cookies actuels:', document.cookie)
-                } else if (error.response.status === 422) {
-                    toast.error('Données invalides. Vérifiez vos informations.')
-                    if (error.response.data && error.response.data.errors) {
-                        setErrors(error.response.data.errors)
-                    }
-                } else if (error.response.status === 401) {
-                    toast.error('Identifiants incorrects. Veuillez réessayer.')
-                } else {
-                    toast.error(`Erreur de serveur: ${error.response.status}`)
-                }
-            } else if (error.request) {
-                // La requête a été faite mais aucune réponse n'a été reçue
-                console.error('Erreur de requête:', error.request)
-                toast.error('Aucune réponse du serveur. Vérifiez votre connexion internet.')
-            } else {
-                // Une erreur s'est produite lors de la configuration de la requête
-                console.error('Erreur:', error.message)
-                toast.error(`Erreur: ${error.message}`)
-            }
-        } finally {
+            setTimeout(() => {
+                const redirectTo = user && user.role === 'super_admin' ? '/dashboard' : '/content-creator-dashboard';
+                window.location.href = redirectTo;
+            }, 500)
+        }finally {
             setIsSubmitting(false)
         }
+        // try {
+        //     // 1. Obtenir le cookie CSRF directement du backend
+        //     await fetch('https://negative-honor-hec8-2159b031.koyeb.app/sanctum/csrf-cookie', {
+        //         method: 'GET',
+        //         credentials: 'include',
+        //         headers: {
+        //             'Accept': 'application/json',
+        //             'Content-Type': 'application/json',
+        //             'X-Requested-With': 'XMLHttpRequest',
+        //         }
+        //     })
+
+        //     // 2. Effectuer le login directement sur le backend
+        //     const loginResponse = await fetch('https://negative-honor-hec8-2159b031.koyeb.app/login', {
+        //         method: 'POST',
+        //         credentials: 'include',
+        //         headers: {
+        //             'Accept': 'application/json',
+        //             'Content-Type': 'application/json',
+        //             'X-Requested-With': 'XMLHttpRequest',
+        //         },
+        //         body: JSON.stringify({
+        //             email,
+        //             password,
+        //             remember: shouldRemember
+        //         })
+        //     })
+
+        //     if (!loginResponse.ok) {
+        //         throw new Error('Erreur de connexion')
+        //     }
+
+        //     // 3. Récupérer l'utilisateur
+        //     const userResponse = await fetch('https://negative-honor-hec8-2159b031.koyeb.app/api/user', {
+        //         method: 'GET',
+        //         credentials: 'include',
+        //         headers: {
+        //             'Accept': 'application/json',
+        //             'Content-Type': 'application/json',
+        //             'X-Requested-With': 'XMLHttpRequest',
+        //         }
+        //     })
+
+        //     if (!userResponse.ok) {
+        //         throw new Error('Erreur lors de la récupération des données utilisateur')
+        //     }
+
+        //     const user = await userResponse.json()
+
+        //     // Redirection
+        //     if (user?.role === 'super_admin') window.location.href = '/dashboard'
+        //     else if (user?.role === 'createur_contenu') window.location.href = '/content-creator-dashboard'
+        //     else window.location.href = '/'
+
+        // } catch (error) {
+        //     if (error.response?.status === 422) {
+        //         setErrors(error.response.data.errors)
+        //     } else if (error.response?.status === 419) {
+        //         toast.error('Session expirée, veuillez rafraîchir la page')
+        //     }
+        // } finally {
+        //     setIsSubmitting(false)
+        // }
     }
     return (
         <>

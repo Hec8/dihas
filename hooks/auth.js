@@ -41,29 +41,15 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         setErrors([])
         setStatus(null)
 
-        return axios
+        axios
             .post('/login', props)
-            .then(async response => {
-                // Récupérer les données utilisateur si elles sont retournées par l'API
-                const user = response.data.user || null
-
-                // Mutate doit être appelé avant la redirection
-                await mutate()
-                // Redirection basée sur le rôle
-                if (user?.role === 'createur_contenu') {
-                    window.location.href = '/content-creator-dashboard'
-                } else {
-                    // Par défaut, rediriger vers le dashboard standard
-                    window.location.href = '/dashboard'
-                }
-            })
+            .then(() => mutate())
             .catch(error => {
                 if (error.response.status !== 422) throw error
 
                 setErrors(error.response.data.errors)
             })
     }
-
 
     const forgotPassword = async ({ setErrors, setStatus, email }) => {
         await csrf()
@@ -110,19 +96,16 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             await axios.post('/logout').then(() => mutate())
         }
 
-        window.location.pathname = '/'
+        window.location.pathname = '/login'
     }
 
     useEffect(() => {
-        if (middleware === 'guest' && redirectIfAuthenticated && user) {
-            const redirectPath = redirectIfAuthenticated(user)
-            if (redirectPath) {
-                router.push(redirectPath)
-            }
-        }
+        if (middleware === 'guest' && redirectIfAuthenticated && user)
+            router.push(redirectIfAuthenticated)
+
         if (middleware === 'auth' && (user && !user.email_verified_at))
             router.push('/verify-email')
-
+        
         if (
             window.location.pathname === '/verify-email' &&
             user?.email_verified_at
