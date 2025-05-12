@@ -35,14 +35,18 @@ const LoginContent = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
-        if(user){
-            if(user.role === 'super_admin'){
-                window.location.href = '/dashboard'
-            }else{
-                window.location.href = '/content-creator-dashboard'
+        if (user) {
+            // Redirection basée sur le rôle de l'utilisateur
+            if (user.role === 'super_admin') {
+                router.push('/dashboard')
+            } else if (user.role === 'createur_contenu') {
+                router.push('/content-creator-dashboard')
+            } else {
+                // Fallback pour tout autre rôle
+                router.push('/')
             }
         }
-    }, [user])
+    }, [user, router])
 
     const submitForm = async (event) => {
         event.preventDefault()
@@ -56,12 +60,11 @@ const LoginContent = () => {
                 setErrors,
                 setStatus
             })
-
-            setTimeout(() => {
-                const redirectTo = user && user.role === 'super_admin' ? '/dashboard' : '/content-creator-dashboard';
-                window.location.href = redirectTo;
-            }, 500)
-        }finally {
+            
+            // La redirection est gérée par le useEffect qui surveille l'état de l'utilisateur
+            // Pas besoin de redirection explicite ici car le hook useAuth mettra à jour l'état de l'utilisateur
+            // ce qui déclenchera le useEffect ci-dessus
+        } finally {
             setIsSubmitting(false)
         }
         // try {

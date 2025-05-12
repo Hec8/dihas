@@ -79,8 +79,9 @@ export default function DashboardHeader() {
     }, []);
 
     const handleLogout = () => {
+        // Laisser la fonction logout du hook gérer la redirection
         logout();
-        router.push('/');
+        // Ne pas ajouter de redirection supplémentaire ici
     };
 
     return (

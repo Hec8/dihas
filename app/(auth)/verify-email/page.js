@@ -36,7 +36,10 @@ const Page = () => {
                 <button
                     type="button"
                     className="underline text-sm text-gray-600 hover:text-gray-900"
-                    onClick={logout}>
+                    onClick={(e) => {
+                        e.preventDefault();
+                        logout();
+                    }}>
                     Logout
                 </button>
             </div>

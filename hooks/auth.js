@@ -43,19 +43,11 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
 
         return axios
             .post('/login', props)
-            .then(async response => {
-                // Récupérer les données utilisateur si elles sont retournées par l'API
-                const user = response.data.user || null
-
-                // Mutate doit être appelé avant la redirection
+            .then(async () => {
+                // Mutate doit être appelé pour mettre à jour les données utilisateur
                 await mutate()
-                // Redirection basée sur le rôle
-                if (user?.role === 'createur_contenu') {
-                    window.location.href = '/content-creator-dashboard'
-                } else {
-                    // Par défaut, rediriger vers le dashboard standard
-                    window.location.href = '/dashboard'
-                }
+                // La redirection sera gérée par le composant qui utilise ce hook
+                // en fonction des données utilisateur mises à jour
             })
             .catch(error => {
                 if (error.response.status !== 422) throw error
@@ -105,25 +97,64 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     }
 
     const logout = async () => {
-        if (!error) {
-            await axios.post('/logout').then(() => mutate())
+        try {
+            // Utiliser une requête avec des en-têtes spécifiques pour éviter la mise en cache
+            await axios.post('/logout', {}, {
+                headers: {
+                    'Cache-Control': 'no-cache',
+                    'Pragma': 'no-cache',
+                    'Expires': '0'
+                }
+            })
+            
+            // Mettre à jour l'état utilisateur
+            await mutate(null, false)
+            
+            // Utiliser router.push au lieu de window.location pour une meilleure gestion
+            router.push('/login')
+        } catch (err) {
+            console.error('Erreur lors de la déconnexion:', err)
+            // Forcer la redirection même en cas d'erreur
+            router.push('/login')
         }
-
-        window.location.pathname = '/login'
     }
 
     useEffect(() => {
-        if (middleware === 'guest' && redirectIfAuthenticated && user)
-            router.push(redirectIfAuthenticated)
+        // Si l'utilisateur est un invité mais qu'il est authentifié, rediriger
+        if (middleware === 'guest' && redirectIfAuthenticated && user) {
+            // Redirection basée sur le rôle
+            if (user.role === 'super_admin') {
+                router.push('/dashboard')
+            } else if (user.role === 'createur_contenu') {
+                router.push('/content-creator-dashboard')
+            } else {
+                // Fallback vers la redirection par défaut
+                router.push(redirectIfAuthenticated)
+            }
+        }
 
-        if (middleware === 'auth' && (user && !user.email_verified_at))
+        // Vérification de l'email
+        if (middleware === 'auth' && (user && !user.email_verified_at)) {
             router.push('/verify-email')
+        }
 
+        // Si l'email est vérifié et que l'utilisateur est sur la page de vérification
         if (
             window.location.pathname === '/verify-email' &&
             user?.email_verified_at
-        )
-            router.push(redirectIfAuthenticated)
+        ) {
+            // Redirection basée sur le rôle
+            if (user.role === 'super_admin') {
+                router.push('/dashboard')
+            } else if (user.role === 'createur_contenu') {
+                router.push('/content-creator-dashboard')
+            } else {
+                // Fallback vers la redirection par défaut
+                router.push(redirectIfAuthenticated || '/')
+            }
+        }
+        
+        // Si l'authentification échoue, déconnexion
         if (middleware === 'auth' && error) logout()
     }, [user, error])
 
