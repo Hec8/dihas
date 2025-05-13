@@ -94,7 +94,7 @@ export default function BlogArticle() {
                         <div className="relative h-64 md:h-96 w-full">
                             {article.image.startsWith('http://') || article.image.startsWith('https://') ? (
                                 <Image
-                                    src={article.image.replace('http://', 'https://')}
+                                    src={article.image.startsWith('http://') ? article.image.replace('http://', 'https://') : article.image}
                                     alt={article.titre}
                                     fill
                                     className="object-cover"
@@ -103,7 +103,10 @@ export default function BlogArticle() {
                                 />
                             ) : (
                                 <Image
-                                    src={`${process.env.NEXT_PUBLIC_BACKEND_URL || 'https://dihas-back.onrender.com'}/images/${article.image.replace('images/', '')}`}
+                                    src={article.image.startsWith('/') ?
+                                        `${process.env.NEXT_PUBLIC_BACKEND_URL || 'https://dihas-back.onrender.com'}${article.image}` :
+                                        `${process.env.NEXT_PUBLIC_BACKEND_URL || 'https://dihas-back.onrender.com'}/images/blogs/${article.image.replace('images/', '')}`
+                                    }
                                     alt={article.titre}
                                     fill
                                     className="object-cover"
