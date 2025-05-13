@@ -138,10 +138,17 @@ export default function Services() {
                 {service.icon ? (
                     <div className="relative w-full h-full">
                         <img
-                            src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}${service.icon}`}
+                            src={service.icon ? 
+                                (service.icon.startsWith('http://') || service.icon.startsWith('https://') ? 
+                                    service.icon : 
+                                    `${process.env.NEXT_PUBLIC_API_URL || 'https://dihas-back.onrender.com'}${service.icon}`
+                                ) : 
+                                '/default-service.png'
+                            }
                             alt={service.title}
                             className="object-contain" // Important pour les images externes
                             onError={(e) => {
+                                console.error('Erreur de chargement image:', service.icon);
                                 e.target.onerror = null;
                                 e.target.src = '/default-service.png';
                             }}

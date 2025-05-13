@@ -104,9 +104,9 @@ export default function Blogs() {
                                 <div className="relative h-[180px] sm:h-[200px] w-full overflow-hidden">
                                     <Image
                                         src={article.image ? 
-                                            (article.image.startsWith('http') ? 
+                                            (article.image.startsWith('http://') || article.image.startsWith('https://') ? 
                                                 article.image : 
-                                                `${process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8000'}${article.image}`
+                                                `${process.env.NEXT_PUBLIC_BACKEND_URL || 'https://dihas-back.onrender.com'}${article.image}`
                                             ) : 
                                             '/assets/default-blog.png'
                                         }

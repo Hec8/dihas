@@ -92,7 +92,7 @@ export default function BlogArticle() {
                     {/* Image de l'article */}
                     {article.image && (
                         <div className="relative h-64 md:h-96 w-full">
-                            {article.image.startsWith('http') ? (
+                            {article.image.startsWith('http://') || article.image.startsWith('https://') ? (
                                 <Image
                                     src={article.image}
                                     alt={article.titre}
@@ -103,12 +103,16 @@ export default function BlogArticle() {
                                 />
                             ) : (
                                 <Image
-                                    src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/images/${article.image.replace('images/', '')}`}
+                                    src={`${process.env.NEXT_PUBLIC_BACKEND_URL || 'https://dihas-back.onrender.com'}/images/${article.image.replace('images/', '')}`}
                                     alt={article.titre}
                                     fill
                                     className="object-cover"
                                     priority
                                     unoptimized={true}
+                                    onError={(e) => {
+                                        console.error('Erreur de chargement image:', article.image);
+                                        e.target.src = '/assets/default-blog.png';
+                                    }}
                                 />
                             )}
                         </div>
