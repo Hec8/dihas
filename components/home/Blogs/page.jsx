@@ -103,7 +103,10 @@ export default function Blogs() {
                             >
                                 <div className="relative h-[180px] sm:h-[200px] w-full overflow-hidden">
                                     <Image
-                                        src={article.image && article.image.startsWith('http') ? article.image.replace('http://', 'https://') : '/assets/default-blog.png'}
+                                        src={article.image && article.image.startsWith('http') ? 
+                                            article.image.replace('http://', 'https://').replace('/images//', '/images/') : 
+                                            '/assets/default-blog.png'
+                                        }
                                         alt={article.titre}
                                         fill
                                         className="object-cover"

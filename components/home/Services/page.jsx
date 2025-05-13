@@ -137,7 +137,10 @@ export default function Services() {
             >
                     <div className="relative w-full h-full">
                         <Image
-                            src={service.icon && service.icon.startsWith('http') ? service.icon.replace('http://', 'https://') : '/assets/default-service.png'}
+                            src={service.icon && service.icon.startsWith('http') ? 
+                                service.icon.replace('http://', 'https://').replace('/images//', '/images/') : 
+                                '/assets/default-service.png'
+                            }
                             alt={service.title}
                             fill
                             className="object-contain"
