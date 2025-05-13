@@ -72,7 +72,7 @@ export default function BlogDetail({ article, loading }) {
 
                 {/* Image principale - Responsive */}
                 <div className="w-full h-48 md:min-h-[500px] relative mb-6 md:mb-8 rounded-lg overflow-hidden">
-                    <img
+                    <Image
                         src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${article.image}`}
                         alt="Image d'illustration"
                         fill

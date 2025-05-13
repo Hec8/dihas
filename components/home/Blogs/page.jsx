@@ -102,7 +102,7 @@ export default function Blogs() {
                                 whileHover={{ y: -2 }}
                             >
                                 <div className="relative h-[180px] sm:h-[200px] w-full overflow-hidden">
-                                    <img
+                                    <Image
                                         src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${article.image}`}
                                         alt={article.titre}
                                         fill

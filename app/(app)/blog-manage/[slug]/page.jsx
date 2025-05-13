@@ -91,7 +91,7 @@ export default function BlogArticle() {
                 <article className="bg-white shadow overflow-hidden sm:rounded-lg">
                     {/* Image de l'article */}
                         <div className="relative h-64 md:h-96 w-full">
-                                <img
+                                <Image
                                     src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${article.image}`}
                                     alt={article.titre}
                                     fill

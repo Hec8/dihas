@@ -136,10 +136,11 @@ export default function Services() {
                 transition={{ delay: 0.2 * index, duration: 0.5 }}
             >
                     <div className="relative w-full h-full">
-                        <img
+                        <Image
                             src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${service.icon}`}
                             alt={service.title}
-                            className="w-full h-full object-contain"
+                            fill
+                            className="object-contain"
                         />
                     </div>
             </motion.div>

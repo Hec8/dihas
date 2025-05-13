@@ -148,7 +148,7 @@ export default function Blog() {
                             filteredArticles.map((article) => (
                                 <div key={article.id} className="bg-white rounded-lg overflow-hidden shadow-md transition-transform hover:scale-105 hover:shadow-xl">
                                     <div className="relative h-[180px] sm:h-[200px] w-full overflow-hidden">
-                                        <img 
+                                        <Image 
                                             src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${article.image}`}
                                             alt={article.titre}
                                             fill
