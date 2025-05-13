@@ -90,37 +90,16 @@ export default function BlogArticle() {
             <main className="max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
                 <article className="bg-white shadow overflow-hidden sm:rounded-lg">
                     {/* Image de l'article */}
-                    {article.image && (
                         <div className="relative h-64 md:h-96 w-full">
-                            {article.image.startsWith('http://') || article.image.startsWith('https://') ? (
-                                <Image
-                                    src={article.image.startsWith('http://') ? article.image.replace('http://', 'https://') : article.image}
+                                <img
+                                    src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${article.image}`}
                                     alt={article.titre}
                                     fill
                                     className="object-cover"
                                     priority
                                     unoptimized={true}
                                 />
-                            ) : (
-                                <Image
-                                    src={article.image.startsWith('/') ?
-                                        `${process.env.NEXT_PUBLIC_BACKEND_URL || 'https://dihas-back.onrender.com'}${article.image}` :
-                                        `${process.env.NEXT_PUBLIC_BACKEND_URL || 'https://dihas-back.onrender.com'}/images/blogs/${article.image.replace('images/', '')}`
-                                    }
-                                    alt={article.titre}
-                                    fill
-                                    className="object-cover"
-                                    priority
-                                    unoptimized={true}
-                                    onError={(e) => {
-                                        console.error('Erreur de chargement image:', article.image);
-                                        e.target.src = '/assets/default-blog.png';
-                                    }}
-                                />
-                            )}
                         </div>
-                    )}
-
                     {/* Entête de l'article */}
                     <div className="px-6 py-4">
                         <h1 className="text-3xl font-bold text-gray-900 mb-2">{article.titre}</h1>

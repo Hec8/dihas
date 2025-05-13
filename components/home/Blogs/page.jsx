@@ -102,16 +102,8 @@ export default function Blogs() {
                                 whileHover={{ y: -2 }}
                             >
                                 <div className="relative h-[180px] sm:h-[200px] w-full overflow-hidden">
-                                    <Image
-                                        src={article.image ? 
-                                            (article.image.startsWith('http://') || article.image.startsWith('https://') ? 
-                                                article.image.replace('http://', 'https://') : 
-                                                article.image.startsWith('/') ?
-                                                    `${process.env.NEXT_PUBLIC_BACKEND_URL || 'https://dihas-back.onrender.com'}${article.image}` :
-                                                    `${process.env.NEXT_PUBLIC_BACKEND_URL || 'https://dihas-back.onrender.com'}/images/blogs/${article.image}`
-                                            ) : 
-                                            '/assets/default-blog.png'
-                                        }
+                                    <img
+                                        src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${article.image}`}
                                         alt={article.titre}
                                         fill
                                         className="object-cover"
@@ -119,10 +111,6 @@ export default function Blogs() {
                                         quality={100}
                                         priority
                                         unoptimized={true}
-                                        onError={(e) => {
-                                            console.error('Erreur de chargement image:', article.image);
-                                            e.target.src = '/assets/default-blog.png';
-                                        }}
                                     />
                                 </div>
                                 <div className="p-4">

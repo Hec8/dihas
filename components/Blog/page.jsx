@@ -148,25 +148,13 @@ export default function Blog() {
                             filteredArticles.map((article) => (
                                 <div key={article.id} className="bg-white rounded-lg overflow-hidden shadow-md transition-transform hover:scale-105 hover:shadow-xl">
                                     <div className="relative h-[180px] sm:h-[200px] w-full overflow-hidden">
-                                        <Image 
-                                            src={article.image ? 
-                                                (article.image.startsWith('http://') || article.image.startsWith('https://') ? 
-                                                    article.image.replace('http://', 'https://') : 
-                                                    article.image.startsWith('/') ?
-                                                        `${process.env.NEXT_PUBLIC_BACKEND_URL || 'https://dihas-back.onrender.com'}${article.image}` :
-                                                        `${process.env.NEXT_PUBLIC_BACKEND_URL || 'https://dihas-back.onrender.com'}/images/blogs/${article.image}`
-                                                ) : 
-                                                '/assets/default-blog.png'
-                                            }
+                                        <img 
+                                            src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${article.image}`}
                                             alt={article.titre}
                                             fill
                                             sizes="(max-width: 640px) 85vw, (max-width: 1024px) 40vw, 25vw"
                                             className="object-cover"
                                             priority
-                                            onError={(e) => {
-                                                console.error('Erreur de chargement image:', article.image);
-                                                e.target.src = '/assets/default-blog.png';
-                                            }}
                                         />
                                     </div>
                                     <div className="p-6">

@@ -135,32 +135,13 @@ export default function Services() {
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.2 * index, duration: 0.5 }}
             >
-                {service.icon ? (
                     <div className="relative w-full h-full">
                         <img
-                            src={service.icon ? 
-                                (service.icon.startsWith('http://') || service.icon.startsWith('https://') ? 
-                                    service.icon.replace('http://', 'https://') : 
-                                    service.icon.startsWith('/') ?
-                                        `${process.env.NEXT_PUBLIC_API_URL || 'https://dihas-back.onrender.com'}${service.icon}` :
-                                        `${process.env.NEXT_PUBLIC_API_URL || 'https://dihas-back.onrender.com'}/images/services/${service.icon}`
-                                ) : 
-                                '/assets/default-service.png'
-                            }
+                            src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${service.icon}`}
                             alt={service.title}
-                            className="w-full h-full object-contain" 
-                            onError={(e) => {
-                                console.error('Erreur de chargement image:', service.icon);
-                                e.target.onerror = null;
-                                e.target.src = '/assets/default-service.png';
-                            }}
+                            className="w-full h-full object-contain"
                         />
                     </div>
-                ) : (
-                    <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center">
-                        <span className="text-xl">🔧</span>
-                    </div>
-                )}
             </motion.div>
             <h3 className="text-xl font-bold text-green-800 mb-2">{service.title}</h3>
             <p className="text-gray-600 mb-4">{service.content}</p>
