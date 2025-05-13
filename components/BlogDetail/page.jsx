@@ -74,11 +74,18 @@ export default function BlogDetail({ article, loading }) {
                 {article.image && (
                 <div className="w-full h-48 md:min-h-[500px] relative mb-6 md:mb-8 rounded-lg overflow-hidden">
                     <Image
-                        src={article.image}
-                        alt="Image d'illustration"
+                        src={article.image.startsWith('http') 
+                            ? article.image.replace('http://', 'https://')
+                            : `${process.env.NEXT_PUBLIC_API_URL}${article.image}`
+                        }
+                        alt={article.titre || "Image d'illustration"}
                         fill
                         className="object-cover md:object-cover"
                         priority
+                        unoptimized={true}
+                        onError={(e) => {
+                            e.currentTarget.src = '/assets/default-blog.png';
+                        }}
                     />
                 </div>
                 )}
