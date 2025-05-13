@@ -94,7 +94,7 @@ export default function BlogArticle() {
                         <div className="relative h-64 md:h-96 w-full">
                             {article.image.startsWith('http://') || article.image.startsWith('https://') ? (
                                 <Image
-                                    src={article.image}
+                                    src={article.image.replace('http://', 'https://')}
                                     alt={article.titre}
                                     fill
                                     className="object-cover"

@@ -149,7 +149,13 @@ export default function Blog() {
                                 <div key={article.id} className="bg-white rounded-lg overflow-hidden shadow-md transition-transform hover:scale-105 hover:shadow-xl">
                                     <div className="relative h-[180px] sm:h-[200px] w-full overflow-hidden">
                                         <Image 
-                                            src={article.image || '/assets/default-blog.png'}
+                                            src={article.image ? 
+                                                (article.image.startsWith('http://') || article.image.startsWith('https://') ? 
+                                                    article.image : 
+                                                    `${process.env.NEXT_PUBLIC_BACKEND_URL || 'https://dihas-back.onrender.com'}${article.image}`
+                                                ) : 
+                                                '/assets/default-blog.png'
+                                            }
                                             alt={article.titre}
                                             fill
                                             sizes="(max-width: 640px) 85vw, (max-width: 1024px) 40vw, 25vw"

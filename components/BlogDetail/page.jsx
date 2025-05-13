@@ -75,7 +75,7 @@ export default function BlogDetail({ article, loading }) {
                     <Image
                         src={article.image ? 
                             (article.image.startsWith('http://') || article.image.startsWith('https://') ? 
-                                article.image : 
+                                article.image.replace('http://', 'https://') : 
                                 `${process.env.NEXT_PUBLIC_BACKEND_URL || 'https://dihas-back.onrender.com'}${article.image}`
                             ) : 
                             '/assets/default-blog.png'
