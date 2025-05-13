@@ -141,7 +141,9 @@ export default function Services() {
                             src={service.icon ? 
                                 (service.icon.startsWith('http://') || service.icon.startsWith('https://') ? 
                                     service.icon.replace('http://', 'https://') : 
-                                    `${process.env.NEXT_PUBLIC_API_URL || 'https://dihas-back.onrender.com'}${service.icon}`
+                                    service.icon.startsWith('/') ?
+                                        `${process.env.NEXT_PUBLIC_API_URL || 'https://dihas-back.onrender.com'}${service.icon}` :
+                                        `${process.env.NEXT_PUBLIC_API_URL || 'https://dihas-back.onrender.com'}/images/services/${service.icon}`
                                 ) : 
                                 '/assets/default-service.png'
                             }
