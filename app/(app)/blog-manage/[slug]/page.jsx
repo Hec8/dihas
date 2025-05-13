@@ -89,20 +89,19 @@ export default function BlogArticle() {
             {/* Contenu de l'article */}
             <main className="max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
                 <article className="bg-white shadow overflow-hidden sm:rounded-lg">
-                    {/* Image de l'article */}
-                        <div className="relative h-64 md:h-96 w-full">
+                    {/* Image de l'article - Version URL externe uniquement */}
+                        {article.image && (
+                            <div className="relative h-64 md:h-96 w-full">
                                 <Image
-                                    src={article.image && article.image.startsWith('http') ? 
-                                        article.image.replace('http://', 'https://').replace('/images//', '/images/') : 
-                                        '/assets/default-blog.png'
-                                    }
+                                    src={article.image}
                                     alt={article.titre}
                                     fill
                                     className="object-cover"
                                     priority
                                     unoptimized={true}
                                 />
-                        </div>
+                            </div>
+                        )}
                     {/* Entête de l'article */}
                     <div className="px-6 py-4">
                         <h1 className="text-3xl font-bold text-gray-900 mb-2">{article.titre}</h1>

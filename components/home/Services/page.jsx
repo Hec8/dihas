@@ -135,17 +135,21 @@ export default function Services() {
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.2 * index, duration: 0.5 }}
             >
+                {service.icon && (
                     <div className="relative w-full h-full">
                         <Image
-                            src={service.icon && service.icon.startsWith('http') ? 
-                                service.icon.replace('http://', 'https://').replace('/images//', '/images/') : 
-                                '/assets/default-service.png'
-                            }
+                            src={`${process.env.NEXT_PUBLIC_API_URL}${service.icon}`}
                             alt={service.title}
-                            fill
-                            className="object-contain"
+                            width={100}
+                            height={100}
+                            className="object-contain" // Important pour les images externes
+                            onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src = '/default-service.png';
+                            }}
                         />
                     </div>
+                )}
             </motion.div>
             <h3 className="text-xl font-bold text-green-800 mb-2">{service.title}</h3>
             <p className="text-gray-600 mb-4">{service.content}</p>

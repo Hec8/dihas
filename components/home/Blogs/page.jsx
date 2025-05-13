@@ -101,21 +101,23 @@ export default function Blogs() {
                                 transition={{ duration: 0.5, delay: index * 0.1 }}
                                 whileHover={{ y: -2 }}
                             >
+                                {article.image && (
                                 <div className="relative h-[180px] sm:h-[200px] w-full overflow-hidden">
                                     <Image
-                                        src={article.image && article.image.startsWith('http') ? 
-                                            article.image.replace('http://', 'https://').replace('/images//', '/images/') : 
-                                            '/assets/default-blog.png'
-                                        }
+                                        src={article.image}
                                         alt={article.titre}
                                         fill
                                         className="object-cover"
                                         sizes="(max-width: 640px) 85vw, (max-width: 1024px) 40vw, 25vw"
                                         quality={100}
                                         priority
-                                        unoptimized={true}
+                                        onError={(e) => {
+                                            console.error('Erreur de chargement image:', article.image);
+                                            e.target.src = '/assets/default-blog.png';
+                                        }}
                                     />
                                 </div>
+                                )}
                                 <div className="p-4">
                                     <h3 className="text-base sm:text-lg font-semibold mb-2 line-clamp-2">
                                         {article.titre}
