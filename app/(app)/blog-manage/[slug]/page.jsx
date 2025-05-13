@@ -92,7 +92,7 @@ export default function BlogArticle() {
                     {/* Image de l'article */}
                         <div className="relative h-64 md:h-96 w-full">
                                 <Image
-                                    src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${article.image}`}
+                                    src={article.image && article.image.startsWith('http') ? article.image.replace('http://', 'https://') : '/assets/default-blog.png'}
                                     alt={article.titre}
                                     fill
                                     className="object-cover"

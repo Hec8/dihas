@@ -149,7 +149,7 @@ export default function Blog() {
                                 <div key={article.id} className="bg-white rounded-lg overflow-hidden shadow-md transition-transform hover:scale-105 hover:shadow-xl">
                                     <div className="relative h-[180px] sm:h-[200px] w-full overflow-hidden">
                                         <Image 
-                                            src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${article.image}`}
+                                            src={article.image && article.image.startsWith('http') ? article.image.replace('http://', 'https://') : '/assets/default-blog.png'}
                                             alt={article.titre}
                                             fill
                                             sizes="(max-width: 640px) 85vw, (max-width: 1024px) 40vw, 25vw"

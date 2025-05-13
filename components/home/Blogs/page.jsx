@@ -103,7 +103,7 @@ export default function Blogs() {
                             >
                                 <div className="relative h-[180px] sm:h-[200px] w-full overflow-hidden">
                                     <Image
-                                        src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${article.image}`}
+                                        src={article.image && article.image.startsWith('http') ? article.image.replace('http://', 'https://') : '/assets/default-blog.png'}
                                         alt={article.titre}
                                         fill
                                         className="object-cover"

@@ -137,7 +137,7 @@ export default function Services() {
             >
                     <div className="relative w-full h-full">
                         <Image
-                            src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${service.icon}`}
+                            src={service.icon && service.icon.startsWith('http') ? service.icon.replace('http://', 'https://') : '/assets/default-service.png'}
                             alt={service.title}
                             fill
                             className="object-contain"

@@ -73,7 +73,7 @@ export default function BlogDetail({ article, loading }) {
                 {/* Image principale - Responsive */}
                 <div className="w-full h-48 md:min-h-[500px] relative mb-6 md:mb-8 rounded-lg overflow-hidden">
                     <Image
-                        src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${article.image}`}
+                        src={article.image && article.image.startsWith('http') ? article.image.replace('http://', 'https://') : '/assets/default-blog.png'}
                         alt="Image d'illustration"
                         fill
                         className="object-cover md:object-cover"
