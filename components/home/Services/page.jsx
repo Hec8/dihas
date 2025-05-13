@@ -53,8 +53,12 @@ export default function Services() {
             setError(null);
             try {
                 const response = await axios.get('/api/services');
-                if (response.status === 200 && response.data?.length > 0) {
-                    setDynamicServices(response.data);
+                if (response.status === 200) {
+                    if (response.data.data && response.data.data.length > 0) {
+                        setDynamicServices(response.data.data);
+                    } else {
+                        setError("Aucun service disponible pour le moment :)");
+                    }
                 } else {
                     setError("Aucun service disponible pour le moment :)");
                 }

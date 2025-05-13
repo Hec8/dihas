@@ -103,13 +103,20 @@ export default function Blogs() {
                             >
                                 <div className="relative h-[180px] sm:h-[200px] w-full overflow-hidden">
                                     <Image
-                                        src={article.image || '/assets/default-blog.png'}
+                                        src={article.image ? 
+                                            (article.image.startsWith('http') ? 
+                                                article.image : 
+                                                `${process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8000'}${article.image}`
+                                            ) : 
+                                            '/assets/default-blog.png'
+                                        }
                                         alt={article.titre}
                                         fill
                                         className="object-cover"
                                         sizes="(max-width: 640px) 85vw, (max-width: 1024px) 40vw, 25vw"
                                         quality={100}
                                         priority
+                                        unoptimized={true}
                                         onError={(e) => {
                                             console.error('Erreur de chargement image:', article.image);
                                             e.target.src = '/assets/default-blog.png';
