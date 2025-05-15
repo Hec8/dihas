@@ -93,10 +93,7 @@ export default function BlogArticle() {
                         {article.image && (
                             <div className="relative h-64 md:h-96 w-full">
                                 <Image
-                                    src={article.image.startsWith('http') 
-                                        ? article.image.replace('http://', 'https://')
-                                        : `${process.env.NEXT_PUBLIC_API_URL}${article.image}`
-                                    }
+                                    src={article.image}
                                     alt={article.titre || "Image d'illustration"}
                                       fill
                                     className="object-cover"

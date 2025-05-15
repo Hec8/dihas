@@ -18,8 +18,13 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'dihas-back.onrender.com', // Retirez le 'https://' ici
+        hostname: 'dihas-back.onrender.com', 
         pathname: '/images/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        pathname: '/**'
       }
     ],
   },

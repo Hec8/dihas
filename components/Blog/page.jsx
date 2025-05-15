@@ -150,10 +150,7 @@ export default function Blog() {
                                     {article.image && (
                                     <div className="relative h-[180px] sm:h-[200px] w-full overflow-hidden">
                                         <Image
-                                            src={article.image.startsWith('http') 
-                                                ? article.image.replace('http://', 'https://')
-                                                : `${process.env.NEXT_PUBLIC_API_URL}${article.image}`
-                                              }
+                                            src={article.image}
                                               alt={article.titre || "Image d'illustration"}
                                               fill
                                             sizes="(max-width: 640px) 85vw, (max-width: 1024px) 40vw, 25vw"

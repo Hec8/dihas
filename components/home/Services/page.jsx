@@ -138,17 +138,14 @@ export default function Services() {
                 {service.icon && (
                     <div className="relative w-full h-full">
                         <Image
-                        src={service.icon.startsWith('http')
-                            ? service.icon.replace('http://', 'https://')
-                            : `${process.env.NEXT_PUBLIC_API_URL}${service.icon}`
-                        }
-                        alt={service.title}
-                        width={100}
-                        height={100}
-                        className="object-contain"
-                        onError={(e) => {
-                            e.currentTarget.src = '/default-service.png';
-                        }}
+                            src={service.icon}
+                            alt={service.title}
+                            width={100}
+                            height={100}
+                            className="object-contain"
+                            onError={(e) => {
+                                e.currentTarget.src = '/assets/default-service.png';
+                            }}
                         />
                     </div>
                 )}

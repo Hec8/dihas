@@ -102,25 +102,24 @@ export default function Blogs() {
                                 whileHover={{ y: -2 }}
                             >
                                 {article.image && (
-                                <div className="relative h-[180px] sm:h-[200px] w-full overflow-hidden">
-                                    <Image
-                                        src={article.image.startsWith('http') 
-                                            ? article.image.replace('http://', 'https://')
-                                            : `${process.env.NEXT_PUBLIC_API_URL}${article.image}`
-                                          }
-                                          alt={article.titre || "Image d'illustration"}
-                                          fill
-                                        className="object-cover"
-                                        sizes="(max-width: 640px) 85vw, (max-width: 1024px) 40vw, 25vw"
-                                        unoptimized={!article.image.startsWith(process.env.NEXT_PUBLIC_API_URL || '')}
-                                        priority
-                                        onError={(e) => {
-                                            console.error('Erreur de chargement image:', article.image);
-                                            e.target.src = '/assets/default-blog.png';
-                                        }}
-                                    />
-                                </div>
+                                    <div className="relative h-[180px] sm:h-[200px] w-full overflow-hidden">
+                                        <Image
+                                            src={article.image}
+                                            alt={article.titre || "Image d'illustration"}
+                                            fill
+                                            className="object-cover"
+                                            sizes="(max-width: 640px) 85vw, (max-width: 1024px) 40vw, 25vw"
+                                            unoptimized={true}
+                                            priority={false}
+                                            loading="lazy"
+                                            onError={(e) => {
+                                                console.error('Erreur de chargement image:', article.image);
+                                                e.target.src = '/assets/default-blog.png';
+                                            }}
+                                        />
+                                    </div>
                                 )}
+
                                 <div className="p-4">
                                     <h3 className="text-base sm:text-lg font-semibold mb-2 line-clamp-2">
                                         {article.titre}
