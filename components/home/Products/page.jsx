@@ -3,11 +3,13 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { useRouter } from "next/navigation";
 
 export default function Products() {
     const [currentPage, setCurrentPage] = useState(0);
     const [visibleCards, setVisibleCards] = useState([]);
     const productsPerPage = 3;
+    const router = useRouter();
 
     // Animation variants
     const containerVariants = {
@@ -42,18 +44,21 @@ export default function Products() {
             title: "Chantier+ : Application web et mobile prête à vendre",
             description: "Acheter votre application pour collaborer avec les entrepreneurs pour vos travaux de construction",
             image: "/assets/BTP.png",
+            link: "liens/produit/Chantier+",
         },
         {
             id: 2,
             title: "RéseauPro : Application web et mobile prête à vendre",
             description: "Obtenez, Réseautez et communiquez plus facilement avec vos proches, amis et partenaires d'affaires",
             image: "/assets/Reseau_pro.png",
+            link: "liens/produit/reseaupro",
         },
         {
             id: 3,
             title: "e-Vignette : Application web et mobile prête à vendre",
             description: "Obtenez Cliniq+ et facilitez la gestion des cliniques des médecins et des patients avec des fonctionnalités avancées",
             image: "/assets/e_vignette.png",
+            link: "liens/produit/evignette",
         }
     ];
 
@@ -138,7 +143,7 @@ export default function Products() {
                                 <p className="text-gray-600 mb-4">{product.description}</p>
                                 <button
                                     className="w-full py-2 px-4 border-2 border-[#0F6B42] text-[#0F6B42] rounded-lg hover:bg-[#FF9F1C] hover:text-white hover:border-transparent transition-all duration-300"
-                                    onClick={() => window.open('https://dihas-product.vercel.app/', '_blank')}
+                                    onClick={() => window.open(product.link, '_blank')}
                                 >
                                     Voir plus
                                 </button>

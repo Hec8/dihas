@@ -73,7 +73,7 @@ export default function Blogs() {
                     pratiques et les dernières tendances qui inspirent et informent
                 </p>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 md:gap-6 w-full max-w-4xl mx-auto">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 w-full max-w-screen-xl mx-auto px-4">
                     {loading ? (
                         // Afficher 2 cartes de chargement
                         [...Array(2)].map((_, index) => (

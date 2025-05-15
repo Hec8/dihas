@@ -90,7 +90,7 @@ export default function Blog() {
                         </div>
 
                         {/* Partie droite pour l'image */}
-                        <div className="w-full md:w-1/2 relative">
+                        <div className="w-[600px] md:w-1/2 relative">
                             <div className="relative w-full h-[400px] md:h-[600px] z-10 translate-x-4 md:translate-x-8 translate-y-6">
                                 <Image
                                     src="/assets/Axelle2.png"
@@ -127,7 +127,7 @@ export default function Blog() {
             <section className="py-16 px-4">
                 <div className="container mx-auto max-w-7xl">
                     <h2 className="text-2xl font-bold mb-12 border-l-4 border-[#FFA500] pl-4 mx-4">Dernières nouvelles</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 w-full max-w-screen-xl mx-auto px-4">
                         {loading ? (
                             // Afficher des cartes de chargement
                             [...Array(4)].map((_, index) => (

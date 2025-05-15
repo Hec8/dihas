@@ -9,16 +9,14 @@ export default function DonutCharts() {
     const chartInstances = useRef([]);
 
     useEffect(() => {
-        // Nettoyage des anciens charts
         chartInstances.current.forEach(chart => chart?.destroy());
         chartInstances.current = [];
 
-        // Configuration commune
         const chartConfig = {
             type: 'doughnut',
             options: {
-                responsive: false, // Désactive le redimensionnement automatique
-                maintainAspectRatio: false, // Permet des dimensions personnalisées
+                responsive: true,
+                maintainAspectRatio: false,
                 plugins: {
                     legend: {
                         position: 'right',
@@ -29,16 +27,19 @@ export default function DonutCharts() {
                         }
                     }
                 },
-                animation: false // Désactive toutes les animations
+                animation: {
+                    animateRotate: true,
+                    animateScale: true,
+                    duration: 1000,
+                    easing: 'easeOutQuart'
+                }
             }
         };
 
-        // Création des charts seulement si les refs sont disponibles
         if (chartRef1.current && chartRef2.current) {
             const ctx1 = chartRef1.current.getContext('2d');
             const ctx2 = chartRef2.current.getContext('2d');
 
-            // Premier diagramme
             const chart1 = new Chart(ctx1, {
                 ...chartConfig,
                 data: {
@@ -51,7 +52,6 @@ export default function DonutCharts() {
                 }
             });
 
-            // Deuxième diagramme
             const chart2 = new Chart(ctx2, {
                 ...chartConfig,
                 data: {
@@ -73,25 +73,13 @@ export default function DonutCharts() {
     }, []);
 
     return (
-        <div className="flex flex-col md:flex-row gap-6 justify-center items-center p-4">
-            {/* Premier diagramme - Taille fixe */}
-            <div className="relative w-[300px] h-[300px] bg-white p-4 rounded-xl shadow-sm">
-                <canvas
-                    ref={chartRef1}
-                    width={300}
-                    height={300}
-                    className="absolute inset-0 w-full h-full"
-                />
+        <div className="flex flex-col md:flex-row gap-6 justify-center items-start p-4">
+            <div className="w-full md:w-1/2 h-[220px] bg-white p-4 rounded-xl shadow-sm">
+                <canvas ref={chartRef1} className="w-full h-full" />
             </div>
 
-            {/* Deuxième diagramme - Taille fixe */}
-            <div className="relative w-[300px] h-[300px] bg-white p-4 rounded-xl shadow-sm">
-                <canvas
-                    ref={chartRef2}
-                    width={300}
-                    height={300}
-                    className="absolute inset-0 w-full h-full"
-                />
+            <div className="w-full md:w-1/2 h-[220px] bg-white p-4 rounded-xl shadow-sm">
+                <canvas ref={chartRef2} className="w-full h-full" />
             </div>
         </div>
     );

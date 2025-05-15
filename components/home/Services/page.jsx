@@ -4,12 +4,14 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import axios from '@/lib/axios';
 import Image from 'next/image';
+import { useRouter } from "next/navigation";
 
 export default function Services() {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [dynamicServices, setDynamicServices] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+    const router = useRouter();
 
     const defaultServices = [
         {
@@ -156,7 +158,7 @@ export default function Services() {
                 className="bg-[#FFA500] text-white px-6 py-2 rounded-full hover:bg-[#FF8C00] transition-colors mt-4"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-            // onClick={() => router.push(`/services/${service.slug}`)}
+            onClick={() => router.push('/services')}
             >
                 En savoir plus
             </motion.button>

@@ -89,7 +89,7 @@ export default function BlogDetail({ article, loading }) {
                 {/* Structure en trois colonnes - Responsive */}
                 <div className="flex flex-col lg:flex-row gap-6 md:gap-8">
                     {/* Colonne gauche : Détails - Mobile en premier */}
-                    <aside className="lg:w-1/4 order-1 lg:order-none">
+                    <aside className="lg:w-1/4 order-1 lg:order-none md:hidden">
                         <div className="lg:sticky lg:top-4 bg-green-200 p-4 rounded-lg shadow-md border-l-4 border-[#FFA500]">
                             <h2 className="font-bold text-lg mb-4 border-b-2 border-[#FFA500] pb-2 uppercase">DÉTAILS DE L'ARTICLE</h2>
                             <div className="space-y-3 text-sm">
