@@ -5,9 +5,11 @@ import { useAuth } from '@/hooks/auth'
 import { useState } from 'react'
 
 const Page = () => {
-    const { logout, resendEmailVerification } = useAuth({
+    const { user, logout, resendEmailVerification } = useAuth({
         middleware: 'auth',
-        redirectIfAuthenticated: '/dashboard',
+        redirectIfAuthenticated: (user) => {
+            return user?.role === 'admin' ? '/dashboard' : '/content-creator-dashboard';
+        }
     })
 
     const [status, setStatus] = useState(null)
