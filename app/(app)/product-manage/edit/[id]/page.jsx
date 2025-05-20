@@ -25,7 +25,55 @@ export default function EditProduct() {
         features: []
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [existingImages, setExistingImages] = useState({
+        homepage_image: null,
+        logo: null,
+        detail_images: []
+    });
     const router = useRouter();
+
+    useEffect(() => {
+        const fetchProduct = async () => {
+            try {
+                const { data } = await axios.get(`/api/products/${id}`);
+                const product = data;
+                
+                // Mettre à jour les champs du formulaire
+                setFormData(prev => ({
+                    ...prev,
+                    ...product,
+                    is_published: product.is_published ? true : false
+                }));
+
+                // Stocker les URLs des images existantes
+                setExistingImages({
+                    homepage_image: product.homepage_image || null,
+                    logo: product.logo || null,
+                    detail_images: product.detail_images || []
+                });
+
+                // Initialiser les caractéristiques si elles existent
+                const features = [];
+                if (product.why_buy) features.push({ type: 'why_buy', label: 'Pourquoi acheter', value: product.why_buy });
+                if (product.main_features) features.push({ type: 'main_features', label: 'Fonctionnalités principales', value: product.main_features });
+                if (product.admin_features) features.push({ type: 'admin_features', label: 'Fonctionnalités admin', value: product.admin_features });
+                if (product.economic_model) features.push({ type: 'economic_model', label: 'Modèle économique', value: product.economic_model });
+                if (product.data_security) features.push({ type: 'data_security', label: 'Sécurité des données', value: product.data_security });
+
+                setFormData(prev => ({
+                    ...prev,
+                    features: features.length > 0 ? features : []
+                }));
+            } catch (error) {
+                console.error('Error fetching product:', error);
+                toast.error('Erreur lors du chargement du produit');
+            }
+        };
+
+        if (id) {
+            fetchProduct();
+        }
+    }, [id]);
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -137,10 +185,20 @@ export default function EditProduct() {
                                         <label className="block text-sm font-medium text-gray-700">
                                             Image principale
                                         </label>
+                                        {existingImages.homepage_image && !formData.homepage_image && (
+                                            <div className="mt-2">
+                                                <img
+                                                    src={existingImages.homepage_image}
+                                                    alt="Image principale actuelle"
+                                                    className="h-32 w-auto object-cover rounded-md"
+                                                />
+                                                <p className="mt-1 text-xs text-gray-500">Image actuelle</p>
+                                            </div>
+                                        )}
                                         <input
                                             type="file"
                                             onChange={(e) => handleImageChange(e, 'homepage_image')}
-                                            className="mt-1 block w-full text-sm text-gray-500
+                                            className="mt-2 block w-full text-sm text-gray-500
                                             file:mr-4 file:py-2 file:px-4
                                             file:rounded-md file:border-0
                                             file:text-sm file:font-semibold
@@ -153,10 +211,20 @@ export default function EditProduct() {
                                         <label className="block text-sm font-medium text-gray-700">
                                             Logo
                                         </label>
+                                        {existingImages.logo && !formData.logo && (
+                                            <div className="mt-2">
+                                                <img
+                                                    src={existingImages.logo}
+                                                    alt="Logo actuel"
+                                                    className="h-16 w-auto object-contain"
+                                                />
+                                                <p className="mt-1 text-xs text-gray-500">Logo actuel</p>
+                                            </div>
+                                        )}
                                         <input
                                             type="file"
                                             onChange={(e) => handleImageChange(e, 'logo')}
-                                            className="mt-1 block w-full text-sm text-gray-500
+                                            className="mt-2 block w-full text-sm text-gray-500
                                             file:mr-4 file:py-2 file:px-4
                                             file:rounded-md file:border-0
                                             file:text-sm file:font-semibold
@@ -169,11 +237,25 @@ export default function EditProduct() {
                                         <label className="block text-sm font-medium text-gray-700">
                                             Images de détail (max 5)
                                         </label>
+                                        {existingImages.detail_images && existingImages.detail_images.length > 0 && !(formData.detail_images && formData.detail_images.length > 0) && (
+                                            <div className="mt-2 grid grid-cols-3 gap-2">
+                                                {existingImages.detail_images.map((img, idx) => (
+                                                    <div key={idx} className="relative">
+                                                        <img
+                                                            src={img.url || img}
+                                                            alt={`Détail ${idx + 1}`}
+                                                            className="h-24 w-full object-cover rounded-md"
+                                                        />
+                                                    </div>
+                                                ))}
+                                                <p className="mt-1 text-xs text-gray-500 col-span-3">Images actuelles</p>
+                                            </div>
+                                        )}
                                         <input
                                             type="file"
                                             onChange={(e) => handleImageChange(e, 'detail_images')}
                                             multiple
-                                            className="mt-1 block w-full text-sm text-gray-500
+                                            className="mt-2 block w-full text-sm text-gray-500
                                             file:mr-4 file:py-2 file:px-4
                                             file:rounded-md file:border-0
                                             file:text-sm file:font-semibold

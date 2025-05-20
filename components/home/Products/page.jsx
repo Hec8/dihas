@@ -4,6 +4,8 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useRouter } from "next/navigation";
+import Link from 'next/link';
+import { MousePointer2 } from 'lucide-react';
 
 export default function Products() {
     const [currentPage, setCurrentPage] = useState(0);
@@ -92,7 +94,7 @@ export default function Products() {
                     transition={{ duration: 0.6 }}
                     viewport={{ once: true }}
                 >
-                    Nos produits
+                    Acheter une application
                 </motion.h2>
                 <motion.p
                     className="text-xl text-center mb-12"
@@ -101,7 +103,7 @@ export default function Products() {
                     transition={{ duration: 0.6, delay: 0.2 }}
                     viewport={{ once: true }}
                 >
-                    Découvrez notre gamme de produits innovants conçus pour répondre à vos besoins
+                    Découvre notre gamme de produits innovants conçus pour répondre à tes besoins
                 </motion.p>
 
                 <motion.div
@@ -152,7 +154,7 @@ export default function Products() {
                     ))}
                 </motion.div>
 
-                <motion.div
+                {/* <motion.div
                     className="flex justify-center items-center mt-12 gap-4"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -191,7 +193,15 @@ export default function Products() {
                             <path d="M9 18l6-6-6-6" />
                         </svg>
                     </button>
-                </motion.div>
+                </motion.div> */}
+
+                <Link
+                    href="/dihas-product"
+                    className="bg-green-800 mt-6 text-white px-6 py-3 rounded-lg flex items-center justify-center transition-all duration-300 transform hover:scale-105 cursor-pointer w-fit mx-auto"
+                >
+                    Voir tous les produits
+                    <MousePointer2 className="ml-2" />
+                </Link>
             </motion.div>
         </motion.section>
     );

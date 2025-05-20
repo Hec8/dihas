@@ -69,7 +69,7 @@ export default function Blogs() {
                     Nos Blogs
                 </h2>
                 <p className="text-sm sm:text-base md:text-xl text-center mb-6 md:mb-8 animate-slideDown animation-delay-200 w-[90%] mx-auto">
-                    Plongez dans nos blogs pour découvrir des sujets passionnants, des conseils
+                    Plonge dans nos blogs pour découvrir des sujets passionnants, des conseils
                     pratiques et les dernières tendances qui inspirent et informent
                 </p>
 
@@ -102,7 +102,7 @@ export default function Blogs() {
                                 whileHover={{ y: -2 }}
                             >
                                 {article.image && (
-                                    <div className="relative h-[180px] sm:h-[200px] w-full overflow-hidden">
+                                    <div className="relative h-[180px] sm:h-[200px] overflow-hidden">
                                         <Image
                                             src={article.image}
                                             alt={article.titre || "Image d'illustration"}

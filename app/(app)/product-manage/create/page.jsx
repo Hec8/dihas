@@ -4,6 +4,7 @@ import { useState } from 'react';
 import axios from '@/lib/axios';
 import { useRouter } from 'next/navigation';
 import toast, { Toaster } from 'react-hot-toast';
+import { Plus, Trash2 } from 'lucide-react';
 
 export default function CreateProduct() {
     const [formData, setFormData] = useState({
@@ -16,15 +17,11 @@ export default function CreateProduct() {
         monetization: '',
         estimated_profit: '',
         estimated_revenue: '',
-        why_buy: '',
-        main_features: '',
-        admin_features: '',
-        economic_model: '',
-        data_security: '',
         is_published: true,
         homepage_image: null,
         logo: null,
-        detail_images: []
+        detail_images: [],
+        features: []
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const router = useRouter();
@@ -51,21 +48,55 @@ export default function CreateProduct() {
         }
     };
 
+    const handleFeatureChange = (index, value) => {
+        setFormData(prev => ({
+            ...prev,
+            features: prev.features.map((feature, i) =>
+                i === index ? { ...feature, value } : feature
+            )
+        }));
+    };
+
+    const addFeature = () => {
+        setFormData(prev => ({
+            ...prev,
+            features: [...prev.features, { type: '', label: '', value: '' }]
+        }));
+    };
+
+    const removeFeature = (index) => {
+        setFormData(prev => ({
+            ...prev,
+            features: prev.features.filter((_, i) => i !== index)
+        }));
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsSubmitting(true);
-
+    
         try {
             const formDataToSend = new FormData();
-
-            // Ajouter les champs textuels
+    
+            // Ajouter les champs textuels avec conversion de is_published
             Object.keys(formData).forEach(key => {
-                if (key !== 'homepage_image' && key !== 'logo' && key !== 'detail_images') {
-                    formDataToSend.append(key, formData[key]);
+                if (key !== 'homepage_image' && key !== 'logo' && key !== 'detail_images' && key !== 'features') {
+                    if (key === 'is_published') {
+                        formDataToSend.append(key, formData[key] ? '1' : '0');
+                    } else {
+                        formDataToSend.append(key, formData[key]);
+                    }
                 }
             });
 
-            // Ajouter les images
+            // Ajouter les caractéristiques
+            formData.features.forEach(feature => {
+                if (feature.type && feature.value) {
+                    formDataToSend.append(feature.type, feature.value);
+                }
+            });
+    
+            // Gestion des images
             if (formData.homepage_image) {
                 formDataToSend.append('homepage_image', formData.homepage_image);
             }
@@ -77,7 +108,7 @@ export default function CreateProduct() {
                     formDataToSend.append(`detail_images[${index}]`, file);
                 });
             }
-
+    
             await axios.post('/api/products', formDataToSend, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
@@ -86,6 +117,7 @@ export default function CreateProduct() {
             toast.success('Produit créé avec succès');
             router.push('/product-manage');
         } catch (error) {
+            console.error('Erreur détaillée:', error);
             toast.error(error.response?.data?.message || 'Erreur lors de la création');
         } finally {
             setIsSubmitting(false);
@@ -281,67 +313,60 @@ export default function CreateProduct() {
                                 </div>
 
                                 {/* Caractéristiques détaillées */}
-                                <div className="space-y-6">
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700">
-                                            Pourquoi acheter
-                                        </label>
-                                        <textarea
-                                            name="why_buy"
-                                            value={formData.why_buy}
-                                            onChange={handleChange}
-                                            rows="3"
-                                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-800 focus:ring focus:ring-green-800 focus:ring-opacity-50"
-                                        />
+                                <div className="space-y-4">
+                                    <div className="flex justify-between items-center">
+                                        <h3 className="text-lg font-medium text-gray-900">Caractéristiques détaillées</h3>
+                                        <button
+                                            type="button"
+                                            onClick={addFeature}
+                                            className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-green-800 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-800"
+                                        >
+                                            <Plus className="h-4 w-4 mr-1" />
+                                            Ajouter une caractéristique
+                                        </button>
                                     </div>
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700">
-                                            Fonctionnalités principales
-                                        </label>
-                                        <textarea
-                                            name="main_features"
-                                            value={formData.main_features}
-                                            onChange={handleChange}
-                                            rows="3"
-                                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-800 focus:ring focus:ring-green-800 focus:ring-opacity-50"
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700">
-                                            Fonctionnalités admin
-                                        </label>
-                                        <textarea
-                                            name="admin_features"
-                                            value={formData.admin_features}
-                                            onChange={handleChange}
-                                            rows="3"
-                                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-800 focus:ring focus:ring-green-800 focus:ring-opacity-50"
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700">
-                                            Modèle économique
-                                        </label>
-                                        <textarea
-                                            name="economic_model"
-                                            value={formData.economic_model}
-                                            onChange={handleChange}
-                                            rows="3"
-                                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-800 focus:ring focus:ring-green-800 focus:ring-opacity-50"
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700">
-                                            Sécurité des données
-                                        </label>
-                                        <textarea
-                                            name="data_security"
-                                            value={formData.data_security}
-                                            onChange={handleChange}
-                                            rows="3"
-                                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-800 focus:ring focus:ring-green-800 focus:ring-opacity-50"
-                                        />
-                                    </div>
+                                    {formData.features.map((feature, index) => (
+                                        <div key={index} className="flex gap-4 items-start">
+                                            <div className="flex-1">
+                                                <select
+                                                    value={feature.type}
+                                                    onChange={(e) => {
+                                                        const newFeatures = [...formData.features];
+                                                        newFeatures[index] = {
+                                                            ...feature,
+                                                            type: e.target.value,
+                                                            label: e.target.options[e.target.selectedIndex].text
+                                                        };
+                                                        setFormData(prev => ({ ...prev, features: newFeatures }));
+                                                    }}
+                                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-800 focus:ring focus:ring-green-800 focus:ring-opacity-50"
+                                                >
+                                                    <option value="">Sélectionner un type</option>
+                                                    <option value="why_buy">Pourquoi acheter</option>
+                                                    <option value="main_features">Fonctionnalités principales</option>
+                                                    <option value="admin_features">Fonctionnalités admin</option>
+                                                    <option value="economic_model">Modèle économique</option>
+                                                    <option value="data_security">Sécurité des données</option>
+                                                </select>
+                                            </div>
+                                            <div className="flex-[2]">
+                                                <textarea
+                                                    value={feature.value}
+                                                    onChange={(e) => handleFeatureChange(index, e.target.value)}
+                                                    rows="3"
+                                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-800 focus:ring focus:ring-green-800 focus:ring-opacity-50"
+                                                    placeholder="Description de la caractéristique"
+                                                />
+                                            </div>
+                                            <button
+                                                type="button"
+                                                onClick={() => removeFeature(index)}
+                                                className="mt-1 inline-flex items-center p-2 border border-transparent rounded-full text-red-600 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                                            >
+                                                <Trash2 className="h-5 w-5" />
+                                            </button>
+                                        </div>
+                                    ))}
                                 </div>
 
                                 <div className="flex items-center">

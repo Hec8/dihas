@@ -11,7 +11,7 @@ export default function About() {
 
     const stats = [
         {
-            number: 7,
+            number: 5,
             label: "Année d'expérience"
         },
         {
@@ -23,7 +23,7 @@ export default function About() {
             label: "Clients Satisfaits"
         },
         {
-            number: 231,
+            number: 15,
             label: "Projets complets"
         }
     ];
