@@ -82,25 +82,29 @@ const BlogStats = ({ role = 'createur_contenu' }) => {
     const currentStats = statsConfig[role] || statsConfig.createur_contenu;
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
             {currentStats.map((stat, index) => (
-                <div key={index} className="flex w-45 h-50 items-center space-x-4 bg-white p-5 rounded-xl shadow">
-                    <div className={`w-16 h-16 flex items-center justify-center rounded-xl`}>
-                        <Image
-                            src={stat.image}
-                            alt={stat.label}
-                            width={50}
-                            height={50}
-                            className="text-white"
-                        />
-                    </div>
-                    <div>
-                        <p className="text-black text-sm font-semibold">{stat.label}</p>
-                        <p className="text-2xl font-bold text-blue-900">{stat.value}</p>
-                    </div>
+                <div
+                key={index}
+                className="flex items-center gap-4 bg-gradient-to-br from-white via-gray-50 to-gray-100 p-6 rounded-2xl shadow-lg hover:shadow-xl transition duration-300 transform hover:-translate-y-1"
+                >
+                <div className="w-16 h-16 bg-green-100 flex items-center justify-center rounded-full shadow-inner">
+                    <Image
+                    src={stat.image}
+                    alt={stat.label}
+                    width={40}
+                    height={40}
+                    className="object-contain"
+                    />
+                </div>
+                <div>
+                    <p className="text-gray-500 text-sm font-medium">{stat.label}</p>
+                    <p className="text-2xl font-bold text-green-800">{stat.value}</p>
+                </div>
                 </div>
             ))}
         </div>
+
     );
 };
 

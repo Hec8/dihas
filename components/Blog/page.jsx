@@ -90,8 +90,8 @@ export default function Blog() {
                         </div>
 
                         {/* Partie droite pour l'image */}
-                        <div className="w-full md:w-1/2 relative">
-                            <div className="relative w-full h-[400px] md:h-[600px] z-10 translate-x-4 md:translate-x-8 translate-y-6">
+                        <div className="w-full md:w-1/2 relative mt-8 md:mt-0">
+                            <div className="relative w-full h-[300px] md:h-[600px] z-10 md:translate-x-8 translate-y-6">
                                 <Image
                                     src="/assets/Axelle2.png"
                                     alt="Blog Hero"
@@ -99,6 +99,7 @@ export default function Blog() {
                                     className="object-contain"
                                     priority
                                     style={{ objectPosition: 'bottom right' }}
+                                    sizes="(max-width: 768px) 100vw, 50vw"
                                 />
                             </div>
                         </div>
@@ -106,7 +107,7 @@ export default function Blog() {
                 </div>
 
                 {/* Vague décorative en bas */}
-                <div className="absolute bottom-0 left-0 w-full h-32 md:h-48 z-20">
+                <div className="absolute bottom-0 left-0 w-full h-32 md:h-48 z-10">
                     <svg
                         viewBox="0 0 1200 120"
                         preserveAspectRatio="none"
@@ -127,7 +128,7 @@ export default function Blog() {
             <section className="py-16 px-4">
                 <div className="container mx-auto max-w-7xl">
                     <h2 className="text-2xl font-bold mb-12 border-l-4 border-[#FFA500] pl-4 mx-4">Dernières nouvelles</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 w-full max-w-7xl mx-auto px-4">
                         {loading ? (
                             // Afficher des cartes de chargement
                             [...Array(4)].map((_, index) => (
@@ -147,23 +148,25 @@ export default function Blog() {
                         ) : filteredArticles.length > 0 ? (
                             filteredArticles.map((article) => (
                                 <div key={article.id} className="bg-white rounded-lg overflow-hidden shadow-md transition-transform hover:scale-105 hover:shadow-xl">
-                                    <div className="relative h-[180px] sm:h-[200px] w-full overflow-hidden">
-                                        <Image 
-                                            src={article.image || '/assets/default-blog.png'}
-                                            alt={article.titre}
-                                            fill
+                                    {article.image && (
+                                    <div className="relative h-[220px] sm:h-[280px] w-full overflow-hidden">
+                                        <Image
+                                            src={article.image}
+                                              alt={article.titre || "Image d'illustration"}
+                                              fill
                                             sizes="(max-width: 640px) 85vw, (max-width: 1024px) 40vw, 25vw"
                                             className="object-cover"
                                             priority
+                                            unoptimized={true}
                                             onError={(e) => {
-                                                console.error('Erreur de chargement image:', article.image);
-                                                e.target.src = '/assets/default-blog.png';
+                                                e.currentTarget.src = '/assets/default-blog.png';
                                             }}
                                         />
                                     </div>
+                                    )}
                                     <div className="p-6">
-                                        <h3 className="font-bold text-lg mb-3">{article.titre}</h3>
-                                        <p className="text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-1 text-gray-600">{article.resume}</p>
+                                        <h3 className="font-bold text-lg mb-2 line-clamp-2 h-14">{article.titre}</h3>
+                                        <p className="text-sm text-gray-600 mb-3 line-clamp-1 h-5">{article.resume}</p>
                                         <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
                                             <span>Publié le : {formatDate(article.created_at)}</span>
                                             <span>{article.writer || 'Admin'}</span>

@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 export default function Hero() {
     return (
-        <section className="bg-green-800 text-white py-16 mt-16">
+        <section className="bg-green-800 text-white py-16 mt-12">
             {/* Animation de fond */}
             <div className="area absolute inset-0">
                 <ul className="circles">
@@ -13,28 +13,60 @@ export default function Hero() {
                     ))}
                 </ul>
             </div>
-            <div className="container mx-auto px-6">
+            <div className="container mx-auto px-2 md:px-6">
                 <div className="flex flex-col md:flex-row items-center justify-between">
                     {/* Partie gauche avec le texte */}
-                    <div className="w-full md:w-1/2 mb-10 md:mb-0">
-                        <h1 className="text-3xl md:text-4xl font-bold mb-4 leading-tight">
-                            Entreprise de conception, <br />
-                            de développement <br />
-                            de vente d'application <br />
-                            SaaS et de logiciel de <br />
-                            gestion
+                    <div className="w-full md:w-1/2 mb-10 md:mb-0 ml-12">
+                        <h1 className="text-3xl md:text-4xl font-bold mb-3 leading-tight">
+                            Obtiens la version 1.0 <br />  
+                            de ton application<br /> 
+                            en seulement <span className='text-white' style={{ textDecoration: 'wavy underline orange 4px', textUnderlineOffset: '4px' }}>30 jours</span>
                         </h1><br />
-                        <p className="text-sm mb-8 text-white max-w-md">
-                            De l'idée de développement de marque nous concevons
-                            et développons des applications
-                        </p><br />
-                        <div className="flex flex-col sm:flex-row gap-4">
+                        <p className="text-sm mb-3 font-semibold text-white max-w-md">
+                           Pour une startup qui grandit, tout commence ici
+                        </p>
+                        
+                        <div className="mb-4 max-w-md">
+                            <ul className="space-y-2">
+                                <li className="flex items-center text-xs text-gray-200">
+                                    <svg className="w-4 h-4 mr-2 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                    </svg>
+                                    Interface moderne et intuitive
+                                </li>
+                                <li className="flex items-center text-xs text-gray-200">
+                                    <svg className="w-4 h-4 mr-2 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                    </svg>
+                                    Expérience utilisateur fluide
+                                </li>
+                                <li className="flex items-center text-xs text-gray-200">
+                                    <svg className="w-4 h-4 mr-2 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                    </svg>
+                                    Développement traditionnel
+                                </li>
+                                <li className="flex items-center text-xs text-gray-200">
+                                    <svg className="w-4 h-4 mr-2 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                    </svg>
+                                    Conception à moindre coût
+                                </li>
+                                <li className="flex items-center text-xs text-gray-200">
+                                    <svg className="w-4 h-4 mr-2 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                    </svg>
+                                    Landing page offertes
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div className="flex flex-col sm:flex-row gap-3 mr-10">
                             <Link
                                 href="/contact"
                                 className="bg-[#FFA500] text-white px-6 py-3 rounded-lg flex items-center justify-center transition-all duration-300 transform hover:scale-105 cursor-pointer"
                             >
-                                <img src="/assets/basket.png" alt="Vector" className="h-5 w-5 mr-2" />
-                                Commander
+                                Appel pour commencer
                             </Link>
                         </div>
                     </div>

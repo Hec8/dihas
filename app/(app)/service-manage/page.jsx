@@ -95,7 +95,7 @@ export default function BlogList() {
                                                 <td className="px-6 py-4 whitespace-nowrap">
                                                     {service.icon && (
                                                         <img
-                                                            src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${service.icon}`}
+                                                            src={service.icon}
                                                             alt={service.title}
                                                             className="h-12 w-12 rounded-md object-fill"
                                                         />

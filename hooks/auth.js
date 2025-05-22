@@ -110,12 +110,13 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             // Mettre à jour l'état utilisateur
             await mutate(null, false)
             
-            // Utiliser router.push au lieu de window.location pour une meilleure gestion
-            router.push('/login')
+            // Utiliser window.location.href pour une redirection complète 
+            // qui contourne le système de routage de Next.js et évite la page de loading
+            window.location.href = '/login'
         } catch (err) {
             console.error('Erreur lors de la déconnexion:', err)
             // Forcer la redirection même en cas d'erreur
-            router.push('/login')
+            window.location.href = '/login'
         }
     }
 

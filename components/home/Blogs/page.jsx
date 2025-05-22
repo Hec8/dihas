@@ -69,11 +69,11 @@ export default function Blogs() {
                     Nos Blogs
                 </h2>
                 <p className="text-sm sm:text-base md:text-xl text-center mb-6 md:mb-8 animate-slideDown animation-delay-200 w-[90%] mx-auto">
-                    Plongez dans nos blogs pour découvrir des sujets passionnants, des conseils
+                    Plonge dans nos blogs pour découvrir des sujets passionnants, des conseils
                     pratiques et les dernières tendances qui inspirent et informent
                 </p>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 md:gap-6 w-full max-w-4xl mx-auto">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 w-full max-w-7xl mx-auto px-4">
                     {loading ? (
                         // Afficher 2 cartes de chargement
                         [...Array(2)].map((_, index) => (
@@ -101,21 +101,25 @@ export default function Blogs() {
                                 transition={{ duration: 0.5, delay: index * 0.1 }}
                                 whileHover={{ y: -2 }}
                             >
-                                <div className="relative h-[180px] sm:h-[200px] w-full overflow-hidden">
-                                    <Image
-                                        src={article.image || '/assets/default-blog.png'}
-                                        alt={article.titre}
-                                        fill
-                                        className="object-cover"
-                                        sizes="(max-width: 640px) 85vw, (max-width: 1024px) 40vw, 25vw"
-                                        quality={100}
-                                        priority
-                                        onError={(e) => {
-                                            console.error('Erreur de chargement image:', article.image);
-                                            e.target.src = '/assets/default-blog.png';
-                                        }}
-                                    />
-                                </div>
+                                {article.image && (
+                                    <div className="relative h-[220px] sm:h-[250px] overflow-hidden">
+                                        <Image
+                                            src={article.image}
+                                            alt={article.titre || "Image d'illustration"}
+                                            fill
+                                            className="object-cover"
+                                            sizes="(max-width: 640px) 85vw, (max-width: 1024px) 40vw, 25vw"
+                                            unoptimized={true}
+                                            priority={false}
+                                            loading="lazy"
+                                            onError={(e) => {
+                                                console.error('Erreur de chargement image:', article.image);
+                                                e.target.src = '/assets/default-blog.png';
+                                            }}
+                                        />
+                                    </div>
+                                )}
+
                                 <div className="p-4">
                                     <h3 className="text-base sm:text-lg font-semibold mb-2 line-clamp-2">
                                         {article.titre}

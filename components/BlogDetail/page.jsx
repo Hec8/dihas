@@ -11,9 +11,8 @@ export default function BlogDetail({ article, loading }) {
     const shareLinks = {
         facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`,
         linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(currentUrl)}`,
-        whatsapp: `https://wa.me/?text=${encodeURIComponent(currentUrl)}`,
         instagram: `https://www.instagram.com/?url=${encodeURIComponent(currentUrl)}`,
-      };
+    };
     function formatTextAsHTML(text) {
         return (
             '<p>' +
@@ -21,10 +20,10 @@ export default function BlogDetail({ article, loading }) {
                 .trim()
                 .replace(/\n{2,}/g, '</p><p>')  // double retour = nouveau paragraphe
                 .replace(/\n/g, '<br/>')        // simple retour = saut de ligne
-                + '</p>'
+            + '</p>'
         );
     }
-    
+
 
     if (loading) {
         return (
@@ -72,20 +71,25 @@ export default function BlogDetail({ article, loading }) {
                 </div>
 
                 {/* Image principale - Responsive */}
+                {article.image && (
                 <div className="w-full h-48 md:min-h-[500px] relative mb-6 md:mb-8 rounded-lg overflow-hidden">
                     <Image
-                        src={article.image || '/assets/default-blog.png'}
-                        alt="Image d'illustration"
+                        src={article.image}
+                        alt={article.titre || "Image d'illustration"}
                         fill
                         className="object-cover md:object-cover"
                         priority
+                        unoptimized={true}
+                        onError={(e) => {
+                            e.currentTarget.src = '/assets/default-blog.png';
+                        }}
                     />
                 </div>
-
+                )}
                 {/* Structure en trois colonnes - Responsive */}
                 <div className="flex flex-col lg:flex-row gap-6 md:gap-8">
                     {/* Colonne gauche : Détails - Mobile en premier */}
-                    <aside className="lg:w-1/4 order-1 lg:order-none">
+                    <aside className="hidden lg:block lg:w-1/4 order-1 lg:order-none">
                         <div className="lg:sticky lg:top-4 bg-green-200 p-4 rounded-lg shadow-md border-l-4 border-[#FFA500]">
                             <h2 className="font-bold text-lg mb-4 border-b-2 border-[#FFA500] pb-2 uppercase">DÉTAILS DE L'ARTICLE</h2>
                             <div className="space-y-3 text-sm">
@@ -103,48 +107,38 @@ export default function BlogDetail({ article, loading }) {
                                 </div>
                             </div>
                             <div className="mt-6">
-                            <h3 className="font-semibold mb-3">Partager cet article</h3>
-                            <div className="flex gap-4">
-                                {/* Facebook */}
-                                <a aria-label="Partager sur Facebook" href={shareLinks.facebook} target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
-                                <Image 
-                                    src="/assets/fb.png" 
-                                    alt="Partager sur Facebook"
-                                    width={32}
-                                    height={32}
-                                />
-                                </a>
-                                
-                                {/* Instagram */}
-                                <a aria-label="Partager sur Instagram" href={shareLinks.instagram} target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
-                                <Image 
-                                    src="/assets/insta.png" 
-                                    alt="Partager sur Instagram"
-                                    width={32}
-                                    height={32}
-                                />
-                                </a>
-                                
-                                {/* LinkedIn */}
-                                <a aria-label="Partager sur LinkedIn" href={shareLinks.linkedin} target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
-                                <Image 
-                                    src="/assets/LkIn.png" 
-                                    alt="Partager sur LinkedIn"
-                                    width={32}
-                                    height={32}
-                                />
-                                </a>
-                                
-                                {/* Autres réseaux si besoin */}
-                                <a aria-label="Partager sur WhatsApp" href={shareLinks.whatsapp} target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
-                                <Image 
-                                    src="/assets/wa.png" 
-                                    alt="Partager sur WhatsApp"
-                                    width={32}
-                                    height={32}
-                                />
-                                </a>
-                            </div>
+                                <h3 className="font-semibold mb-3">Partager cet article</h3>
+                                <div className="flex gap-4">
+                                    {/* Facebook */}
+                                    <a aria-label="Partager sur Facebook" href={shareLinks.facebook} target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
+                                        <Image
+                                            src="/assets/fb.png"
+                                            alt="Partager sur Facebook"
+                                            width={32}
+                                            height={32}
+                                        />
+                                    </a>
+
+                                    {/* Instagram */}
+                                    <a aria-label="Partager sur Instagram" href={shareLinks.instagram} target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
+                                        <Image
+                                            src="/assets/Insta.png"
+                                            alt="Partager sur Instagram"
+                                            width={32}
+                                            height={32}
+                                        />
+                                    </a>
+
+                                    {/* LinkedIn */}
+                                    <a aria-label="Partager sur LinkedIn" href={shareLinks.linkedin} target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
+                                        <Image
+                                            src="/assets/LkIn.png"
+                                            alt="Partager sur LinkedIn"
+                                            width={32}
+                                            height={32}
+                                        />
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </aside>
@@ -160,7 +154,7 @@ export default function BlogDetail({ article, loading }) {
                         </div>
 
                         {/* Contenu de l'article */}
-                        <div 
+                        <div
                             className="prose prose-sm sm:prose lg:prose-lg max-w-none mt-8 mb-12
                                     prose-headings:text-gray-800 prose-headings:font-bold
                                     prose-p:text-justify prose-p:mb-4 prose-p:leading-relaxed
@@ -176,10 +170,10 @@ export default function BlogDetail({ article, loading }) {
                         >
                             {article.contenu ? (
                                 <div
-                                dangerouslySetInnerHTML={{
-                                    __html: formatTextAsHTML(article.contenu)
-                                  }}
-                                  className="article-content text-justify"
+                                    dangerouslySetInnerHTML={{
+                                        __html: formatTextAsHTML(article.contenu)
+                                    }}
+                                    className="article-content text-justify"
                                 />
                             ) : (
                                 <p className="text-gray-500 italic text-center py-4">
@@ -207,40 +201,40 @@ export default function BlogDetail({ article, loading }) {
                     </article>
 
                     {/* Colonne droite : Aide */}
-                <aside className="lg:w-1/4 order-3 lg:block">
-                <div className="sticky top-4 space-y-6">
-                    {/* Barre de recherche */}
-                    <div className="relative max-w-md">
-                    <input
-                        type="text"
-                        placeholder="Rechercher..."
-                        className="w-full px-6 py-3 rounded-2xl bg-transparent border-2 text-black placeholder-black/70 focus:outline-none focus:ring-2 focus:ring-white/50"
-                    />
-                    <button className="absolute right-2 top-1/2 transform -translate-y-1/2">
-                        <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
-                    </button>
-                    </div>
+                    <aside className="lg:w-1/4 order-3 lg:block">
+                        <div className="sticky top-4 space-y-6">
+                            {/* Barre de recherche */}
+                            <div className="relative max-w-md">
+                                <input
+                                    type="text"
+                                    placeholder="Rechercher..."
+                                    className="w-full px-6 py-3 rounded-2xl bg-transparent border-2 text-black placeholder-black/70 focus:outline-none focus:ring-2 focus:ring-white/50"
+                                />
+                                <button className="absolute right-2 top-1/2 transform -translate-y-1/2">
+                                    <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                    </svg>
+                                </button>
+                            </div>
 
-                    {/* Bloc d'aide - Déplacé à l'intérieur du div sticky */}
-                    <div className="bg-green-200 p-4 rounded-lg shadow-md text-center">
-                    <h3 className="font-bold mb-4 text-md">
-                        Avez-vous besoin d'aide avec les services de développement d'applications et de sites Web ?
-                    </h3>
-                    <div className="flex justify-between gap-3">
-                        <Link href="/contact">
-                        <button className="bg-green-300 text-black font-bold px-5 py-2 rounded transition-colors">
-                            Oui
-                        </button>
-                        </Link>
-                        <button className="border border-gray-400 text-black font-bold px-5 py-2 rounded hover:bg-gray-200 transition-colors">
-                        Non
-                        </button>
-                    </div>
-                    </div>
-                </div>
-                </aside>
+                            {/* Bloc d'aide - Déplacé à l'intérieur du div sticky */}
+                            <div className="bg-green-200 p-4 rounded-lg shadow-md text-center">
+                                <h3 className="font-bold mb-4 text-md">
+                                    Avez-vous besoin d'aide avec les services de développement d'applications et de sites Web ?
+                                </h3>
+                                <div className="flex justify-between gap-3">
+                                    <Link href="/contact">
+                                        <button className="bg-green-300 text-black font-bold px-5 py-2 rounded transition-colors">
+                                            Oui
+                                        </button>
+                                    </Link>
+                                    <button className="border border-gray-400 text-black font-bold px-5 py-2 rounded hover:bg-gray-200 transition-colors">
+                                        Non
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
                 </div>
                 <div className="bg-[#1A5276] from-blue-50 to-blue-100 rounded-xl p-6 md:p-12 my-12">
                     <div className="flex flex-col md:flex-row items-center gap-8">

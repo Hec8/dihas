@@ -89,31 +89,22 @@ export default function BlogArticle() {
             {/* Contenu de l'article */}
             <main className="max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
                 <article className="bg-white shadow overflow-hidden sm:rounded-lg">
-                    {/* Image de l'article */}
-                    {article.image && (
-                        <div className="relative h-64 md:h-96 w-full">
-                            {article.image.startsWith('http') ? (
+                    {/* Image de l'article - Version URL externe uniquement */}
+                        {article.image && (
+                            <div className="relative h-64 md:h-96 w-full">
                                 <Image
                                     src={article.image}
-                                    alt={article.titre}
-                                    fill
+                                    alt={article.titre || "Image d'illustration"}
+                                      fill
                                     className="object-cover"
                                     priority
                                     unoptimized={true}
+                                    onError={(e) => {
+                                        e.currentTarget.src = '/assets/default-blog.png';
+                                    }}
                                 />
-                            ) : (
-                                <Image
-                                    src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/images/${article.image.replace('images/', '')}`}
-                                    alt={article.titre}
-                                    fill
-                                    className="object-cover"
-                                    priority
-                                    unoptimized={true}
-                                />
-                            )}
-                        </div>
-                    )}
-
+                            </div>
+                        )}
                     {/* Entête de l'article */}
                     <div className="px-6 py-4">
                         <h1 className="text-3xl font-bold text-gray-900 mb-2">{article.titre}</h1>

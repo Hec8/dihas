@@ -3,11 +3,15 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { useRouter } from "next/navigation";
+import Link from 'next/link';
+import { MousePointer2 } from 'lucide-react';
 
 export default function Products() {
     const [currentPage, setCurrentPage] = useState(0);
     const [visibleCards, setVisibleCards] = useState([]);
     const productsPerPage = 3;
+    const router = useRouter();
 
     // Animation variants
     const containerVariants = {
@@ -42,18 +46,21 @@ export default function Products() {
             title: "Chantier+ : Application web et mobile prête à vendre",
             description: "Acheter votre application pour collaborer avec les entrepreneurs pour vos travaux de construction",
             image: "/assets/BTP.png",
+            link: "liens/produit/Chantier+",
         },
         {
             id: 2,
             title: "RéseauPro : Application web et mobile prête à vendre",
             description: "Obtenez, Réseautez et communiquez plus facilement avec vos proches, amis et partenaires d'affaires",
             image: "/assets/Reseau_pro.png",
+            link: "liens/produit/reseaupro",
         },
         {
             id: 3,
             title: "e-Vignette : Application web et mobile prête à vendre",
             description: "Obtenez Cliniq+ et facilitez la gestion des cliniques des médecins et des patients avec des fonctionnalités avancées",
             image: "/assets/e_vignette.png",
+            link: "liens/produit/evignette",
         }
     ];
 
@@ -87,7 +94,7 @@ export default function Products() {
                     transition={{ duration: 0.6 }}
                     viewport={{ once: true }}
                 >
-                    Nos produits
+                    Acheter une application
                 </motion.h2>
                 <motion.p
                     className="text-xl text-center mb-12"
@@ -96,7 +103,7 @@ export default function Products() {
                     transition={{ duration: 0.6, delay: 0.2 }}
                     viewport={{ once: true }}
                 >
-                    Découvrez notre gamme de produits innovants conçus pour répondre à vos besoins
+                    Découvre notre gamme de produits innovants conçus pour répondre à tes besoins
                 </motion.p>
 
                 <motion.div
@@ -138,7 +145,7 @@ export default function Products() {
                                 <p className="text-gray-600 mb-4">{product.description}</p>
                                 <button
                                     className="w-full py-2 px-4 border-2 border-[#0F6B42] text-[#0F6B42] rounded-lg hover:bg-[#FF9F1C] hover:text-white hover:border-transparent transition-all duration-300"
-                                    onClick={() => window.open('https://dihas-product.vercel.app/', '_blank')}
+                                    onClick={() => window.open(product.link, '_blank')}
                                 >
                                     Voir plus
                                 </button>
@@ -147,7 +154,7 @@ export default function Products() {
                     ))}
                 </motion.div>
 
-                <motion.div
+                {/* <motion.div
                     className="flex justify-center items-center mt-12 gap-4"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -186,7 +193,15 @@ export default function Products() {
                             <path d="M9 18l6-6-6-6" />
                         </svg>
                     </button>
-                </motion.div>
+                </motion.div> */}
+
+                <Link
+                    href="/dihas-product"
+                    className="bg-green-800 mt-6 text-white px-6 py-3 rounded-lg flex items-center justify-center transition-all duration-300 transform hover:scale-105 cursor-pointer w-fit mx-auto"
+                >
+                    Voir tous les produits
+                    <MousePointer2 className="ml-2" />
+                </Link>
             </motion.div>
         </motion.section>
     );

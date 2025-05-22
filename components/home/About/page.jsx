@@ -11,7 +11,7 @@ export default function About() {
 
     const stats = [
         {
-            number: 7,
+            number: 5,
             label: "Année d'expérience"
         },
         {
@@ -23,7 +23,7 @@ export default function About() {
             label: "Clients Satisfaits"
         },
         {
-            number: 231,
+            number: 15,
             label: "Projets complets"
         }
     ];
@@ -53,7 +53,7 @@ export default function About() {
     };
 
     return (
-        <section className="bg-green-700 py-16" ref={ref}>
+        <section className="bg-green-700 py-10" ref={ref}>
             <div className="container mx-auto px-4">
                 <motion.div 
                     className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center text-white"
@@ -70,7 +70,7 @@ export default function About() {
                             {index < stats.length - 1 && (
                                 <div className="hidden lg:block absolute right-0 top-1/2 transform -translate-y-1/2 w-px h-16 bg-white/30"></div>
                             )}
-                            <div className="text-4xl font-bold mb-2">
+                            <div className="text-2xl font-bold mb-2">
                                 {isInView && (
                                     <CountUp
                                         end={stat.number}
@@ -80,7 +80,7 @@ export default function About() {
                                     />
                                 )}
                             </div>
-                            <div className="text-lg">{stat.label}</div>
+                            <div className="text-sm">{stat.label}</div>
                         </motion.div>
                     ))}
                 </motion.div>

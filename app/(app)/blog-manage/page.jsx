@@ -122,7 +122,7 @@ export default function BlogList() {
                                                 <td className="px-6 py-4 whitespace-nowrap">
                                                     {article.image && (
                                                         <img
-                                                            src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${article.image}`}
+                                                            src={article.image}
                                                             alt={article.titre}
                                                             className="h-12 w-12 rounded-md object-cover"
                                                         />

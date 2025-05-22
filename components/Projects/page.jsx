@@ -103,7 +103,7 @@ export default function Projects() {
                     transition={{ duration: 0.6 }}
                     viewport={{ once: true }}
                 >
-                    Nos projets
+                    Etude de cas
                 </motion.h2>
                 <motion.p
                     className="text-xl text-center mb-12"
@@ -112,8 +112,8 @@ export default function Projects() {
                     transition={{ duration: 0.6, delay: 0.2 }}
                     viewport={{ once: true }}
                 >
-                    Voyez comment nous donnons vie à vos idées en les transformant en projets concrets, innovants
-                    et parfaitement adaptés à vos objectifs
+                    Vois comment nous donnons vie à tes idées en les transformant en projets concrets, innovants
+                    et parfaitement adaptés à tes objectifs
                 </motion.p>
 
                 <motion.div
@@ -183,7 +183,7 @@ export default function Projects() {
                     ))}
                 </motion.div>
 
-                <motion.div
+                {/* <motion.div
                     className="flex justify-center items-center mt-12 gap-4"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -222,7 +222,7 @@ export default function Projects() {
                             <path d="M9 18l6-6-6-6" />
                         </svg>
                     </button>
-                </motion.div>
+                </motion.div> */}
             </motion.div>
         </motion.section>
     );

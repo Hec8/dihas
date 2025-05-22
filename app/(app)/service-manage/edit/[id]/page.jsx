@@ -33,7 +33,7 @@ export default function EditService() {
                     icon: null,
                 });
                 if (service.icon) {
-                    setCurrentIcon(`${process.env.NEXT_PUBLIC_BACKEND_URL}${service.icon}`);
+                    setCurrentIcon(service.icon);
                 }
             } catch (error) {
                 toast.error('Erreur lors du chargement du service');

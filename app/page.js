@@ -6,6 +6,7 @@ const Header = dynamic(() => import('../components/Header/page'), { ssr: true })
 const Hero = dynamic(() => import('../components/home/Hero/page'), { ssr: true });
 const About = dynamic(() => import('../components/home/About/page'), { ssr: true });
 const Goals = dynamic(() => import('../components/home/Goals/page'), { ssr: true });
+const Industries = dynamic(() => import('../components/home/Industries/page'), { ssr: true });
 const Services = dynamic(() => import('../components/home/Services/page'), { ssr: true });
 const Products = dynamic(() => import('../components/home/Products/page'), { ssr: true });
 const Projects = dynamic(() => import('../components/Projects/page'), { ssr: true });
@@ -20,10 +21,11 @@ export default function Page() {
             <Header />
             <Hero />
             <About />
-            <Goals />
-            <Services />
-            <Products />
             <Projects />
+            <Goals />
+            <Industries />
+            <Products />
+            <Services />
             <Blogs />
             <Testimony />
             <Newsletter />

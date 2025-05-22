@@ -5,9 +5,11 @@ import { useAuth } from '@/hooks/auth'
 import { useState } from 'react'
 
 const Page = () => {
-    const { logout, resendEmailVerification } = useAuth({
+    const { user, logout, resendEmailVerification } = useAuth({
         middleware: 'auth',
-        redirectIfAuthenticated: '/dashboard',
+        redirectIfAuthenticated: (user) => {
+            return user?.role === 'admin' ? '/dashboard' : '/content-creator-dashboard';
+        }
     })
 
     const [status, setStatus] = useState(null)
@@ -15,22 +17,22 @@ const Page = () => {
     return (
         <>
             <div className="mb-4 text-sm text-gray-600">
-                Thanks for signing up! Before getting started, could you verify
-                your email address by clicking on the link we just
-                emailed to you? If you didn&apos;t receive the email, we will gladly
-                send you another.
+                Merci de vous être enregistré! Avant de commencer, pourriez-vous vérifier
+                votre adresse e-mail en cliquant sur le lien que nous avons envoyé
+                à votre adresse e-mail ? Si vous n&apos;avez pas reçu l&apos;email, nous serons ravis
+                de vous envoyer un autre.
             </div>
 
             {status === 'verification-link-sent' && (
                 <div className="mb-4 font-medium text-sm text-green-600">
-                    A new verification link has been sent to the email address
-                    you provided during registration.
+                    Un nouveau lien de vérification a été envoyé à l&apos;adresse e-mail
+                    que vous avez fournie lors de votre enregistrement.
                 </div>
             )}
 
             <div className="mt-4 flex items-center justify-between">
                 <Button onClick={() => resendEmailVerification({ setStatus })}>
-                    Resend Verification Email
+                    Envoyer un nouveau lien
                 </Button>
 
                 <button

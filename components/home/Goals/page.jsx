@@ -27,7 +27,7 @@ export default function Goals() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
             >
-                Que voulez-vous faire ?
+                Que veux-tu faire ?
             </motion.h2>
             <motion.p
                 className="text-black mb-10"
@@ -35,7 +35,7 @@ export default function Goals() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
             >
-                Choisissez l'objectif qui vous correspond le mieux
+                Choisis l'objectif qui te correspond le mieux
             </motion.p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -49,13 +49,13 @@ export default function Goals() {
                 >
                     <h3 className="text-xl font-semibold mb-3">Acheter et Créer</h3>
                     <p className="text-black text-sm mb-6 max-w-xs">
-                        Parcourez nos applications mobile/web de différente industries pour créer une entreprise en ligne en 30 jours
+                        Parcoure nos applications mobile/web de différente industries pour créer une entreprise en ligne en 30 jours
                     </p>
                     <motion.button
                         className="bg-[#c6e2d5] hover:bg-[#b2d6c8] text-green-800 font-medium px-10 py-4 rounded-full transition"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        onClick={() => window.location.href = '/projets'}
+                        onClick={() => window.location.href = '/dihas-product'}
                     >
                         Parcourir
                     </motion.button>
@@ -87,7 +87,7 @@ export default function Goals() {
                         whileTap={{ scale: 0.95 }}
                         onClick={() => window.location.href = '/contact'}
                     >
-                        Contactez-nous
+                        Contactes-nous
                     </motion.button>
                     <motion.img
                         src="/assets/Reseau_pro.png"

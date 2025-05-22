@@ -192,20 +192,31 @@ const LoginContent = () => {
                     </label>
                 </div>
 
-                <div className="flex items-center justify-end mt-4">
+                <div className="flex items-center justify-between mt-4">
                     <Link
-                        href="/forgot-password"
-                        className="underline text-sm text-gray-600 hover:text-green-800">
-                        Mot de passe oublié?
+                        href="/"
+                        className="inline-flex items-center text-sm text-green-800 hover:text-green-700 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                        Retour à l&apos;accueil
                     </Link>
+                    
+                    <div className="flex items-center">
+                        <Link
+                            href="/forgot-password"
+                            className="underline text-sm text-gray-600 hover:text-green-800">
+                            Mot de passe oublié?
+                        </Link>
 
-                    <button
-                        type="submit"
-                        disabled={isSubmitting}
-                        className="ml-3 px-4 py-2 bg-green-800 text-white rounded-xl hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-800 focus:ring-opacity-50 transition-colors"
-                    >
-                        {isSubmitting ? 'Connexion en cours...' : 'Se connecter'}
-                    </button>
+                        <button
+                            type="submit"
+                            disabled={isSubmitting}
+                            className="ml-3 px-4 py-2 bg-green-800 text-white rounded-xl hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-800 focus:ring-opacity-50 transition-colors"
+                        >
+                            {isSubmitting ? 'Connexion en cours...' : 'Se connecter'}
+                        </button>
+                    </div>
                 </div>
             </form>
         </>
