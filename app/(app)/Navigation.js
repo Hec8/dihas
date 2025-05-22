@@ -130,7 +130,10 @@ const Navigation = ({ user }) => {
 
                 {/* Autres menus - uniquement pour les administrateurs */}
                 {!isContentCreator && [
-                    { id: 'projet', name: 'Gestion de projet', icon: menuIcons.projet },
+                    { id: 'projet', name: 'Gestion de projet', icon: menuIcons.projet, subLinks: [
+                        { name: 'Accueil', href: '/project-manage' },
+                        { name: 'Espace de travail', href: '/project-manage/espace-travail' },
+                    ] },
                     { id: 'crm', name: 'CRM Gestion Client', icon: menuIcons.crm },
                     { id: 'dev', name: 'Développement IT', icon: menuIcons.dev },
                     { id: 'rh', name: 'RH Recrutement', icon: menuIcons.rh },
@@ -154,6 +157,26 @@ const Navigation = ({ user }) => {
                                 <ChevronDown className="w-5 h-5" />
                             </motion.div>
                         </motion.button>
+                        {/* Sous-menu pour Gestion de projet */}
+                        {menu.subLinks && openMenu === menu.id && (
+                            <motion.div
+                                initial={{ opacity: 0, height: 0 }}
+                                animate={{ opacity: 1, height: 'auto' }}
+                                exit={{ opacity: 0, height: 0 }}
+                                transition={{ duration: 0.2 }}
+                                className="mt-1 ml-8 space-y-1 overflow-hidden"
+                            >
+                                {menu.subLinks.map((sub) => (
+                                    <Link
+                                        key={sub.href}
+                                        href={sub.href}
+                                        className={`block px-4 py-2 rounded-md transition-all ${isActive(sub.href) ? 'bg-white/20 font-medium' : 'text-white/80 hover:text-white'}`}
+                                    >
+                                        {sub.name}
+                                    </Link>
+                                ))}
+                            </motion.div>
+                        )}
                     </div>
                 ))}
             </div>

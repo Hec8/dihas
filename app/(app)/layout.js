@@ -2,10 +2,13 @@
 
 import { useAuth } from '@/hooks/auth'
 import Navigation from '@/app/(app)/Navigation'
-import DashboardHeader from '@/components/DashboardHeader'
+import DashboardHeader from '@/components/DashboardHeader';
 import Loading from '@/app/(app)/Loading'
 
 const AppLayout = ({ children }) => {
+    // On récupère le contexte projet si disponible
+    // (le useProject reste utile pour DashboardHeader)
+
     const { user } = useAuth({ middleware: 'auth' })
 
     if (!user) {

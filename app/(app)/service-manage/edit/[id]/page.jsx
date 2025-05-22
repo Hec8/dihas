@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, use } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import axios from '@/lib/axios';
 import { useAuth } from '@/hooks/auth'; // Importez votre hook useAuth
@@ -18,12 +18,13 @@ export default function EditService() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const router = useRouter();
     const params = useParams();
+    const { id } = use(params);
     const { user } = useAuth();
 
     useEffect(() => {
         const fetchService = async () => {
             try {
-                const response = await axios.get(`/api/services/${params.id}`); // Utilisation de params.id
+                const response = await axios.get(`/api/services/${id}`); // Utilisation de id
                 const service = response.data;
                 setFormData({
                     title: service.title,
@@ -40,10 +41,10 @@ export default function EditService() {
             }
         };
 
-        if (params.id) { // Vérification que l'ID existe
+        if (id) { // Vérification que l'ID existe
             fetchService();
         }
-    }, [params.id, router]);
+    }, [id, router]);
 
     const handleChange = (e) => {
         const { name, value, type, checked, files } = e.target;
@@ -87,7 +88,7 @@ export default function EditService() {
             }
 
             // Utilisez PUT avec _method pour Laravel
-            const response = await axios.post(`/api/services/${params.id}`, submitData, {
+            const response = await axios.post(`/api/services/${id}`, submitData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'X-HTTP-Method-Override': 'PUT' // Alternative à _method

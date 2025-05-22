@@ -8,7 +8,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '@/hooks/auth';
 import axios from '@/lib/axios';
 
-export default function DashboardHeader() {
+export default function DashboardHeader({ title = '' }) {
     const [showNotifications, setShowNotifications] = useState(false);
     const [showProfileMenu, setShowProfileMenu] = useState(false);
     const [notifications, setNotifications] = useState([]);
@@ -19,7 +19,7 @@ export default function DashboardHeader() {
 
     const shouldHideSearchBar = (path) => {
         if (!path) return true;
-        const hiddenPaths = ['/dashboard', '/dashboard-contenu', '/content-creator-dashboard'];
+        const hiddenPaths = ['/dashboard', '/dashboard-contenu', '/content-creator-dashboard', '/project-manage'];
         return hiddenPaths.some(hiddenPath => path.startsWith(hiddenPath));
     };
 
@@ -99,6 +99,10 @@ export default function DashboardHeader() {
                         {pathname === '/content-creator-dashboard' && 'Dashboard'}
                         {pathname === '/profile' && 'Mon profil'}
                         {pathname === '/dashboard-contenu' && 'Statistiques Gestion de contenu'}
+                        {pathname === '/project-manage' && 'Gestion de projet'}
+                        {pathname === '/project-manage/espace-travail' && 'Projets'}
+                        {pathname.startsWith('/project-manage/espace-travail/project/') && title}
+
                     </h2>
                     {/* Barre de recherche */}
                     {!shouldHideSearchBar(pathname) && (
